@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Returning values by value, reference, and address | peiji</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="icon" href="/first.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+    <meta name="description" content="Just playing around">
+    
+    <link rel="preload" href="/assets/css/0.styles.3670de44.css" as="style"><link rel="preload" href="/assets/js/app.8761549f.js" as="script"><link rel="preload" href="/assets/js/3.7abf9d82.js" as="script"><link rel="preload" href="/assets/js/1.3f67f674.js" as="script"><link rel="preload" href="/assets/js/22.e4fce297.js" as="script"><link rel="prefetch" href="/assets/js/10.11ebffe0.js"><link rel="prefetch" href="/assets/js/11.d58655ce.js"><link rel="prefetch" href="/assets/js/12.604fcf63.js"><link rel="prefetch" href="/assets/js/13.ceb46a52.js"><link rel="prefetch" href="/assets/js/14.5e3e7371.js"><link rel="prefetch" href="/assets/js/15.632278c2.js"><link rel="prefetch" href="/assets/js/16.f26ba4b6.js"><link rel="prefetch" href="/assets/js/17.ddc6eb8b.js"><link rel="prefetch" href="/assets/js/18.51e33f36.js"><link rel="prefetch" href="/assets/js/19.efa314f5.js"><link rel="prefetch" href="/assets/js/20.95558435.js"><link rel="prefetch" href="/assets/js/21.c06bcd43.js"><link rel="prefetch" href="/assets/js/23.c3488b5c.js"><link rel="prefetch" href="/assets/js/24.da3ed6eb.js"><link rel="prefetch" href="/assets/js/25.2f0b9092.js"><link rel="prefetch" href="/assets/js/26.a0fb29c4.js"><link rel="prefetch" href="/assets/js/27.6aba5b29.js"><link rel="prefetch" href="/assets/js/28.9cc7ea41.js"><link rel="prefetch" href="/assets/js/29.7c7d8797.js"><link rel="prefetch" href="/assets/js/30.b1446ea5.js"><link rel="prefetch" href="/assets/js/31.5dd332ad.js"><link rel="prefetch" href="/assets/js/32.b8edf858.js"><link rel="prefetch" href="/assets/js/33.1d69495d.js"><link rel="prefetch" href="/assets/js/34.1ba2a58d.js"><link rel="prefetch" href="/assets/js/35.3c4c5f84.js"><link rel="prefetch" href="/assets/js/36.cf653b61.js"><link rel="prefetch" href="/assets/js/37.abcb80dc.js"><link rel="prefetch" href="/assets/js/38.25c45d37.js"><link rel="prefetch" href="/assets/js/39.ac69179e.js"><link rel="prefetch" href="/assets/js/4.23562cf1.js"><link rel="prefetch" href="/assets/js/40.a99aa474.js"><link rel="prefetch" href="/assets/js/41.94d84870.js"><link rel="prefetch" href="/assets/js/42.1ffcdf3a.js"><link rel="prefetch" href="/assets/js/43.f68c260e.js"><link rel="prefetch" href="/assets/js/44.6348dd59.js"><link rel="prefetch" href="/assets/js/45.e1d944b7.js"><link rel="prefetch" href="/assets/js/46.a6b0bcb8.js"><link rel="prefetch" href="/assets/js/47.19dd8ae2.js"><link rel="prefetch" href="/assets/js/48.91f15bbd.js"><link rel="prefetch" href="/assets/js/49.ae387199.js"><link rel="prefetch" href="/assets/js/5.3cc29248.js"><link rel="prefetch" href="/assets/js/50.9b315d9a.js"><link rel="prefetch" href="/assets/js/6.08321c69.js"><link rel="prefetch" href="/assets/js/7.6d2e0911.js"><link rel="prefetch" href="/assets/js/8.d85bf6c7.js"><link rel="prefetch" href="/assets/js/9.64a167e6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3670de44.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-2d5f533b><div data-v-2d5f533b><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-2d5f533b data-v-2d5f533b><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-2d5f533b data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>peiji</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-2d5f533b><header class="navbar" data-v-2d5f533b><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">peiji</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-2d5f533b></div> <aside class="sidebar" data-v-2d5f533b><div class="personal-info-wrapper" data-v-ca798c94 data-v-2d5f533b><!----> <h3 class="name" data-v-ca798c94>
+    peiji
+  </h3> <div class="num" data-v-ca798c94><div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Article</h6></div> <div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Tag</h6></div></div> <hr data-v-ca798c94></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav> <ul class="sidebar-links"><li><a href="/C++/function/1.Function parameters and arguments.html" class="sidebar-link">Function parameters and arguments</a></li><li><a href="/C++/function/2.Passing arguments by value.html" class="sidebar-link">Passing arguments by value</a></li><li><a href="/C++/function/3.Passing arguments by reference.html" class="sidebar-link">Passing arguments by reference</a></li><li><a href="/C++/function/4.Passing arguments by address.html" class="sidebar-link">Passing arguments by address</a></li><li><a href="/C++/function/5.Returning values by value, reference, and address.html" class="active sidebar-link">Returning values by value, reference, and address</a></li><li><a href="/C++/function/6.Inline function.html" class="sidebar-link">Inline functions</a></li><li><a href="/C++/function/7.function overloading.html" class="sidebar-link">Function overloading</a></li><li><a href="/C++/function/8.Default arguments.html" class="sidebar-link">Default arguments</a></li><li><a href="/C++/function/9.Function Pointers.html" class="sidebar-link">Function Pointers</a></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e></h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-2d5f533b><main class="page" style="padding-right:0;"><div class="page-title" style="display:none;"><h1 class="title">Returning values by value, reference, and address</h1> <div data-v-3b7f5bdf><i class="iconfont reco-account" data-v-3b7f5bdf><span data-v-3b7f5bdf>peiji</span></i> <!----> <!----> <!----></div></div> <div class="theme-reco-content content__default" style="display:none;"><h1 id="returning-values-by-value-reference-and-address"><a href="#returning-values-by-value-reference-and-address" class="header-anchor">#</a> Returning values by value, reference, and address</h1> <blockquote><p>本节中，我们将考虑通过所有三种方法将值返回给调用方的问题。</p></blockquote> <p>​		事实证明，按值，地址或引用将函数的值返回给调用者的方法几乎与将参数传递给函数的方法完全一样。每种方法都具有相同的优点和缺点。两者之间的主要区别只是数据流的方向相反。但是，还增加了一点复杂性-因为函数中的局部变量超出范围并在函数返回时被破坏，所以我们需要考虑此操作对每种返回类型的影响。</p> <h2 id="return-by-value"><a href="#return-by-value" class="header-anchor">#</a> Return by value</h2> <p>​		按值返回是最简单，最安全的返回类型。当按值返回值时，该值的副本将返回给调用方。与按值传递一样，您可以按值返回字面量（例如5），变量（例如x）或表达式（例如x + 1），这使得按值返回非常灵活。</p> <p>​		按值返回的另一个优点是，您可以返回涉及在函数中声明的局部变量的变量（或表达式），而不必担心范围问题。由于变量是在函数返回之前求值的，并且值的副本已返回给调用者，所以当函数的变量超出函数范围的范围时，这没有问题。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">doubleValue</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> value<span class="token punctuation">{</span> x <span class="token operator">*</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> value<span class="token punctuation">;</span> <span class="token comment">// A copy of value will be returned here</span>
+<span class="token punctuation">}</span> <span class="token comment">// value goes out of scope here</span>
+</code></pre></div><p>​		当返回在函数内部声明的变量或返回通过值传递的函数参数时，按值返回最合适。但是，像按值传递一样，对于结构和大型类，按值返回很慢。</p> <p><strong>When to use return by value:</strong></p> <ul><li>返回在函数内部声明的变量时</li> <li>返回按值传递的函数参数时</li></ul> <p><strong>When not to use return by value:</strong></p> <ul><li>返回内置数组或指针时（使用按地址返回）</li> <li>返回大型结构或类时（使用按引用返回）</li></ul> <h2 id="return-by-address"><a href="#return-by-address" class="header-anchor">#</a> Return by address</h2> <p>​	按地址返回涉及将变量的地址返回给调用方。与按地址传递类似，按地址返回只能返回变量的地址，而不能返回文字或表达式（没有地址）。由于按地址返回只是将地址从函数复制到调用方，因此按地址返回速度很快。</p> <p>​	但是，按地址返回还有一个缺点，而按值返回没有这个缺点——如果您尝试返回函数本地变量的地址，则程序将表现出未定义的行为。考虑以下示例：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span><span class="token operator">*</span> <span class="token function">doubleValue</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> value<span class="token punctuation">{</span> x <span class="token operator">*</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">&amp;</span>value<span class="token punctuation">;</span> <span class="token comment">// return value by address here</span>
+<span class="token punctuation">}</span> <span class="token comment">// value destroyed here</span>
+</code></pre></div><p>​		如您在此处看到的，值在返回给调用方之后就被销毁。最终结果是，调用者最终以未分配的内存（悬挂的指针）的地址结尾，如果使用该地址将引起问题。这是新程序员经常犯的错误。如果程序员尝试按地址返回局部变量，许多较新的编译器都会发出警告（不是错误）-但是，有很多方法可以欺骗编译器，使您在不生成警告的情况下进行非法操作，因此确保程序返回的指针将在函数返回后指向有效变量是程序员的重担。</p> <p>​		按地址返回通常用于将动态分配的内存返回给调用方</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span><span class="token operator">*</span> <span class="token function">allocateArray</span><span class="token punctuation">(</span><span class="token keyword">int</span> size<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> <span class="token operator">*</span>array<span class="token punctuation">{</span> <span class="token function">allocateArray</span><span class="token punctuation">(</span><span class="token number">25</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// do stuff with array</span>
+ 
+    <span class="token keyword">delete</span><span class="token punctuation">[</span><span class="token punctuation">]</span> array<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​		这个之所以可行，是因为动态分配的内存在声明它的块的末尾不会超出范围，因此当地址返回给调用者时，内存仍将存在。跟踪手动分配可能很困难。将分配和删除分成不同的功能，这使得了解谁负责删除资源或根本是否需要删除资源变得更加困难。应该使用智能指针（稍后介绍）和在其自身之后清理的类型，而不是手动分配。</p> <p><strong>When to use return by address:</strong></p> <ul><li>返回动态分配的内存时和您不能使用为您处理分配的类型。</li> <li>返回通过地址传递的函数实数时。</li></ul> <p><strong>When not to use return by address:</strong></p> <ul><li>返回在函数内部声明的变量或按值传递的参数时（使用按值返回）</li> <li>返回通过引用传递的大型结构或类时（使用按引用返回）</li></ul> <h2 id="return-by-reference"><a href="#return-by-reference" class="header-anchor">#</a> <strong>Return by reference</strong></h2> <p>​		跟返回地址一样,通过引用返回值必须是变量(你不应该返回一个字面量的引用或表达式解析为一个临时的值，这些将超出函数结束的范围,它最终会返回一个悬空引用)。当变量通过引用返回时，对该变量的引用被传递回调用者。然后调用者可以使用这个引用继续修改变量，这有时是很有用的。引用返回也很快速，这在返回结构和类时很有用。</p> <p>​		<font color="yellow">但是，就像按地址返回一样，您不应该返回局部变量的引用。考虑下面的例子:</font></p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span><span class="token operator">&amp;</span> <span class="token function">doubleValue</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> value<span class="token punctuation">{</span> x <span class="token operator">*</span> <span class="token number">2</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> value<span class="token punctuation">;</span> <span class="token comment">// return a reference to value here</span>
+<span class="token punctuation">}</span> <span class="token comment">// value is destroyed here</span>
+</code></pre></div><p>​		在上面的程序中，函数返回时，程序返回了一个对将被销毁的值的引用。这意味着调用者接收到一个对garbage的引用。幸运的是，如果您试图这样做，编译器可能会给您一个警告或错误。</p> <p>​		返回引用通常用于在通过引用传递给函数的参数返回给调用者。在下面的例子中，我们(通过引用)返回通过引用传递给函数的数组元素:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;array&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token comment">// Returns a reference to the index element of array</span>
+<span class="token keyword">int</span><span class="token operator">&amp;</span> <span class="token function">getElement</span><span class="token punctuation">(</span>std<span class="token operator">::</span>array<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">,</span> <span class="token keyword">int</span> index<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// we know that array[index] will not be destroyed when we return to the caller (since the caller passed in the array in the first place!)</span>
+    <span class="token comment">// so it's okay to return it by reference</span>
+    <span class="token keyword">return</span> array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>array<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token number">25</span><span class="token operator">&gt;</span> array<span class="token punctuation">;</span>
+ 
+    <span class="token comment">// Set the element of array with index 10 to the value 5</span>
+    <span class="token function">getElement</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+	
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​		当调用<code>getElement(array, 10)</code>时，<code>getElement()</code>返回索引为10的数组元素的引用。<code>main()</code>然后使用这个引用将该元素的值赋给5。</p> <p>​		虽然这是一个人为设计的示例(因为您可以直接访问数组[10])，但一旦您了解了类，您将发现更多通过引用返回值的用法。</p> <p><strong>When to use return by reference:</strong></p> <ul><li>返回引用参数时。</li> <li>返回通过引用或地址传递给函数的对象的成员时。</li> <li>当返回一个不会在函数结束时被销毁的大型结构体或类时(例如通过引用传入的结构体)。</li></ul> <p><strong>When not to use return by reference:</strong></p> <ul><li>当返回函数内部声明的变量或按值传递的参数时(使用按值返回)。</li> <li>返回内置数组或指针值时(使用按地址返回)</li></ul> <h2 id="mixing-return-references-and-values"><a href="#mixing-return-references-and-values" class="header-anchor">#</a> Mixing return references and values</h2> <p>​	虽然函数可以返回值或引用，但调用者可以将结果赋值给相应的变量或引用，也可以不赋值。让我们看看混合使用值类型和引用类型会发生什么。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">returnByValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span><span class="token operator">&amp;</span> <span class="token function">returnByReference</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+     <span class="token keyword">static</span> <span class="token keyword">int</span> x<span class="token punctuation">{</span> <span class="token number">5</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// static ensures x isn't destroyed when the function ends</span>
+     <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> giana<span class="token punctuation">{</span> <span class="token function">returnByReference</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// case A -- ok, treated as return by value</span>
+    <span class="token keyword">int</span><span class="token operator">&amp;</span> ref<span class="token punctuation">{</span> <span class="token function">returnByValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// case B -- compile error since the value is an r-value, and an r-value can't bind to a non-const reference</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> cref<span class="token punctuation">{</span> <span class="token function">returnByValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// case C -- ok, the lifetime of the return value is extended to the lifetime of cref</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​		在情况A中，我们将一个引用返回值赋给一个非引用变量。因为<code>giana</code>不是一个引用，所以返回值被复制到<code>giana</code>中，就像<code>returnByReference()</code>已经通过value返回一样。</p> <p>​		在B种情况下，我们尝试用<code>returnByValue()</code>返回的返回值的副本初始化reference ref。但是，由于返回的值没有地址(它是r值)，这将导致编译错误。</p> <p>​		在C案例中，我们尝试使用由<code>returnByValue()</code> 返回的返回值的副本来初始化const引用<code>cref</code>。因为const引用可以绑定到r值，所以这里没有问题。通常，右值在创建它们的表达式的末尾过期——但是，当绑定到const引用时，右值的生存期(在本例中是函数的返回值)被扩展，以匹配引用的生存期(在本例中是<code>cref</code>)</p> <h2 id="lifetime-extension-doesn-t-save-dangling-references"><a href="#lifetime-extension-doesn-t-save-dangling-references" class="header-anchor">#</a> <strong>Lifetime extension doesn’t save dangling references</strong></h2> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">const</span> <span class="token keyword">int</span><span class="token operator">&amp;</span> <span class="token function">returnByReference</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+     <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>ref <span class="token punctuation">{</span> <span class="token function">returnByReference</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// runtime error</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​		在上面的程序中，<code>returnByReference()</code>返回一个指向函数结束时将超出作用域的值的const引用。这通常是一个禁忌，因为它将导致悬空引用。但是，我们也知道，将一个值赋给const引用可以延长该值的生存期。那么这里哪个优先呢?5先超出范围，还是ref延长5的生命?</p> <p>​		答案是5首先超出作用域，然后将对5的引用复制回调用者，然后ref扩展当前悬空引用的生命周期。</p> <p>​		然而，下面的工作确实如预期的那样:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token function">returnByValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+     <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">&amp;</span>ref <span class="token punctuation">{</span> <span class="token function">returnByValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// ok, we're extending the lifetime of the copy passed back to main</span>
+<span class="token punctuation">}</span>
+
+</code></pre></div><p>在本例中，文字值5首先被复制回调用者(main)的范围内，然后ref扩展该副本的生存期。</p> <h2 id="returning-multiple-values"><a href="#returning-multiple-values" class="header-anchor">#</a> Returning multiple values</h2> <p>​		c++不包含将多个值传递回调用者的直接方法。虽然有时你可以重新构建你的代码，这样你可以分别传递每个数据项(例如，不是让一个函数返回两个值，而是让两个函数每个返回一个值)，这可能是麻烦和不直观的。</p> <p>​		正如第3章(通过引用传递参数)中所介绍的，out参数提供了一个将多位数据传递回调用者的方法。我们不推荐这种方法。</p> <p>​		第二种方法涉及到使用纯数据结构体:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token keyword">struct</span> <span class="token class-name">S</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> m_x<span class="token punctuation">;</span>
+	<span class="token keyword">double</span> m_y<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+S <span class="token function">returnStruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	S s<span class="token punctuation">;</span>
+	s<span class="token punctuation">.</span>m_x <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+	s<span class="token punctuation">.</span>m_y <span class="token operator">=</span> <span class="token number">6.7</span><span class="token punctuation">;</span>
+	<span class="token keyword">return</span> s<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	S s<span class="token punctuation">{</span> <span class="token function">returnStruct</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> s<span class="token punctuation">.</span>m_x <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span> <span class="token operator">&lt;&lt;</span> s<span class="token punctuation">.</span>m_y <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​		第三种方法(在c++ 11中引入)是使用<code>std::tuple</code>。元组是可能是不同类型的元素序列，其中每个元素的类型都必须显式指定。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;tuple&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+std<span class="token operator">::</span>tuple<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">double</span><span class="token operator">&gt;</span> <span class="token function">returnTuple</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// return a tuple that contains an int and a double</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">return</span> <span class="token punctuation">{</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6.7</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	std<span class="token operator">::</span>tuple s<span class="token punctuation">{</span> <span class="token function">returnTuple</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// get our tuple</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>get<span class="token operator">&lt;</span><span class="token number">0</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span> <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>get<span class="token operator">&lt;</span><span class="token number">1</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// use std::get&lt;n&gt; to get the nth element of the tuple</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>这与前面的例子相同。</p> <p>还可以使用<code>std::tie</code>将元组分解预定义变量，如下所示:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;tuple&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+std<span class="token operator">::</span>tuple<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">double</span><span class="token operator">&gt;</span> <span class="token function">returnTuple</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// return a tuple that contains an int and a double</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">return</span> <span class="token punctuation">{</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6.7</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">int</span> a<span class="token punctuation">;</span>
+	<span class="token keyword">double</span> b<span class="token punctuation">;</span>
+	std<span class="token operator">::</span><span class="token function">tie</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">returnTuple</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// put elements of tuple in variables a and b</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> a <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span> <span class="token operator">&lt;&lt;</span> b <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> 
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="conclusion"><a href="#conclusion" class="header-anchor">#</a> conclusion</h2> <p>​		大多数情况下，按值返回就足以满足您的需求。这也是将信息返回给调用者的最灵活和最安全的方式。然而，通过引用或地址返回也可能是有用的，特别是在处理动态分配的类或结构时。当使用返回引用或返回值时，请确保您返回的不是函数返回时超出作用域的引用或变量的地址。</p></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.8761549f.js" defer></script><script src="/assets/js/3.7abf9d82.js" defer></script><script src="/assets/js/1.3f67f674.js" defer></script><script src="/assets/js/22.e4fce297.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Partial template specialization | peiji</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="icon" href="/first.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+    <meta name="description" content="Just playing around">
+    
+    <link rel="preload" href="/assets/css/0.styles.3670de44.css" as="style"><link rel="preload" href="/assets/js/app.8761549f.js" as="script"><link rel="preload" href="/assets/js/3.7abf9d82.js" as="script"><link rel="preload" href="/assets/js/1.3f67f674.js" as="script"><link rel="preload" href="/assets/js/32.b8edf858.js" as="script"><link rel="prefetch" href="/assets/js/10.11ebffe0.js"><link rel="prefetch" href="/assets/js/11.d58655ce.js"><link rel="prefetch" href="/assets/js/12.604fcf63.js"><link rel="prefetch" href="/assets/js/13.ceb46a52.js"><link rel="prefetch" href="/assets/js/14.5e3e7371.js"><link rel="prefetch" href="/assets/js/15.632278c2.js"><link rel="prefetch" href="/assets/js/16.f26ba4b6.js"><link rel="prefetch" href="/assets/js/17.ddc6eb8b.js"><link rel="prefetch" href="/assets/js/18.51e33f36.js"><link rel="prefetch" href="/assets/js/19.efa314f5.js"><link rel="prefetch" href="/assets/js/20.95558435.js"><link rel="prefetch" href="/assets/js/21.c06bcd43.js"><link rel="prefetch" href="/assets/js/22.e4fce297.js"><link rel="prefetch" href="/assets/js/23.c3488b5c.js"><link rel="prefetch" href="/assets/js/24.da3ed6eb.js"><link rel="prefetch" href="/assets/js/25.2f0b9092.js"><link rel="prefetch" href="/assets/js/26.a0fb29c4.js"><link rel="prefetch" href="/assets/js/27.6aba5b29.js"><link rel="prefetch" href="/assets/js/28.9cc7ea41.js"><link rel="prefetch" href="/assets/js/29.7c7d8797.js"><link rel="prefetch" href="/assets/js/30.b1446ea5.js"><link rel="prefetch" href="/assets/js/31.5dd332ad.js"><link rel="prefetch" href="/assets/js/33.1d69495d.js"><link rel="prefetch" href="/assets/js/34.1ba2a58d.js"><link rel="prefetch" href="/assets/js/35.3c4c5f84.js"><link rel="prefetch" href="/assets/js/36.cf653b61.js"><link rel="prefetch" href="/assets/js/37.abcb80dc.js"><link rel="prefetch" href="/assets/js/38.25c45d37.js"><link rel="prefetch" href="/assets/js/39.ac69179e.js"><link rel="prefetch" href="/assets/js/4.23562cf1.js"><link rel="prefetch" href="/assets/js/40.a99aa474.js"><link rel="prefetch" href="/assets/js/41.94d84870.js"><link rel="prefetch" href="/assets/js/42.1ffcdf3a.js"><link rel="prefetch" href="/assets/js/43.f68c260e.js"><link rel="prefetch" href="/assets/js/44.6348dd59.js"><link rel="prefetch" href="/assets/js/45.e1d944b7.js"><link rel="prefetch" href="/assets/js/46.a6b0bcb8.js"><link rel="prefetch" href="/assets/js/47.19dd8ae2.js"><link rel="prefetch" href="/assets/js/48.91f15bbd.js"><link rel="prefetch" href="/assets/js/49.ae387199.js"><link rel="prefetch" href="/assets/js/5.3cc29248.js"><link rel="prefetch" href="/assets/js/50.9b315d9a.js"><link rel="prefetch" href="/assets/js/6.08321c69.js"><link rel="prefetch" href="/assets/js/7.6d2e0911.js"><link rel="prefetch" href="/assets/js/8.d85bf6c7.js"><link rel="prefetch" href="/assets/js/9.64a167e6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3670de44.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-2d5f533b><div data-v-2d5f533b><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-2d5f533b data-v-2d5f533b><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-2d5f533b data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>peiji</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-2d5f533b><header class="navbar" data-v-2d5f533b><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">peiji</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-2d5f533b></div> <aside class="sidebar" data-v-2d5f533b><div class="personal-info-wrapper" data-v-ca798c94 data-v-2d5f533b><!----> <h3 class="name" data-v-ca798c94>
+    peiji
+  </h3> <div class="num" data-v-ca798c94><div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Article</h6></div> <div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Tag</h6></div></div> <hr data-v-ca798c94></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav> <ul class="sidebar-links"><li><a href="/C++/templates/function template.html" class="sidebar-link">Function template</a></li><li><a href="/C++/templates/function template instance.html" class="sidebar-link">Function template instances</a></li><li><a href="/C++/templates/templet classes.html" class="sidebar-link">Template classes</a></li><li><a href="/C++/templates/Template non-type parameters.html" class="sidebar-link">Template non-type parameters</a></li><li><a href="/C++/templates/Function template specialization.html" class="sidebar-link">Function template specialization</a></li><li><a href="/C++/templates/Class template specialization.html" class="sidebar-link">Class template specialization</a></li><li><a href="/C++/templates/Partial template specialization.html" class="active sidebar-link">Partial template specialization</a></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e></h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-2d5f533b><main class="page" style="padding-right:0;"><div class="page-title" style="display:none;"><h1 class="title">Partial template specialization</h1> <div data-v-3b7f5bdf><i class="iconfont reco-account" data-v-3b7f5bdf><span data-v-3b7f5bdf>peiji</span></i> <!----> <!----> <!----></div></div> <div class="theme-reco-content content__default" style="display:none;"><h1 id="partial-template-specialization"><a href="#partial-template-specialization" class="header-anchor">#</a> Partial template specialization</h1> <p>​		部分模板特化并不经常使用(但在特定情况下可能有用)。在<a href="/C++/templates/Template non-type parameters/">Template non-type parameters</a>，您了解了如何使用表达式参数来参数化模板类。</p> <p>​		让我们再看一下在前面的示例之一中使用的Static Array类：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token comment">// The expression parameter controls the size of the array</span>
+    T m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+    T<span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+	
+    T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>​		该类具有两个模板参数，一个类型参数和一个表达式参数。 现在，假设我们要编写一个函数以打印出整个数组。尽管我们可以将其实现为成员函数，但我们将其作为非成员函数来实现，因为它将使后续示例更容易理解。</p> <p>​		使用模板，我们可能会这样写：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>StaticArray<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> size<span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​		这将使我们能够执行以下操作：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring&gt;</span></span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token comment">// The expression parameter controls the size of the array</span>
+	T m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+	T<span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+ 
+	T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>StaticArray<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> size<span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// declare an int array</span>
+	StaticArray<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token operator">&gt;</span> int4<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+	int4<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	int4<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	int4<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	int4<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// Print the arraypp</span>
+	<span class="token function">print</span><span class="token punctuation">(</span>int4<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>尽管这可行，但它具有设计缺陷。考虑以下：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// declare a char array</span>
+    StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token operator">&gt;</span> char14<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+    std<span class="token operator">::</span><span class="token function">strcpy</span><span class="token punctuation">(</span>char14<span class="token punctuation">.</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// Print the array</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>char14<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>该程序将编译，执行并产生以下值（或一个类似的值）：</p> <div class="language- extra-class"><pre class="language-text"><code>H e l l o ,   w o r l d !  //中间有空格
+</code></pre></div><p>​		对于非字符类型，在每个数组元素之间放置一个空格是有意义的，因此它们不能一起运行。但是，对于char类型，将所有一起运行的内容打印为C样式的字符串更有意义，而我们的print（）函数则不这样做。</p> <p>​		那么我们该如何解决呢？</p> <p><strong>模板特化可以解救吗</strong></p> <p>​		可能首先想到使用模板特化。完全模板特化的问题在于必须明确定义所有模板参数。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring&gt;</span></span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token comment">// The expression parameter controls the size of the array</span>
+	T m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+	T<span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+ 
+	T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>StaticArray<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> size<span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token comment">// Override print() for fully specialized StaticArray&lt;char, 14&gt;</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> <span class="token number">14</span><span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// declare a char array</span>
+    StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token operator">&gt;</span> char14<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+    std<span class="token operator">::</span><span class="token function">strcpy</span><span class="token punctuation">(</span>char14<span class="token punctuation">.</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;Hello, world!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// Print the array</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>char14<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>如您所见，我们现在为完全特化的<code>StaticArray &lt;char，14&gt;</code>提供了重载的打印功能。确实，此打印：</p> <div class="language- extra-class"><pre class="language-text"><code>Hello, world!
+</code></pre></div><p>尽管这解决了确保可以使用<code>StaticArray &lt;char，14&gt;</code>调用<code>print()</code>的问题，但它带来了另一个问题：使用完整模板专用化意味着我们必须显式定义此函数将接受的数组的长度！考虑以下示例：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// declare a char array</span>
+    StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token operator">&gt;</span> char12<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+    std<span class="token operator">::</span><span class="token function">strcpy</span><span class="token punctuation">(</span>char12<span class="token punctuation">.</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;Hello, mom!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// Print the array</span>
+    <span class="token function">print</span><span class="token punctuation">(</span>char12<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+  
+</code></pre></div><p>​		用<code>char12</code>调用<code>print()</code>将调用带有<code>staticArray &lt;T，size&gt;</code>的<code>print()</code>版本，因为<code>char12</code>的类型为<code>StaticArray &lt;char，12&gt;</code>，并且只有在传递<code>StaticArray&lt;char，14&gt;</code>时才会调用我们的<font color="yellow">重载后</font>的<code>print()</code> 。 尽管我们可以复制处理staticArray &lt;char，12&gt;的print（）的副本，但是当我们要调用数组大小为5或22的print（）时会发生什么呢？我们必须针对每个不同的数组大小复制该函数。那是多余的。 显然，完整的模板专业化在这里过于严格。我们正在寻找的解决方案是部分模板专业化。</p> <p><strong>Partial template specialization</strong></p> <p>​		部分模板特化使我们能够特化一些类（但不是单个函数！），其中已经明确定义了一些（但不是全部）模板参数。对于上述困难，理想的解决方案是让我们的重载打印函数与char类型的StaticArray一起使用，但将长度表达式参数设置为模板，以便可以根据需要进行更改。部分模板特化使我们能够做到这一点！</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">// overload of print() function for partially specialized StaticArray&lt;char, size&gt;</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is still a templated expression parameter</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> size<span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">)</span> <span class="token comment">// we're explicitly defining type char here</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​		如您所见，我们已明确声明该函数仅适用于<code>char</code>类型的<code>StaticArray</code>，但是<code>size</code>仍然是模板化的表达式参数，因此它将适用于任何大小的<code>char</code>数组。这里的所有都是它的！</p> <p>​		这是使用此功能的完整程序：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstring&gt;</span></span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token comment">// The expression parameter controls the size of the array</span>
+	T m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+	T<span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+ 
+	T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">typename</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>StaticArray<span class="token operator">&lt;</span>T<span class="token punctuation">,</span> size<span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token comment">// overload of print() function for partially specialized StaticArray&lt;char, size&gt;</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">int</span> size<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span>StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> size<span class="token operator">&gt;</span> <span class="token operator">&amp;</span>array<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>count<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// Declare an char array of size 14</span>
+	StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token operator">&gt;</span> char14<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// Print the array</span>
+	<span class="token function">print</span><span class="token punctuation">(</span>char14<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// Now declare an char array of size 12</span>
+	StaticArray<span class="token operator">&lt;</span><span class="token keyword">char</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token operator">&gt;</span> char12<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+	std<span class="token operator">::</span><span class="token function">strcpy</span><span class="token punctuation">(</span>char12<span class="token punctuation">.</span><span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">&quot;Hello, mom!&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// Print the array</span>
+	<span class="token function">print</span><span class="token punctuation">(</span>char12<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+</code></pre></div><p>​		请注意，从<code>C ++ 14</code>开始，部分模板特化只能与类一起使用，而不能与模板函数一起使用（功能必须完全特化）。我们的<code>void print(StaticArray &lt;char，size&gt;＆array)</code>示例之所以有效，是因为print函数不是部分特化的（它只是使用部分特化的类参数的重载函数）。</p> <p><strong>Partial template specialization for member functions</strong></p> <p>​		函数部分特化的局限性在处理成员功能时可能会带来一些挑战。例如，如果我们这样定义StaticArray怎么办？</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+    <span class="token comment">// The expression parameter controls the size of the array</span>
+    T m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+    T<span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+	
+    T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+ 
+    <span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+            std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> m_array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>现在，<code>print()</code>是<code>StaticArray &lt;T，int&gt;</code>类的成员函数。那么，当我们想要部分专门化<code>print()</code>使其工作方式不同时会发生什么呢？您可以尝试以下方法：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">// Doesn't work</span>
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">int</span> size<span class="token operator">&gt;</span>
+<span class="token keyword">void</span> <span class="token class-name">StaticArray</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token punctuation">,</span> size<span class="token operator">&gt;</span><span class="token operator">::</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>scientific <span class="token operator">&lt;&lt;</span> m_array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>不幸的是，这是行不通的，因为我们正在尝试部分特化函数，这是不允许的。 那么我们如何解决呢？一种明显的方法是对整个类进行部分专业化处理：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token comment">// The expression parameter controls the size of the array</span>
+	T m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+	T<span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+ 
+	T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+			std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> m_array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">&quot;\n&quot;</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token punctuation">,</span> size<span class="token operator">&gt;</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">private</span><span class="token operator">:</span>
+	<span class="token comment">// The expression parameter controls the size of the array</span>
+	<span class="token keyword">double</span> m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+	<span class="token keyword">double</span><span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+ 
+	<span class="token keyword">double</span><span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+	<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+			std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>scientific <span class="token operator">&lt;&lt;</span> m_array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// declare an integer array with room for 6 integers</span>
+	StaticArray<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token operator">&gt;</span> intArray<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// Fill it up in order, then print it</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		intArray<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token punctuation">;</span>
+ 
+	intArray<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// declare a double buffer with room for 4 doubles</span>
+	StaticArray<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token operator">&gt;</span> doubleArray<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		doubleArray<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">4.0</span> <span class="token operator">+</span> <span class="token number">0.1</span> <span class="token operator">*</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	doubleArray<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>虽然它工作，这不是一个好的解决方案，因为我们必须复制大量代码从<code>StaticArray&lt;T，size&gt;</code>到<code>StaticArray&lt;double，size&gt;</code>。要是有办在<code>StaticArray&lt;T, size&gt;</code> 重用<code>StaticArray&lt;double, size&gt;</code>中的代码就好了。听起来像是继承的工作!你可能开始尝试这样写代码:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token punctuation">,</span> size<span class="token operator">&gt;</span><span class="token operator">:</span> <span class="token keyword">public</span> StaticArray<span class="token operator">&lt;</span> <span class="token comment">// Then what?</span>
+</code></pre></div><p>我们如何引用StaticArray?我们不能。幸运的是，有一个解决方案，使用一个公共基类:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span><span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray_Base</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">protected</span><span class="token operator">:</span>
+	<span class="token comment">// The expression parameter controls the size of the array</span>
+	T m_array<span class="token punctuation">[</span>size<span class="token punctuation">]</span><span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">public</span><span class="token operator">:</span>
+	T<span class="token operator">*</span> <span class="token function">getArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token keyword">return</span> m_array<span class="token punctuation">;</span> <span class="token punctuation">}</span>
+ 
+	T<span class="token operator">&amp;</span> <span class="token keyword">operator</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">return</span> m_array<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+ 
+	<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+			std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> m_array<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+ 
+	<span class="token keyword">virtual</span> <span class="token operator">~</span><span class="token function">StaticArray_Base</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token keyword">default</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">class</span> <span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span><span class="token operator">:</span> <span class="token base-clause"><span class="token keyword">public</span> <span class="token class-name">StaticArray_Base</span><span class="token operator">&lt;</span><span class="token class-name">T</span><span class="token punctuation">,</span> <span class="token class-name">size</span><span class="token operator">&gt;</span></span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">template</span> <span class="token operator">&lt;</span><span class="token keyword">int</span> size<span class="token operator">&gt;</span> <span class="token comment">// size is the expression parameter</span>
+<span class="token keyword">class</span> <span class="token class-name">StaticArray</span><span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token punctuation">,</span> size<span class="token operator">&gt;</span><span class="token operator">:</span> <span class="token keyword">public</span> StaticArray_Base<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token punctuation">,</span> size<span class="token operator">&gt;</span>
+<span class="token punctuation">{</span>
+<span class="token keyword">public</span><span class="token operator">:</span>
+ 
+	<span class="token keyword">void</span> <span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">)</span>
+			std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> std<span class="token operator">::</span>scientific <span class="token operator">&lt;&lt;</span> <span class="token keyword">this</span><span class="token operator">-&gt;</span>m_array<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+<span class="token comment">// note: The this-&gt; prefix in the above line is needed.</span>
+<span class="token comment">// See https://stackoverflow.com/a/6592617 or https://isocpp.org/wiki/faq/templates#nondependent-name-lookup-members for more info on why.</span>
+		std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// declare an integer array with room for 6 integers</span>
+	StaticArray<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token operator">&gt;</span> intArray<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// Fill it up in order, then print it</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> <span class="token number">6</span><span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		intArray<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">=</span> count<span class="token punctuation">;</span>
+ 
+	intArray<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// declare a double buffer with room for 4 doubles</span>
+	StaticArray<span class="token operator">&lt;</span><span class="token keyword">double</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token operator">&gt;</span> doubleArray<span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> count<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> count <span class="token operator">&lt;</span> <span class="token number">4</span><span class="token punctuation">;</span> <span class="token operator">++</span>count<span class="token punctuation">)</span>
+		doubleArray<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">4.0</span> <span class="token operator">+</span> <span class="token number">0.1</span> <span class="token operator">*</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	doubleArray<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.8761549f.js" defer></script><script src="/assets/js/3.7abf9d82.js" defer></script><script src="/assets/js/1.3f67f674.js" defer></script><script src="/assets/js/32.b8edf858.js" defer></script>
+  </body>
+</html>

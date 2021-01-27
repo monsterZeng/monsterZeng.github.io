@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>lvalue and rvalue | peiji</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="icon" href="/first.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+    <meta name="description" content="Just playing around">
+    
+    <link rel="preload" href="/assets/css/0.styles.3670de44.css" as="style"><link rel="preload" href="/assets/js/app.8761549f.js" as="script"><link rel="preload" href="/assets/js/3.7abf9d82.js" as="script"><link rel="preload" href="/assets/js/1.3f67f674.js" as="script"><link rel="preload" href="/assets/js/16.f26ba4b6.js" as="script"><link rel="prefetch" href="/assets/js/10.11ebffe0.js"><link rel="prefetch" href="/assets/js/11.d58655ce.js"><link rel="prefetch" href="/assets/js/12.604fcf63.js"><link rel="prefetch" href="/assets/js/13.ceb46a52.js"><link rel="prefetch" href="/assets/js/14.5e3e7371.js"><link rel="prefetch" href="/assets/js/15.632278c2.js"><link rel="prefetch" href="/assets/js/17.ddc6eb8b.js"><link rel="prefetch" href="/assets/js/18.51e33f36.js"><link rel="prefetch" href="/assets/js/19.efa314f5.js"><link rel="prefetch" href="/assets/js/20.95558435.js"><link rel="prefetch" href="/assets/js/21.c06bcd43.js"><link rel="prefetch" href="/assets/js/22.e4fce297.js"><link rel="prefetch" href="/assets/js/23.c3488b5c.js"><link rel="prefetch" href="/assets/js/24.da3ed6eb.js"><link rel="prefetch" href="/assets/js/25.2f0b9092.js"><link rel="prefetch" href="/assets/js/26.a0fb29c4.js"><link rel="prefetch" href="/assets/js/27.6aba5b29.js"><link rel="prefetch" href="/assets/js/28.9cc7ea41.js"><link rel="prefetch" href="/assets/js/29.7c7d8797.js"><link rel="prefetch" href="/assets/js/30.b1446ea5.js"><link rel="prefetch" href="/assets/js/31.5dd332ad.js"><link rel="prefetch" href="/assets/js/32.b8edf858.js"><link rel="prefetch" href="/assets/js/33.1d69495d.js"><link rel="prefetch" href="/assets/js/34.1ba2a58d.js"><link rel="prefetch" href="/assets/js/35.3c4c5f84.js"><link rel="prefetch" href="/assets/js/36.cf653b61.js"><link rel="prefetch" href="/assets/js/37.abcb80dc.js"><link rel="prefetch" href="/assets/js/38.25c45d37.js"><link rel="prefetch" href="/assets/js/39.ac69179e.js"><link rel="prefetch" href="/assets/js/4.23562cf1.js"><link rel="prefetch" href="/assets/js/40.a99aa474.js"><link rel="prefetch" href="/assets/js/41.94d84870.js"><link rel="prefetch" href="/assets/js/42.1ffcdf3a.js"><link rel="prefetch" href="/assets/js/43.f68c260e.js"><link rel="prefetch" href="/assets/js/44.6348dd59.js"><link rel="prefetch" href="/assets/js/45.e1d944b7.js"><link rel="prefetch" href="/assets/js/46.a6b0bcb8.js"><link rel="prefetch" href="/assets/js/47.19dd8ae2.js"><link rel="prefetch" href="/assets/js/48.91f15bbd.js"><link rel="prefetch" href="/assets/js/49.ae387199.js"><link rel="prefetch" href="/assets/js/5.3cc29248.js"><link rel="prefetch" href="/assets/js/50.9b315d9a.js"><link rel="prefetch" href="/assets/js/6.08321c69.js"><link rel="prefetch" href="/assets/js/7.6d2e0911.js"><link rel="prefetch" href="/assets/js/8.d85bf6c7.js"><link rel="prefetch" href="/assets/js/9.64a167e6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3670de44.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-2d5f533b><div data-v-2d5f533b><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-2d5f533b data-v-2d5f533b><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-2d5f533b data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>peiji</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-2d5f533b><header class="navbar" data-v-2d5f533b><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">peiji</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-2d5f533b></div> <aside class="sidebar" data-v-2d5f533b><div class="personal-info-wrapper" data-v-ca798c94 data-v-2d5f533b><!----> <h3 class="name" data-v-ca798c94>
+    peiji
+  </h3> <div class="num" data-v-ca798c94><div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Article</h6></div> <div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Tag</h6></div></div> <hr data-v-ca798c94></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav> <ul class="sidebar-links"><li><a href="/C++/basic/" aria-current="page" class="sidebar-link">basic</a></li><li><a href="/C++/basic/lvalue and rvalue.html" class="active sidebar-link">lvalue and rvalue</a></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e></h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-2d5f533b><main class="page" style="padding-right:0;"><div class="page-title" style="display:none;"><h1 class="title">lvalue and rvalue</h1> <div data-v-3b7f5bdf><i class="iconfont reco-account" data-v-3b7f5bdf><span data-v-3b7f5bdf>peiji</span></i> <!----> <!----> <!----></div></div> <div class="theme-reco-content content__default" style="display:none;"><h1 id="lvalue-and-rvalue"><a href="#lvalue-and-rvalue" class="header-anchor">#</a> lvalue and rvalue</h1> <p>左值右值</p></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.8761549f.js" defer></script><script src="/assets/js/3.7abf9d82.js" defer></script><script src="/assets/js/1.3f67f674.js" defer></script><script src="/assets/js/16.f26ba4b6.js" defer></script>
+  </body>
+</html>

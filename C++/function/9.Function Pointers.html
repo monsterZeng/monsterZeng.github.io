@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Function Pointers | peiji</title>
+    <meta name="generator" content="VuePress 1.7.1">
+    <link rel="icon" href="/first.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+    <meta name="description" content="Just playing around">
+    
+    <link rel="preload" href="/assets/css/0.styles.3670de44.css" as="style"><link rel="preload" href="/assets/js/app.8761549f.js" as="script"><link rel="preload" href="/assets/js/3.7abf9d82.js" as="script"><link rel="preload" href="/assets/js/1.3f67f674.js" as="script"><link rel="preload" href="/assets/js/26.a0fb29c4.js" as="script"><link rel="prefetch" href="/assets/js/10.11ebffe0.js"><link rel="prefetch" href="/assets/js/11.d58655ce.js"><link rel="prefetch" href="/assets/js/12.604fcf63.js"><link rel="prefetch" href="/assets/js/13.ceb46a52.js"><link rel="prefetch" href="/assets/js/14.5e3e7371.js"><link rel="prefetch" href="/assets/js/15.632278c2.js"><link rel="prefetch" href="/assets/js/16.f26ba4b6.js"><link rel="prefetch" href="/assets/js/17.ddc6eb8b.js"><link rel="prefetch" href="/assets/js/18.51e33f36.js"><link rel="prefetch" href="/assets/js/19.efa314f5.js"><link rel="prefetch" href="/assets/js/20.95558435.js"><link rel="prefetch" href="/assets/js/21.c06bcd43.js"><link rel="prefetch" href="/assets/js/22.e4fce297.js"><link rel="prefetch" href="/assets/js/23.c3488b5c.js"><link rel="prefetch" href="/assets/js/24.da3ed6eb.js"><link rel="prefetch" href="/assets/js/25.2f0b9092.js"><link rel="prefetch" href="/assets/js/27.6aba5b29.js"><link rel="prefetch" href="/assets/js/28.9cc7ea41.js"><link rel="prefetch" href="/assets/js/29.7c7d8797.js"><link rel="prefetch" href="/assets/js/30.b1446ea5.js"><link rel="prefetch" href="/assets/js/31.5dd332ad.js"><link rel="prefetch" href="/assets/js/32.b8edf858.js"><link rel="prefetch" href="/assets/js/33.1d69495d.js"><link rel="prefetch" href="/assets/js/34.1ba2a58d.js"><link rel="prefetch" href="/assets/js/35.3c4c5f84.js"><link rel="prefetch" href="/assets/js/36.cf653b61.js"><link rel="prefetch" href="/assets/js/37.abcb80dc.js"><link rel="prefetch" href="/assets/js/38.25c45d37.js"><link rel="prefetch" href="/assets/js/39.ac69179e.js"><link rel="prefetch" href="/assets/js/4.23562cf1.js"><link rel="prefetch" href="/assets/js/40.a99aa474.js"><link rel="prefetch" href="/assets/js/41.94d84870.js"><link rel="prefetch" href="/assets/js/42.1ffcdf3a.js"><link rel="prefetch" href="/assets/js/43.f68c260e.js"><link rel="prefetch" href="/assets/js/44.6348dd59.js"><link rel="prefetch" href="/assets/js/45.e1d944b7.js"><link rel="prefetch" href="/assets/js/46.a6b0bcb8.js"><link rel="prefetch" href="/assets/js/47.19dd8ae2.js"><link rel="prefetch" href="/assets/js/48.91f15bbd.js"><link rel="prefetch" href="/assets/js/49.ae387199.js"><link rel="prefetch" href="/assets/js/5.3cc29248.js"><link rel="prefetch" href="/assets/js/50.9b315d9a.js"><link rel="prefetch" href="/assets/js/6.08321c69.js"><link rel="prefetch" href="/assets/js/7.6d2e0911.js"><link rel="prefetch" href="/assets/js/8.d85bf6c7.js"><link rel="prefetch" href="/assets/js/9.64a167e6.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.3670de44.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-2d5f533b><div data-v-2d5f533b><div id="loader-wrapper" class="loading-wrapper" data-v-d48f4d20 data-v-2d5f533b data-v-2d5f533b><div class="loader-main" data-v-d48f4d20><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div><div data-v-d48f4d20></div></div> <!----> <!----></div> <div class="password-shadow password-wrapper-out" style="display:none;" data-v-64685f0e data-v-2d5f533b data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e>peiji</h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div class="hide" data-v-2d5f533b><header class="navbar" data-v-2d5f533b><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">peiji</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-2d5f533b></div> <aside class="sidebar" data-v-2d5f533b><div class="personal-info-wrapper" data-v-ca798c94 data-v-2d5f533b><!----> <h3 class="name" data-v-ca798c94>
+    peiji
+  </h3> <div class="num" data-v-ca798c94><div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Article</h6></div> <div data-v-ca798c94><h3 data-v-ca798c94>1</h3> <h6 data-v-ca798c94>Tag</h6></div></div> <hr data-v-ca798c94></div> <nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link"><i class="iconfont undefined"></i>
+  Home
+</a></div><div class="nav-item"><a href="/python/" class="nav-link"><i class="iconfont undefined"></i>
+  python
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      C++
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/C++/" class="nav-link router-link-active"><i class="iconfont undefined"></i>
+  introduction
+</a></li><li class="dropdown-item"><!----> <a href="/C++/basic/" class="nav-link"><i class="iconfont undefined"></i>
+  basic
+</a></li><li class="dropdown-item"><!----> <a href="/C++/templates/" class="nav-link"><i class="iconfont undefined"></i>
+  templates
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont undefined"></i>
+      Information Extraction
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/Information Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Introduction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Named Entity Reconginition/" class="nav-link"><i class="iconfont undefined"></i>
+  Named Entity Reconginition
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Entity and Relationship Extraction/" class="nav-link"><i class="iconfont undefined"></i>
+  Entity Relationship Extraction
+</a></li><li class="dropdown-item"><!----> <a href="/Information Extraction/Semantic Role Labeling/" class="nav-link"><i class="iconfont undefined"></i>
+  Semantic Role Labeling
+</a></li></ul></div></div><div class="nav-item"><a href="/ML/" class="nav-link"><i class="iconfont undefined"></i>
+  ML
+</a></div> <!----></nav> <ul class="sidebar-links"><li><a href="/C++/function/1.Function parameters and arguments.html" class="sidebar-link">Function parameters and arguments</a></li><li><a href="/C++/function/2.Passing arguments by value.html" class="sidebar-link">Passing arguments by value</a></li><li><a href="/C++/function/3.Passing arguments by reference.html" class="sidebar-link">Passing arguments by reference</a></li><li><a href="/C++/function/4.Passing arguments by address.html" class="sidebar-link">Passing arguments by address</a></li><li><a href="/C++/function/5.Returning values by value, reference, and address.html" class="sidebar-link">Returning values by value, reference, and address</a></li><li><a href="/C++/function/6.Inline function.html" class="sidebar-link">Inline functions</a></li><li><a href="/C++/function/7.function overloading.html" class="sidebar-link">Function overloading</a></li><li><a href="/C++/function/8.Default arguments.html" class="sidebar-link">Default arguments</a></li><li><a href="/C++/function/9.Function Pointers.html" class="active sidebar-link">Function Pointers</a></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-64685f0e data-v-2d5f533b><h3 class="title" style="display:none;" data-v-64685f0e data-v-64685f0e></h3> <!----> <label id="box" class="inputBox" style="display:none;" data-v-64685f0e data-v-64685f0e><input type="password" value="" data-v-64685f0e> <span data-v-64685f0e>Konck! Knock!</span> <button data-v-64685f0e>OK</button></label> <div class="footer" style="display:none;" data-v-64685f0e data-v-64685f0e><span data-v-64685f0e><i class="iconfont reco-theme" data-v-64685f0e></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-64685f0e>vuePress-theme-reco</a></span> <span data-v-64685f0e><i class="iconfont reco-copyright" data-v-64685f0e></i> <a data-v-64685f0e><span data-v-64685f0e>peiji</span>
+            
+          <!---->
+          2021
+        </a></span></div></div> <div data-v-2d5f533b><main class="page" style="padding-right:0;"><div class="page-title" style="display:none;"><h1 class="title">Function Pointers</h1> <div data-v-3b7f5bdf><i class="iconfont reco-account" data-v-3b7f5bdf><span data-v-3b7f5bdf>peiji</span></i> <!----> <!----> <!----></div></div> <div class="theme-reco-content content__default" style="display:none;"><h1 id="function-pointers"><a href="#function-pointers" class="header-anchor">#</a> Function Pointers</h1> <blockquote><p>指针是一个变量，其中包含另一个变量的地址。函数指针相似，不同之处在于它们不是指向变量，而是指向函数！</p></blockquote> <p>​	考虑以下函数：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	标识符<code>foo</code>是函数的名称。但是函数是什么类型的？函数具有自己的左值函数类型-在这种情况下，该函数类型返回整数且不带参数。与变量非常相似，函数位于内存中的分配地址上。</p> <p>​	一个函数被调用时（通过<code>()</code>运算符），执行跳转到被调用函数的地址：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// code for foo starts at memory address 0x002717f0</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// jump to address 0x002717f0</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	在您的编程生涯的某个时候（如果还没有），您可能会犯一个简单的错误：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// code starts at memory address 0x002717f0</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> foo <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// we meant to call foo(), but instead we're printing foo itself!</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	我们无意中将函数foo直接发送到<code>std :: cout</code>，而不是调用函数<code>foo()</code>并打印返回值。在这种情况下会发生什么？</p> <p>​	在作者的机器上，则打印<code>0x002717f0</code>.</p> <p>​	但是它可能会在您的计算机上打印其他值（例如1），具体取决于编译器决定如何将函数指针转换为其他类型进行打印。如果您的机器没有打印该函数的地址，则可以通过将函数转换为空指针并打印以下内容来强制执行此操作：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token comment">// code starts at memory address 0x002717f0</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token keyword">reinterpret_cast</span><span class="token operator">&lt;</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token operator">&gt;</span><span class="token punctuation">(</span>foo<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// Tell C++ to interpret function foo as a void pointer</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	就像可以声明指向普通变量的非恒定指针一样，也可以声明指向函数的非恒定指针。在本课程的其余部分中，我们将研究这些函数指针及其用法。函数指针是一个相当高级的主题，仅寻找C ++基础知识的人员可以安全地跳过或略读本课程的其余部分。</p> <p><strong>Pointers to functions</strong></p> <p>​	创建非常量函数指针的语法是您在C ++中见过的最丑陋的事情之一：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">// fcnPtr is a pointer to a function that takes no arguments and returns an integer</span>
+<span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>​	在上面的代码段中，<code>fcnPtr</code>是指向没有参数且返回整数的函数的指针。 <code>fcnPtr</code>可以指向与此类型匹配的任何函数。</p> <p>​	出于优先原因，必须在<code>* fcnPtr</code>周围加上括号，因为<code>int *fcnPtr()</code>将被解释为名为<code>fcnPtr</code>的函数的前向声明，该函数不带参数并返回指向整数的指针。</p> <p>​	要创建<code>const</code>函数指针，<code>const</code>在星号之后：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token keyword">const</span> fcnPtr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>​	如果将<code>const</code>放在<code>int</code>之前，则表明所指向的函数将返回<code>const int</code>。</p> <p><strong>Assigning a function to a function pointer</strong></p> <p>​	可以使用函数初始化函数指针（并且可以为非const函数指针分配一个函数）。在上面的示例中，我们直接使用了foo，并将其转换为函数指针。与指向变量的指针一样，我们也可以使用＆foo获取指向foo的函数指针。为了与变量指针和成员函数指针保持一致（我们将在以后的课程中介绍），我们将使用＆foo语法，而不仅仅是foo。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">goo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">6</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token operator">&amp;</span>foo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// fcnPtr points to function foo</span>
+    fcnPtr <span class="token operator">=</span> <span class="token operator">&amp;</span>goo<span class="token punctuation">;</span> <span class="token comment">// fcnPtr now points to function goo</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	一个常见的错误就是：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code>fcnPtr <span class="token operator">=</span> <span class="token function">goo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>​	实际上，这会将调用<code>goo()</code>函数的返回值分配给<code>fcnPtr</code>，这不是我们想要的。我们希望为<code>fcnPtr</code>分配函数<code>goo</code>的地址，而不是函数<code>goo()</code>的返回值。因此，不需要括号。</p> <p>​	请注意，函数指针的类型（参数和返回类型）必须与函数的类型匹配。以下是一些示例：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">// function prototypes</span>
+<span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">double</span> <span class="token function">goo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">hoo</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+<span class="token comment">// function pointer assignments</span>
+<span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr1<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token operator">&amp;</span>foo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// okay</span>
+<span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr2<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token operator">&amp;</span>goo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// wrong -- return types don't match!</span>
+<span class="token keyword">double</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr4<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token operator">&amp;</span>goo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// okay</span>
+fcnPtr1 <span class="token operator">=</span> <span class="token operator">&amp;</span>hoo<span class="token punctuation">;</span> <span class="token comment">// wrong -- fcnPtr1 has no parameters, but hoo() does</span>
+<span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr3<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token operator">&amp;</span>hoo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// okay</span>
+</code></pre></div><p>​	与基本类型不同，C ++会在需要时将函数隐式转换为函数指针（因此您无需使用地址运算符（＆）来获取函数的地址）。但是，它不会将函数指针隐式转换为void指针，反之亦然。</p> <p><strong>Calling a function using a function pointer</strong></p> <p>​	您可以使用函数指针执行的另一项主要操作是使用它实际调用函数。有两种方法可以做到这一点。第一种是通过显式取消引用：</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token operator">&amp;</span>foo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// Initialize fcnPtr with function foo</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// call function foo(5) through fcnPtr.</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	第二种方法是通过隐式解引用:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">{</span> <span class="token operator">&amp;</span>foo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// Initialize fcnPtr with function foo</span>
+    <span class="token function">fcnPtr</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// call function foo(5) through fcnPtr.</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	如您所见，<font color="red">隐式解引用方法看起来就像一个普通的函数调用</font>——这正是您所期望的，因为普通的函数名是指向函数的指针! 然而，一些较老的编译器不支持隐式解引用方法，但所有现代编译器都应该支持。</p> <p>​	<font color="red">一个有趣的注意:通过函数指针调用的函数并不能使用默认参数</font>。默认形参在<strong>编译时解析</strong>(也就是说，如果不为默认形参提供实参，编译器在编译代码时为您替换一个实参)。然而，函数指针是在<strong>运行时解析的</strong>。因此，当使用函数指针调用函数时，无法解析默认形参。在这种情况下，必须显式地传入任何默认参数的值。</p> <p><strong>Passing functions as arguments to other functions</strong></p> <p>​	用函数指针做的最有用的事情之一是将一个函数作为参数传递给另一个函数。作为另一个函数的参数的函数有时被称为<strong>回调函数(callback function)</strong>。</p> <p>​	考虑这样一种情况，您正在编写一个函数来执行一个任务(例如对数组进行排序)，但您希望用户能够定义该任务的特定部分将如何执行(例如数组是按升序排序还是按降序排序)。让我们仔细研究一下这个问题，作为一个可以推广到其他类似问题的例子，它特别适用于排序。</p> <p>​	许多基于比较的排序算法都基于类似的概念:排序算法遍历一个数字列表，对数字对进行比较，并根据这些比较的结果对数字重新排序。因此，通过改变比较，我们可以改变算法排序的方式而不影响其余的排序代码。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;utility&gt;</span> <span class="token comment">// for std::swap</span></span>
+ 
+<span class="token keyword">void</span> <span class="token function">SelectionSort</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>array<span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Step through each element of the array</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> startIndex <span class="token operator">&lt;</span> <span class="token punctuation">(</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>startIndex<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// smallestIndex is the index of the smallest element we've encountered so far.</span>
+        <span class="token keyword">int</span> smallestIndex<span class="token punctuation">{</span> startIndex <span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+        <span class="token comment">// Look for smallest element remaining in the array (starting at startIndex+1)</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> currentIndex<span class="token punctuation">{</span> startIndex <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> currentIndex <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>currentIndex<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">// If the current element is smaller than our previously found smallest</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>array<span class="token punctuation">[</span>smallestIndex<span class="token punctuation">]</span> <span class="token operator">&gt;</span> array<span class="token punctuation">[</span>currentIndex<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">// COMPARISON DONE HERE</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment">// This is the new smallest number for this iteration</span>
+                smallestIndex <span class="token operator">=</span> currentIndex<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+ 
+        <span class="token comment">// Swap our start element with our smallest element</span>
+        std<span class="token operator">::</span><span class="token function">swap</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>startIndex<span class="token punctuation">]</span><span class="token punctuation">,</span> array<span class="token punctuation">[</span>smallestIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	现在，为了让调用者决定如何进行排序，我们将不使用我们自己硬编码的比较函数，而是允许调用者提供自己的排序函数!这是通过函数指针完成的。</p> <p>​	因为调用者的比较函数将比较两个整数并返回一个布尔值，指向这样一个函数的指针应该是这样的:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>comparisonFunc<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>​	因此，我们将允许调用者将指向其所需比较函数的指针作为第三个参数传递给排序例程，然后我们将使用调用者的函数来进行比较。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code> 
+<span class="token comment">// Note our user-defined comparison is the third parameter</span>
+<span class="token keyword">void</span> <span class="token function">selectionSort</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>array<span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token punctuation">,</span> <span class="token keyword">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>comparisonFcn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token comment">// Step through each element of the array</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> startIndex<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> startIndex <span class="token operator">&lt;</span> <span class="token punctuation">(</span>size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>startIndex<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">// bestIndex is the index of the smallest/largest element we've encountered so far.</span>
+        <span class="token keyword">int</span> bestIndex<span class="token punctuation">{</span> startIndex <span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+        <span class="token comment">// Look for smallest/largest element remaining in the array (starting at startIndex+1)</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> currentIndex<span class="token punctuation">{</span> startIndex <span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> currentIndex <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>currentIndex<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token comment">// If the current element is smaller/larger than our previously found smallest</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">comparisonFcn</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>bestIndex<span class="token punctuation">]</span><span class="token punctuation">,</span> array<span class="token punctuation">[</span>currentIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">// COMPARISON DONE HERE</span>
+            <span class="token punctuation">{</span>
+                <span class="token comment">// This is the new smallest/largest number for this iteration</span>
+                bestIndex <span class="token operator">=</span> currentIndex<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+ 
+        <span class="token comment">// Swap our start element with our smallest/largest element</span>
+        std<span class="token operator">::</span><span class="token function">swap</span><span class="token punctuation">(</span>array<span class="token punctuation">[</span>startIndex<span class="token punctuation">]</span><span class="token punctuation">,</span> array<span class="token punctuation">[</span>bestIndex<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token comment">// Here is a comparison function that sorts in ascending order</span>
+<span class="token comment">// (Note: it's exactly the same as the previous ascending() function)</span>
+<span class="token keyword">bool</span> <span class="token function">ascending</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> x <span class="token operator">&gt;</span> y<span class="token punctuation">;</span> <span class="token comment">// swap if the first element is greater than the second</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token comment">// Here is a comparison function that sorts in descending order</span>
+<span class="token keyword">bool</span> <span class="token function">descending</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> x <span class="token operator">&lt;</span> y<span class="token punctuation">;</span> <span class="token comment">// swap if the second element is greater than the first</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token comment">// This function prints out the values in the array</span>
+<span class="token keyword">void</span> <span class="token function">printArray</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>array<span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">{</span> <span class="token number">0</span> <span class="token punctuation">}</span><span class="token punctuation">;</span> index <span class="token operator">&lt;</span> size<span class="token punctuation">;</span> <span class="token operator">++</span>index<span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> array<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">&lt;&lt;</span> <span class="token string">' '</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">{</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// Sort the array in descending order using the descending() function</span>
+    <span class="token function">selectionSort</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> descending<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printArray</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// Sort the array in ascending order using the ascending() function</span>
+    <span class="token function">selectionSort</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> ascending<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printArray</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	这很酷吧?我们已经让调用者能够控制选择排序的工作方式。调用者甚至可以定义自己的“奇怪的”比较函数:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">bool</span> <span class="token function">evensFirst</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">// if x is even and y is odd, x goes first (no swap needed)</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token punctuation">(</span>y <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+ 
+	<span class="token comment">// if x is odd and y is even, y goes first (swap needed)</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token punctuation">(</span>x <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>y <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+ 
+        <span class="token comment">// otherwise sort in ascending order</span>
+	<span class="token keyword">return</span> <span class="token function">ascending</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">int</span> array<span class="token punctuation">[</span><span class="token number">9</span><span class="token punctuation">]</span><span class="token punctuation">{</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">4</span> <span class="token punctuation">}</span><span class="token punctuation">;</span>
+ 
+    <span class="token function">selectionSort</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> evensFirst<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//2 4 6 8 1 3 5 7 9</span>
+    <span class="token function">printArray</span><span class="token punctuation">(</span>array<span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	如您所见，在这种情况下使用函数指针提供了一种很好的方式，允许调用者将自己的功能“挂钩”到您以前编写和测试过的东西中，这有助于促进代码重用!以前，如果希望按降序排序一个数组，按升序排序另一个数组，则需要多个版本的排序例程。现在，您可以有一个版本，可以按照调用者希望的方式进行排序!</p> <p>​	<font color="red">注意:如果函数形参属于函数类型，它将被转换为指向该函数类型的指针。这意味着</font></p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">selectionSort</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>array<span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token punctuation">,</span> <span class="token keyword">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>comparisonFcn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre></div><p>​	可以等价地写成:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">void</span> <span class="token function">selectionSort</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>array<span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token punctuation">,</span> <span class="token keyword">bool</span> <span class="token function">comparisonFcn</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre></div><p>​	这只适用于函数参数，而不是独立的函数指针，因此用途有限。</p> <p><strong>Providing default functions</strong></p> <p>​	如果您打算允许调用者将函数作为参数传入，那么为调用者提供一些方便使用的标准函数通常是很有用的。例如，在上面的选择排序示例中，提供升序()和降序()函数以及<code>selectionSort()</code>函数将使调用者的工作更简单，因为他们不必每次想使用它们时都重写升序()或降序()。</p> <p>​	你甚至可以将其中一个设置为默认参数:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token comment">// Default the sort to ascending sort</span>
+<span class="token keyword">void</span> <span class="token function">selectionSort</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>array<span class="token punctuation">,</span> <span class="token keyword">int</span> size<span class="token punctuation">,</span> <span class="token keyword">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>comparisonFcn<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span> <span class="token operator">=</span> ascending<span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>​	在这种情况下，只要用户正常调用<code>selectionSort</code>(不是通过函数指针)，<code>comparisonFcn</code>参数默认为ascending。</p> <p><strong>Making function pointers prettier with type aliases</strong></p> <p>​	让我们面对它——指向函数的指针的语法很丑陋。然而，类型别名可以使函数指针看起来更像常规变量:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">using</span> ValidateFunction <span class="token operator">=</span> <span class="token keyword">bool</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>​	这定义了一个名为<code>ValidateFunction</code>的类型别名，它是一个指向函数的指针，该函数接受两个int类型并返回bool类型。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">bool</span> <span class="token function">validate</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>fcnPtr<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// ugly</span>
+<span class="token keyword">bool</span> <span class="token function">validate</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> ValidateFunction pfcn<span class="token punctuation">)</span> <span class="token comment">// clean</span>
+</code></pre></div><p>**Using <code>std::function</code> **</p> <p>​	定义和存储函数指针的另一种方法是使用<code>std::function</code>，它是标准库<code>&lt;functional&gt;</code>头文件的一部分。要使用此方法定义函数指针，请声明一个<code>std::function</code>对象，如下所示:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;functional&gt;</span></span>
+<span class="token keyword">bool</span> <span class="token function">validate</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> std<span class="token operator">::</span>function<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token operator">&gt;</span> fcn<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// std::function method that returns a bool and takes two int parameters</span>
+</code></pre></div><p>​	如您所见，返回类型和参数都在尖括号内，参数则在圆括号内。如果没有参数，括号可以为空。虽然这读起来有点冗长，但它也更清晰，因为它清楚地说明了预期的返回类型和参数是什么(而typedef方法使它们变得模糊)。</p> <p>​	用std::函数更新我们前面的例子:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;functional&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">5</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">goo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    <span class="token keyword">return</span> <span class="token number">6</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+    std<span class="token operator">::</span>function<span class="token operator">&lt;</span><span class="token keyword">int</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">&gt;</span> fcnPtr<span class="token punctuation">{</span> <span class="token operator">&amp;</span>foo <span class="token punctuation">}</span><span class="token punctuation">;</span> <span class="token comment">// declare function pointer that returns an int and takes no parameters</span>
+    fcnPtr <span class="token operator">=</span> <span class="token operator">&amp;</span>goo<span class="token punctuation">;</span> <span class="token comment">// fcnPtr now points to function goo</span>
+    std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">fcnPtr</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span> <span class="token comment">// call the function just like normal</span>
+ 
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	注意，你也可以输入别名<code>std::function</code>:</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token keyword">using</span> ValidateFunctionRaw <span class="token operator">=</span> <span class="token keyword">bool</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// type alias to raw function pointer</span>
+<span class="token keyword">using</span> ValidateFunction <span class="token operator">=</span> std<span class="token operator">::</span>function<span class="token operator">&lt;</span><span class="token keyword">bool</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token operator">&gt;</span><span class="token punctuation">;</span> <span class="token comment">// type alias to std::function</span>
+</code></pre></div><p><strong>Type inference for function pointers</strong></p> <p>​	就像<code>auto</code>关键字可以用来推断普通变量的类型一样，<code>auto</code>关键字也可以推断函数指针的类型。</p> <div class="language-cpp extra-class"><pre class="language-cpp"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream&gt;</span></span>
+ 
+<span class="token keyword">int</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">return</span> x<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+ 
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">auto</span> fcnPtr<span class="token punctuation">{</span> <span class="token operator">&amp;</span>foo <span class="token punctuation">}</span><span class="token punctuation">;</span>
+	std<span class="token operator">::</span>cout <span class="token operator">&lt;&lt;</span> <span class="token function">fcnPtr</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token string">'\n'</span><span class="token punctuation">;</span>
+ 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>​	这与您预期的完全一样，而且语法非常清晰。当然，缺点是关于函数的形参类型和返回类型的所有细节都是隐藏的，因此在调用函数或使用其返回值时很容易出错。</p> <p><strong>Conclusion</strong></p> <p>​	函数指针主要用于在数组(或其他结构)中存储函数，或需要将函数传递给另一个函数时。因为声明函数指针的本机语法很难看而且容易出错，所以我们建议使用<code>std::function</code>。在函数指针类型只使用一次的地方(例如单个参数或返回值)，可以直接使用<code>std::function</code>。在多次使用函数指针类型的地方，<code>std::</code>函数的类型别名是更好的选择(防止重复使用)。</p></div> <footer class="page-edit" style="display:none;"><!----> <!----></footer> <!----> <!----> <!----></main> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/assets/js/app.8761549f.js" defer></script><script src="/assets/js/3.7abf9d82.js" defer></script><script src="/assets/js/1.3f67f674.js" defer></script><script src="/assets/js/26.a0fb29c4.js" defer></script>
+  </body>
+</html>
