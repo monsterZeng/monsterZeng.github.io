@@ -2,22 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>monsterzeng.github.io/</loc>
-    <lastmod>2023-07-23T11:32:09+08:00</lastmod>
-  </url><url>
-    <loc>monsterzeng.github.io/posts/</loc>
-    <lastmod>2023-07-23T11:32:09+08:00</lastmod>
-  </url><url>
-    <loc>monsterzeng.github.io/posts/probability/</loc>
-    <lastmod>2023-07-23T11:32:09+08:00</lastmod>
-  </url><url>
-    <loc>monsterzeng.github.io/posts/calculus/</loc>
-    <lastmod>2023-07-23T11:17:19+08:00</lastmod>
-  </url><url>
-    <loc>monsterzeng.github.io/posts/linear-algebra/</loc>
-    <lastmod>2023-07-23T11:15:04+08:00</lastmod>
-  </url><url>
     <loc>monsterzeng.github.io/categories/</loc>
+  </url><url>
+    <loc>monsterzeng.github.io/</loc>
   </url><url>
     <loc>monsterzeng.github.io/tags/</loc>
   </url>

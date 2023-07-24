@@ -5,34 +5,6 @@
     <link>monsterzeng.github.io/</link>
     <description>Recent content on Peiji&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sun, 23 Jul 2023 11:32:09 +0800</lastBuildDate><atom:link href="monsterzeng.github.io/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Probability</title>
-      <link>monsterzeng.github.io/posts/probability/</link>
-      <pubDate>Sun, 23 Jul 2023 11:32:09 +0800</pubDate>
-      
-      <guid>monsterzeng.github.io/posts/probability/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Calculus</title>
-      <link>monsterzeng.github.io/posts/calculus/</link>
-      <pubDate>Sun, 23 Jul 2023 11:17:19 +0800</pubDate>
-      
-      <guid>monsterzeng.github.io/posts/calculus/</guid>
-      <description>$$ \sum_{i=0}^{n}i=\frac{n(n+1)}{2} $$</description>
-    </item>
-    
-    <item>
-      <title>Linear Algebra</title>
-      <link>monsterzeng.github.io/posts/linear-algebra/</link>
-      <pubDate>Sun, 23 Jul 2023 11:15:04 +0800</pubDate>
-      
-      <guid>monsterzeng.github.io/posts/linear-algebra/</guid>
-      <description></description>
-    </item>
-    
+    <language>en-us</language><atom:link href="monsterzeng.github.io/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
