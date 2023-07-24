@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Peiji&#39;s Blog</title>
-    <link>monsterzeng.github.io/</link>
-    <description>Recent content on Peiji&#39;s Blog</description>
+    <title>Posts on Peiji&#39;s Blog</title>
+    <link>monsterzeng.github.io/posts/</link>
+    <description>Recent content in Posts on Peiji&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Jul 2023 11:32:09 +0800</lastBuildDate><atom:link href="monsterzeng.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 23 Jul 2023 11:32:09 +0800</lastBuildDate><atom:link href="monsterzeng.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Probability</title>
       <link>monsterzeng.github.io/posts/probability/</link>
