@@ -6,6 +6,24 @@ theme = 'paper'
     # misc
     disableHLJS = true                        # disable highlight.js
     monoDarkIcon = true                       # show monochrome dark mode icon
-    gravatarCdn = 'GRAVATAR_CDN_LINK'         # e.g. 'https://cdn.v2ex.com/gravatar/'
-    graphCommentId = "YOUR_GRAPH_COMMENT_ID"  # use graph comment (disqus alternative)
+    comments =true
     math = true                               # enable KaTex math typesetting globally  
+
+[params.page.comment.giscus]   
+  # 你可以参考官方文档来使用下列配置   
+  enable = true   
+  repo = "monsterZeng/comment"   
+  repoId = "MDEwOlJlcG9zaXRvcnkzOTI2NzYzMzE="   
+  category = "Announcements"   
+  categoryId = "DIC_kwDOF2fD684CYHe->"   
+
+  # 为空时自动适配当前主题 i18n 配置   
+  lang = "zh-CN"   
+  mapping = "<your_mapping>"   
+  # <your_mapping> 对应官网的 data-mapping   
+  reactionsEnabled = "1"   
+  emitMetadata = "0"   
+  inputPosition = "bottom"   
+  lazyLoading = false   
+  lightTheme = "light"   
+  darkTheme = "dark_dimmed"
