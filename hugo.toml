@@ -20,7 +20,6 @@ theme = 'paper'
   # 为空时自动适配当前主题 i18n 配置   
   lang = "zh-CN"   
   mapping = "pathname"   
-  # <your_mapping> 对应官网的 data-mapping   
   reactionsEnabled = "1"   
   emitMetadata = "0"   
   inputPosition = "bottom"   
