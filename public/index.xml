@@ -13,11 +13,9 @@
       <link>https://example.org/posts/introduction-of-wav2vec/</link>
       <pubDate>Sat, 22 Mar 2025 21:25:33 +0800</pubDate>
       <guid>https://example.org/posts/introduction-of-wav2vec/</guid>
-      <description>&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;import&lt;/span&gt; torch
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;$\sum_{i=0}^{n}n = \frac{n(n+1)}{2}$
-$$
-\sum_{i=0}^{n}n = \frac{n(n+1)}{2} \tag{1}
-$$&lt;/p&gt;</description>
+      <description>&lt;h2 id=&#34;wav2vec-unsupervised-pre-training-for-speech-recognition&#34;&gt;WAV2VEC: UNSUPERVISED PRE-TRAINING FOR SPEECH RECOGNITION&lt;/h2&gt;
+&lt;p&gt;链接：https://arxiv.org/pdf/1904.05862
+&lt;img loading=&#34;lazy&#34; src=&#34;https://example.org/static/images/Wav2Vec/image.png&#34;&gt;&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
