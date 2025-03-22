@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>MonsterZeng Site</title>
-    <link>http://localhost:1313/</link>
+    <link>https://example.org/</link>
     <description>Recent content on MonsterZeng Site</description>
     <generator>Hugo -- 0.145.0</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 22 Mar 2025 21:25:33 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Introduction of Wav2vec</title>
-      <link>http://localhost:1313/posts/introduction-of-wav2vec/</link>
+      <link>https://example.org/posts/introduction-of-wav2vec/</link>
       <pubDate>Sat, 22 Mar 2025 21:25:33 +0800</pubDate>
-      <guid>http://localhost:1313/posts/introduction-of-wav2vec/</guid>
+      <guid>https://example.org/posts/introduction-of-wav2vec/</guid>
       <description></description>
     </item>
   </channel>
