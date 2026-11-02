@@ -1,0 +1,2696 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/papers/ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        <link rel="prev" href="../Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+        <link rel="next" href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>ELLSA 2 - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ELLSA 2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1、§2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-figure-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、方法（§3，总览见 Figure 1）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、方法（§3，总览见 Figure 1）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-31-a1a2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 流式、对话感知的手势-表情生成器（§3.1，附录 A.1–A.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-31-a1-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 嘴部子空间分解（§3.1 末段，附录 A.1，式 (1)）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-32-a3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 接入全双工主干：隐状态条件化（§3.2，附录 A.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-33-a4a5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 语义调用与模板引导（§3.3，附录 A.4–A.5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-34-a6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 多模态课程训练（§3.4，附录 A.6）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-figure-2-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、数据（§4.1，流程见 Figure 2，细节见 附录 B）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、数据（§4.1，流程见 Figure 2，细节见 附录 B）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-3401-81-b1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 说话人级筛选：3,401 人里只留 81 人（附录 B.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-b2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 面部监督（附录 B.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-b3-table-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 语义模板库（附录 B.3，漏斗见 Table 7）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-b4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 人工核验测试集（附录 B.4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、评测指标（§4.2，细节见 附录 C）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、评测指标（§4.2，细节见 附录 C）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 语音
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-mllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 手势：两个运动学指标 + 两个 MLLM 指标
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 表情
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、实验结果（§5）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、实验结果（§5）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-salmonn-omni-table-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 语音交互：基本保住了 SALMONN-omni 的水平（Table 1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-table-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 手势（Table 2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-mllm-table-3-table-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 MLLM 评委与人工评测的一致性（Table 3，细节见 Table 10）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-table-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.4 表情（Table 4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、存疑与不一致之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、与对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1、§2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-figure-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、方法（§3，总览见 Figure 1）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、方法（§3，总览见 Figure 1）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-31-a1a2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 流式、对话感知的手势-表情生成器（§3.1，附录 A.1–A.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-31-a1-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 嘴部子空间分解（§3.1 末段，附录 A.1，式 (1)）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-32-a3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 接入全双工主干：隐状态条件化（§3.2，附录 A.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-33-a4a5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 语义调用与模板引导（§3.3，附录 A.4–A.5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-34-a6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 多模态课程训练（§3.4，附录 A.6）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#41-figure-2-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、数据（§4.1，流程见 Figure 2，细节见 附录 B）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、数据（§4.1，流程见 Figure 2，细节见 附录 B）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-3401-81-b1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 说话人级筛选：3,401 人里只留 81 人（附录 B.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-b2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 面部监督（附录 B.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-b3-table-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 语义模板库（附录 B.3，漏斗见 Table 7）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-b4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 人工核验测试集（附录 B.4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、评测指标（§4.2，细节见 附录 C）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、评测指标（§4.2，细节见 附录 C）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 语音
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-mllm" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 手势：两个运动学指标 + 两个 MLLM 指标
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 表情
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、实验结果（§5）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、实验结果（§5）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-salmonn-omni-table-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 语音交互：基本保住了 SALMONN-omni 的水平（Table 1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-table-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 手势（Table 2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-mllm-table-3-table-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 MLLM 评委与人工评测的一致性（Table 3，细节见 Table 10）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-table-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.4 表情（Table 4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、存疑与不一致之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、与对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    全双工语音对话
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="ellsa-2">ELLSA 2：语音、手势、表情一体的全双工对话模型 —— 论文总结<a class="headerlink" href="#ellsa-2" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>原文</strong>：<a href="https://arxiv.org/html/2610.21452v1">Full-Duplex Interaction with Speech, Expressions and Gestures</a>（arXiv:2610.21452v1，eess.AS，2026-10-15，37 页 5 图）
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2610.21452v1">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21452v1">PDF</a> ｜ <a href="https://arxiv.org/html/2610.21452v1">HTML 全文</a> ｜ <a href="https://arxiv.org/src/2610.21452v1">TeX 源码</a> ｜ <a href="https://doi.org/10.48550/arXiv.2610.21452">DOI</a>
+<strong>作者</strong>：Siyin Wang、Wenyi Yu、Terumi Chiba、Xianzhao Chen、Xiaohai Tian、Jun Zhang、Lu Lu、Chao Zhang*（*通讯作者）
+<strong>机构</strong>：清华大学电子系（张超组，即 SALMONN 团队）、字节跳动
+<strong>开源</strong>：<a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">GitHub: bytedance/SALMONN 的 ELLSA2 分支</a>（Apache-2.0）｜ <a href="https://huggingface.co/tsinghua-ee/ELLSA2">HF 模型 tsinghua-ee/ELLSA2</a> ｜ <a href="https://huggingface.co/datasets/tsinghua-ee/ELLSA2_data">HF 数据 tsinghua-ee/ELLSA2_data</a>
+<strong>开源范围（2026-11-02 查看）</strong>：只放出了<strong>独立的手势-表情生成器</strong>（standalone generator）、数据筛选与评测流水线、138 条人工核验测试集。完整的 10.78B ELLSA 2（含对话主干、语音合成器、语义调用头）<strong>没有开源</strong>，论文说“录用后发布”。
+<strong>名字</strong>：ELLSA = <em>Expressive LLM that Listens, Speaks, and Acts</em>。上一代 ELLSA（<a href="https://arxiv.org/search/?query=End-to-end+listen%2C+look%2C+speak+and+act&amp;searchtype=title">End-to-end listen, look, speak and act</a>，ICLR 2026）做的是视觉感知和机械臂操作，这一代转向手势和表情。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一句话概括<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>在 <a href="https://arxiv.org/search/?query=SALMONN-omni&amp;searchtype=title">SALMONN-omni</a> 全双工语音对话模型上，<strong>外挂一个 0.5B 的自回归手势-表情生成器</strong>。它每 0.8 秒读一次“我在说的话”（来自语音合成器的隐状态）和“对方在说的话”（来自 LLM 主干的隐状态），输出上半身、双手、面部、嘴部共 18 路 RVQ 码。模型不说话时也一直在生成，所以能做点头、微笑这类倾听反应。另外，主干上挂了一个<strong>语义调用头</strong>，判断“此刻要不要做一个有明确含义的手势”（比如说“房子很大”时张开双手）；一旦判定要做，就从 3,227 条模板库里取一条示范动作，插进生成序列做引导。语音能力基本保持 SALMONN-omni 的水平，手势和表情指标超过级联基线，模板引导把人工语义分从 2.014 提到 2.711。</p>
+<hr />
+<h2 id="12">二、要解决的问题（<a href="https://arxiv.org/html/2610.21452v1#S1">§1</a>、<a href="https://arxiv.org/html/2610.21452v1#S2">§2</a>）<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>人面对面交流时，说话人会用手比划大小，听话人会点头、挑眉，这些行为本身就承载意义，也在组织对话节奏。作者的观点是：<strong>非语言行为应当是对话过程的一部分，而不是语音生成完之后再贴上去的动画。</strong></p>
+<p>现有工作分属两条线，作者认为都不够：</p>
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>代表</th>
+<th>不足</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全双工语音模型</td>
+<td>双模型“监听-生成”式的 <a href="https://arxiv.org/abs/2501.01957">VITA-1.5</a>、<a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a>；连续生成式的 <a href="https://arxiv.org/abs/2410.00037">Moshi</a>、<a href="https://arxiv.org/search/?query=PersonaPlex&amp;searchtype=title">PersonaPlex</a>；显式对话状态预测的 <a href="https://arxiv.org/search/?query=SALMONN-omni&amp;searchtype=title">SALMONN-omni</a></td>
+<td>只输出语音</td>
+</tr>
+<tr>
+<td>语音驱动手势/表情</td>
+<td>自回归的 <a href="https://arxiv.org/abs/2203.05297">BEAT</a>、<a href="https://arxiv.org/abs/2401.00374">EMAGE</a>；扩散的 <a href="https://arxiv.org/search/?query=DiffSHEG&amp;searchtype=title">DiffSHEG</a>；流匹配的 <a href="https://arxiv.org/search/?query=GestureLSM&amp;searchtype=title">GestureLSM</a>；双人对话的 <a href="https://arxiv.org/search/?query=DiffuGesture&amp;searchtype=title">DiffuGesture</a>、<a href="https://arxiv.org/abs/2506.22554">Seamless Interaction</a>、<a href="https://arxiv.org/search/?query=DyaDiT&amp;searchtype=title">DyaDiT</a>；表情方向的 <a href="https://arxiv.org/search/?query=DualTalk+dual-speaker&amp;searchtype=title">DualTalk</a>、<a href="https://arxiv.org/search/?query=UniLS+listening+speaking&amp;searchtype=title">UniLS</a>、<a href="https://arxiv.org/abs/2606.30145">FacePlex</a></td>
+<td>输入是“已经给定的语音”，不参与对话决策；语义手势（有明确含义的手势）很难学</td>
+</tr>
+<tr>
+<td>两者结合的早期尝试</td>
+<td><a href="https://arxiv.org/search/?query=ViBES+behaviorally-intelligent&amp;searchtype=title">ViBES</a>（多任务分开支持）、<a href="https://arxiv.org/search/?query=MIBURI+interactive+gesture&amp;searchtype=title">MIBURI</a> 和 <a href="https://arxiv.org/abs/2606.03874">DyaPlex</a>（基于<strong>冻结的</strong>语音交互模型表征生成手势）</td>
+<td>没有联合优化</td>
+</tr>
+</tbody>
+</table>
+<p>ELLSA 2 的定位是：<strong>第一个把语音、手势、表情端到端联合优化的全双工对话模型</strong>。作者强调，真正的问题不在于多加几种输出模态，而在于<strong>怎样让对话理解来协调这些模态</strong>：倾听反应需要理解对方说的内容；语义手势需要判断某个动作是否适合当前要说的话。</p>
+<hr />
+<h2 id="3-figure-1">三、方法（<a href="https://arxiv.org/html/2610.21452v1#S3">§3</a>，总览见 <a href="https://arxiv.org/html/2610.21452v1#S3.F1">Figure 1</a>）<a class="headerlink" href="#3-figure-1" title="Permanent link">&para;</a></h2>
+<p><img alt="Figure 1 ELLSA 2 总览" src="https://arxiv.org/html/2610.21452v1/seg_1.png" /></p>
+<p><em><a href="https://arxiv.org/html/2610.21452v1#S3.F1">Figure 1</a>：手势-表情合成器读取用户语音和模型语音两路隐状态，每 800 ms 自回归生成一组离散手势与表情码；支持自由生成和带语义模板的引导生成两种模式。</em></p>
+<p>整体数据流可以画成下面这样（我根据 <a href="https://arxiv.org/html/2610.21452v1#S3.SS2">§3.2</a> 和 <a href="https://arxiv.org/html/2610.21452v1#A1.SS3">附录 A.3</a> 整理）：</p>
+<pre class="mermaid"><code>flowchart LR
+    U[用户语音] --&gt; ENC[流式语音编码器&lt;br/&gt;12.5 Hz]
+    ENC --&gt; LLM[LLM 主干 + LoRA&lt;br/&gt;SALMONN-omni, 80 ms/步]
+    LLM --&gt;|文本 token / &amp;lt;silence&amp;gt;| TTS[流式语音合成器&lt;br/&gt;每组 8 个文本 token]
+    TTS --&gt; OUT[模型语音]
+    LLM --&gt;|倾听流：末层隐状态| GEN
+    TTS --&gt;|说话流：末层隐状态&lt;br/&gt;静默时换成可学习空向量| GEN
+    U --&gt;|冻结的 SPEAR 声学特征| GEN
+    OUT --&gt;|冻结的 SPEAR 声学特征| GEN
+    LLM --&gt;|第 16/20/24 层| CALL[语义调用头&lt;br/&gt;sigmoid]
+    CALL --&gt;|p ≥ τ| LIB[(模板库&lt;br/&gt;3,227 条)]
+    LIB --&gt;|模板 token 插入序列| GEN
+    GEN[手势-表情生成器&lt;br/&gt;Qwen2.5-0.5B, 每 0.8 s] --&gt; CODE[18 路 RVQ 码&lt;br/&gt;上身6 手6 脸4 嘴2]
+    CODE --&gt; DEC[RVQ-VAE 解码&lt;br/&gt;SMPL-H + FLAME, 30 Hz]</code></pre>
+<h3 id="31-31-a1a2">3.1 流式、对话感知的手势-表情生成器（<a href="https://arxiv.org/html/2610.21452v1#S3.SS1">§3.1</a>，<a href="https://arxiv.org/html/2610.21452v1#A1.SS1">附录 A.1–A.2</a>）<a class="headerlink" href="#31-31-a1a2" title="Permanent link">&para;</a></h3>
+<p>**“对话感知”<strong>指生成时同时看模型自己的语音和对方的语音；</strong>“流式”**指可以在线逐块生成，满足实时交互的延迟要求。两者都通过“按块交错的自回归语言建模”实现：</p>
+<ul>
+<li><strong>块长 0.8 s</strong>。每块内的序列顺序是：说话音频 → 倾听音频 → 手势/表情 token。因果注意力天然支持流式推理。</li>
+<li><strong>动作表示</strong>：身体用 <a href="https://mano.is.tue.mpg.de/">SMPL-H</a>，脸用 <a href="https://flame.is.tue.mpg.de/">FLAME</a>。目标拆成上半身、双手、面部三部分，各自用一个区域专用的 RVQ-VAE（残差向量量化，参见 <a href="https://arxiv.org/abs/2203.01941">Lee et al. 2022</a>）编码。<strong>下半身不建模</strong>，因为视频里经常看不到，监督不可靠（沿用 <a href="https://arxiv.org/search/?query=DyaDiT&amp;searchtype=title">DyaDiT</a> 的观察）。</li>
+<li><strong>帧率对齐</strong>：动作原始 30 Hz，RVQ-VAE 编码器下采样 4 倍到 7.5 Hz；语音表征是 12.5 Hz。</li>
+</ul>
+<p>每个 0.8 s 块的 token 预算如下：</p>
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>每块数量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>说话语音 embedding</td>
+<td>10</td>
+<td>12.5 Hz × 0.8 s</td>
+</tr>
+<tr>
+<td>倾听语音 embedding</td>
+<td>10</td>
+<td>同上</td>
+</tr>
+<tr>
+<td>动作潜变量步</td>
+<td>6</td>
+<td>7.5 Hz × 0.8 s，对应 24 帧原始动作</td>
+</tr>
+<tr>
+<td>每个潜变量步的码本索引</td>
+<td>18</td>
+<td>上半身 6 + 双手 6 + 非嘴部表情 4 + 嘴部表情 2</td>
+</tr>
+</tbody>
+</table>
+<p>18 路码本<strong>不是</strong>逐层自回归生成的（这点和 <a href="https://arxiv.org/abs/2410.00037">Moshi</a> 的 Depth Transformer 不同）。18 路码本的 embedding 加权求和后作为一个时间位置输入，再由 18 个独立的分类头从同一个隐状态<strong>并行</strong>预测。块内的生成概率是（<a href="https://arxiv.org/html/2610.21452v1#A1.E3">式 (3)</a>）：</p>
+<div class="arithmatex">\[
+p(z_k \mid z_{&lt;k}, c_{\le k}) = \prod_{j=1}^{6} \prod_{q=1}^{18} p_\theta\!\left(z_{k,j}^{(q)} \mid z_{&lt;k},\, z_{k,&lt;j},\, c_{\le k}\right)
+\]</div>
+<p>其中 <span class="arithmatex">\(k\)</span> 是第 <span class="arithmatex">\(k\)</span> 个 0.8 s 区间 <span class="arithmatex">\(I_k=[k\Delta,(k+1)\Delta)\)</span>，<span class="arithmatex">\(\Delta=0.8\)</span> s；<span class="arithmatex">\(j\)</span> 是区间内第 <span class="arithmatex">\(j\)</span> 个潜变量步；<span class="arithmatex">\(q\)</span> 是码本编号；<span class="arithmatex">\(c_k\)</span> 是该区间的说话与倾听条件。注意 <span class="arithmatex">\(q\)</span> 的连乘只是写法，实际上 18 个分量在给定隐状态后条件独立。</p>
+<p>其他关键设置：</p>
+<ul>
+<li><strong>上下文窗口 20 s</strong>。缓存刷新时保留最后 3 个块作为历史，保证动作连续。训练时生成器上下文同样封顶 20 s，用来限制缓存增长（<a href="https://arxiv.org/html/2610.21452v1#A1.SS3">附录 A.3</a>）。</li>
+<li><strong>生成器结构</strong>（<a href="https://arxiv.org/html/2610.21452v1#A1.SS7">附录 A.7</a>）：从 <a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct</a> 初始化，24 层，隐藏维 896，14 个 query 头、2 个 KV 头，FFN 4,864；18 套独立 embedding 和输出头，每套词表 2,048。</li>
+<li><strong>说话人风格</strong>：用一段 gesture prompt（发布代码里是 612 帧，约 20 s 的参考动作）提供风格。</li>
+<li><strong>RVQ 分词器</strong>（<a href="https://arxiv.org/html/2610.21452v1#A1.SS1">附录 A.1</a>）：每个码本 2,048 项，码维 512，卷积宽 512；两级步长 2 的时间下采样；残差块深 6，膨胀增长率 3，ReLU；EMA 衰减 0.99，量化器 dropout 0.2。上半身输入是 13 个 SMPL-H 关节的 6D 旋转（78 维），双手 2×15 关节（180 维），面部接口 108 维（100 个表情系数 + 3 个头部姿态 + 1 个下颌张开 + 4 个眼球姿态）。头部朝向不由面部分词器管，而是由身体前向运动学给出。</li>
+</ul>
+<p>发布代码里，18 路码本的 embedding 是这样加权求和的（摘自 <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/modeling_ellsa2.py"><code>code/modeling_ellsa2.py</code></a> 的 <code>_motion_ids_to_embeds</code>，原文照录，仅省略开头的参数检查）：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">_motion_ids_to_embeds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motion_token_ids</span><span class="p">):</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">    </span><span class="sd">"""Sum weighted RVQ embeddings; negative IDs contribute zero."""</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="n">motion_embeds</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">for</span> <span class="n">level</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">num_motion_codebooks</span><span class="p">):</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="n">level_ids</span> <span class="o">=</span> <span class="n">motion_token_ids</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">level</span><span class="p">]</span><span class="o">.</span><span class="n">clamp</span><span class="p">(</span><span class="nb">min</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">motion_vocab_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">invalid_mask</span> <span class="o">=</span> <span class="n">motion_token_ids</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">level</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">level_embeds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_embeds</span><span class="p">[</span><span class="n">level</span><span class="p">](</span><span class="n">level_ids</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="c1"># Mask on-device: testing .any() here would synchronize every codebook.</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="n">level_embeds</span> <span class="o">=</span> <span class="n">level_embeds</span><span class="o">.</span><span class="n">masked_fill</span><span class="p">(</span><span class="n">invalid_mask</span><span class="o">.</span><span class="n">unsqueeze</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">)</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="n">motion_embeds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">level_embeds</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_embed_weights</span><span class="p">[</span><span class="n">level</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">level_embeds</span><span class="o">.</span><span class="n">dtype</span><span class="p">))</span>
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">motion_embeds</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+</span></code></pre></div>
+<h3 id="32-31-a1-1">3.2 嘴部子空间分解（<a href="https://arxiv.org/html/2610.21452v1#S3.SS1">§3.1</a> 末段，<a href="https://arxiv.org/html/2610.21452v1#A1.SS1">附录 A.1</a>，<a href="https://arxiv.org/html/2610.21452v1#A1.E1">式 (1)</a>）<a class="headerlink" href="#32-31-a1-1" title="Permanent link">&para;</a></h3>
+<p>面对面交流时口型最容易被看出问题，所以作者把嘴部运动从其他面部动态里单独拆出来建模。做法是：设 <span class="arithmatex">\(\boldsymbol{\psi}\in\mathbb{R}^{100}\)</span> 为标准化后的 FLAME 表情系数，<span class="arithmatex">\(B\in\mathbb{R}^{100\times 8}\)</span> 是一组正交的“嘴部基”，则</p>
+<div class="arithmatex">\[
+\boldsymbol{\psi}_{\mathrm{mouth}} = B^{\top}\boldsymbol{\psi}, \qquad \boldsymbol{\psi}_{\mathrm{other}} = (I - BB^{\top})\,\boldsymbol{\psi}
+\]</div>
+<p>嘴部基 <span class="arithmatex">\(B\)</span> <strong>由几何构造，而不是对测试表情做 PCA</strong>：取 SMPL-X 网格上支撑嘴部关键点的三角形所涉及的 51 个顶点，构造“表情系数 → 顶点位移”矩阵，按训练集表情标准差缩放各列，做 SVD 后取前 8 个右奇异向量，覆盖 99.6836% 的奇异值平方能量。这样 <span class="arithmatex">\(B\)</span> 只依赖中性网格几何和训练集归一化，不碰评测数据。</p>
+<p>分完之后：</p>
+<ul>
+<li><strong>嘴部分支</strong>是 9 维（8 个嘴部坐标 + 下颌张开），用 2 个码本；</li>
+<li><strong>非嘴部分支</strong>是 104 维（投影后的 100 维表情 + 4 个眼球维度），用 4 个码本；</li>
+<li>重建时先把预测出的非嘴部系数再投影回正交补空间，再与嘴部分量相加。</li>
+</ul>
+<p>作者也提醒：正交性只在标准化系数空间成立，不代表两部分在解剖上影响的顶点互不重叠。</p>
+<p>面部分词器的损失是（<a href="https://arxiv.org/html/2610.21452v1#A1.E2">式 (2)</a>）：</p>
+<div class="arithmatex">\[
+L_{\rm VQ} = L_{\rm other} + 2L_{\rm mouth} + 4L_{\rm jaw} + 0.1L_{\rm lip} + 0.1L_{\rm vel} + 0.02L_{\rm commit}
+\]</div>
+<p>前三项是标准化特征上的 MSE；<span class="arithmatex">\(L_{\rm lip}\)</span> 是嘴部顶点误差（单位 mm²）。身体和手的分词器只用 MSE + <span class="arithmatex">\(0.02\times\)</span> commitment。</p>
+<p>拆分与合并的实现很短（摘自 <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/models/vq/factorized_flame_model.py"><code>code/models/vq/factorized_flame_model.py</code></a>，原文照录）：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">split_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">motion</span><span class="p">):</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="c1"># motion: 标准化后的 FLAME 参数 (B, T, 108)</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="n">expression</span> <span class="o">=</span> <span class="n">motion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="n">mouth_expression</span> <span class="o">=</span> <span class="n">expression</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_basis</span>                      <span class="c1"># B^T ψ，8 维</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">nonmouth_expression</span> <span class="o">=</span> <span class="n">expression</span> <span class="o">-</span> <span class="n">mouth_expression</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_basis</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># (I - B B^T) ψ</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">nonmouth</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">nonmouth_expression</span><span class="p">,</span> <span class="n">motion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">104</span><span class="p">:</span><span class="mi">108</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># + 4 维眼球 → 104 维</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">mouth</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">mouth_expression</span><span class="p">,</span> <span class="n">motion</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">103</span><span class="p">:</span><span class="mi">104</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>        <span class="c1"># + 下颌张开 → 9 维</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="k">return</span> <span class="n">nonmouth</span><span class="p">,</span> <span class="n">mouth</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="k">def</span><span class="w"> </span><span class="nf">project_nonmouth_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nonmouth</span><span class="p">):</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="n">expression</span> <span class="o">=</span> <span class="n">nonmouth</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>    <span class="n">expression</span> <span class="o">=</span> <span class="n">expression</span> <span class="o">-</span> <span class="p">(</span><span class="n">expression</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_basis</span><span class="p">)</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_basis</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">([</span><span class="n">expression</span><span class="p">,</span> <span class="n">nonmouth</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">104</span><span class="p">]],</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="k">def</span><span class="w"> </span><span class="nf">merge_features</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nonmouth</span><span class="p">,</span> <span class="n">mouth</span><span class="p">):</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">nonmouth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_nonmouth_features</span><span class="p">(</span><span class="n">nonmouth</span><span class="p">)</span>   <span class="c1"># 先投回正交补，防止两支打架</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>    <span class="n">expression</span> <span class="o">=</span> <span class="n">nonmouth</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span> <span class="o">+</span> <span class="n">mouth</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_rank</span><span class="p">]</span> <span class="o">@</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_basis</span><span class="o">.</span><span class="n">T</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>    <span class="n">output</span> <span class="o">=</span> <span class="n">expression</span><span class="o">.</span><span class="n">new_zeros</span><span class="p">(</span><span class="o">*</span><span class="n">expression</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="mi">108</span><span class="p">)</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="n">output</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="p">:</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="n">expression</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>    <span class="n">output</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">103</span><span class="p">:</span><span class="mi">104</span><span class="p">]</span> <span class="o">=</span> <span class="n">mouth</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_rank</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouth_rank</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="n">output</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">104</span><span class="p">:</span><span class="mi">108</span><span class="p">]</span> <span class="o">=</span> <span class="n">nonmouth</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="mi">100</span><span class="p">:</span><span class="mi">104</span><span class="p">]</span>
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>    <span class="k">return</span> <span class="n">output</span>   <span class="c1"># 100:103 的头部旋转保持为 0，由身体姿态提供</span>
+</span></code></pre></div>
+<p>（中文注释是我加的。）消融显示这种 4+2 分解比统一的 6 级 RVQ 好：说话帧 LVE 从 9.4962 mm 降到 8.8214 mm，MHD 从 2.0255 mm 降到 1.9031 mm（<a href="https://arxiv.org/html/2610.21452v1#A5.T13">Table 13</a>）。</p>
+<h3 id="33-32-a3">3.3 接入全双工主干：隐状态条件化（<a href="https://arxiv.org/html/2610.21452v1#S3.SS2">§3.2</a>，<a href="https://arxiv.org/html/2610.21452v1#A1.SS3">附录 A.3</a>）<a class="headerlink" href="#33-32-a3" title="Permanent link">&para;</a></h3>
+<p>主干完全沿用 <a href="https://arxiv.org/search/?query=SALMONN-omni&amp;searchtype=title">SALMONN-omni</a> 的全双工时序框架：模型按固定时间块持续运行（主干步长 <span class="arithmatex">\(\delta=80\)</span> ms），每步读入最新的输入语音表征，输出对应的文本 token；隐状态再驱动流式语音合成器和手势-表情生成器。主干是 thinker-talker 结构，<strong>文本先于语音生成</strong>，这一点在 3.4 节很关键。</p>
+<p>两路条件分别取自：</p>
+<table>
+<thead>
+<tr>
+<th>条件流</th>
+<th>来源</th>
+<th>编码了什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>说话流</strong> S</td>
+<td>流式语音合成器处理输出语音 token 时的<strong>末层</strong>隐状态（25 Hz，相邻两帧拼接后降到 12.5 Hz）</td>
+<td>模型自己要说的内容和声学实现</td>
+</tr>
+<tr>
+<td><strong>倾听流</strong> L</td>
+<td>LLM 主干处理输入语音 embedding 时的<strong>末层</strong>隐状态（12.5 Hz）</td>
+<td>当前声学上下文 + 推断出的对方对话状态</td>
+</tr>
+</tbody>
+</table>
+<p>当主干输出 <code>&lt;silence&gt;</code> 时，语音合成器不工作，说话流条件换成一个<strong>可学习的空向量</strong>；倾听流始终开着。所以模型沉默时仍在持续生成手势和表情，可以做倾听反应。作者特别指出：轮次制（turn-based）模型通常只有被激活回答时才处理输入语音，做不到这一点，这正是全双工建模的价值。</p>
+<p>为了不破坏预训练生成器已学到的声学通路，作者<strong>保留了原来冻结的 SPEAR 声学特征</strong>，把主干隐状态以残差的形式加上去（<a href="https://arxiv.org/html/2610.21452v1#A1.E4">式 (4)</a>）：</p>
+<div class="arithmatex">\[
+c_k^{r} = \phi_k^{r} + \gamma_r(u)\,P_r\!\left(h_k^{r}\right), \qquad r\in\{\mathrm{L},\mathrm{S}\}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(\phi_k^{r}\in\mathbb{R}^{10\times 896}\)</span>：第 <span class="arithmatex">\(k\)</span> 个区间冻结的声学条件，来自因果版 <a href="https://arxiv.org/abs/2510.25955">SPEAR</a> 编码器（<a href="https://huggingface.co/marcoyang/transformer-causal-600m-spear-speech">HF 权重</a>，16 kHz、128 维 fbank 输入、1,280 维输出、最终 12.5 Hz）；</li>
+<li><span class="arithmatex">\(h_k^{r}\)</span>：对齐后的主干或合成器隐状态；<span class="arithmatex">\(P_r\)</span>：分组 + 投影到相同形状；</li>
+<li><span class="arithmatex">\(\gamma_r(u)\)</span>：随训练步数 <span class="arithmatex">\(u\)</span> 线性升温的残差系数，</li>
+</ul>
+<div class="arithmatex">\[
+\gamma_r(u) = 0.01 + \min\!\left(\frac{u}{2500},\,1\right)\left(\gamma_r^{*}-0.01\right), \qquad \gamma_{\rm L}^{*}=0.1,\ \ \gamma_{\rm S}^{*}=0.25
+\]</div>
+<p>升温 2,500 步恰好等于第 3 阶段的训练步数（见 3.5 节）。说话流的最终权重比倾听流大一倍多。</p>
+<p>完整系统的这部分代码<strong>没有开源</strong>。下面是我按式 (4) 写的示意，变量名是自拟的，仅用于理解：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 示意代码（非官方）：式 (4) 的残差条件化</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">residual_scale</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="n">gamma_star</span><span class="p">,</span> <span class="n">warmup</span><span class="o">=</span><span class="mi">2500</span><span class="p">):</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="k">return</span> <span class="mf">0.01</span> <span class="o">+</span> <span class="nb">min</span><span class="p">(</span><span class="n">u</span> <span class="o">/</span> <span class="n">warmup</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma_star</span> <span class="o">-</span> <span class="mf">0.01</span><span class="p">)</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">build_condition</span><span class="p">(</span><span class="n">phi_k</span><span class="p">,</span> <span class="n">h_k</span><span class="p">,</span> <span class="n">proj</span><span class="p">,</span> <span class="n">u</span><span class="p">,</span> <span class="n">stream</span><span class="p">):</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="sd">"""phi_k: (10, 896) 冻结 SPEAR 声学条件；h_k: 主干/合成器隐状态"""</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">gamma</span> <span class="o">=</span> <span class="n">residual_scale</span><span class="p">(</span><span class="n">u</span><span class="p">,</span> <span class="mf">0.1</span> <span class="k">if</span> <span class="n">stream</span> <span class="o">==</span> <span class="s2">"listen"</span> <span class="k">else</span> <span class="mf">0.25</span><span class="p">)</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="k">return</span> <span class="n">phi_k</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">proj</span><span class="p">(</span><span class="n">h_k</span><span class="p">)</span>          <span class="c1"># proj = 分组 + 线性投影 (+LayerNorm)</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># 说话流在 &lt;silence&gt; 期间：h_k 不存在，用可学习空向量 null_speak 代替</span>
+</span></code></pre></div>
+<h3 id="34-33-a4a5">3.4 语义调用与模板引导（<a href="https://arxiv.org/html/2610.21452v1#S3.SS3">§3.3</a>，<a href="https://arxiv.org/html/2610.21452v1#A1.SS4">附录 A.4–A.5</a>）<a class="headerlink" href="#34-33-a4a5" title="Permanent link">&para;</a></h3>
+<p><strong>问题</strong>：有明确含义的手势（比如张开双手表示“大”）在对话录像里很稀疏，而且需要高层语义理解。按常规方式训练，大量无语义的节拍动作会主导损失，模型就只学会跟着语音节奏晃手。</p>
+<p><strong>核心思路</strong>：把“<strong>要不要</strong>做一个语义手势”和“<strong>怎么做</strong>”拆开：</p>
+<ol>
+<li>对话主干判断当前上下文是否需要语义手势；</li>
+<li>一旦需要，就从模板库里检索一条高质量示范动作，用来引导生成器做出语义一致的动作。</li>
+</ol>
+<p><strong>具体流程</strong>：</p>
+<ol>
+<li><strong>词典路由</strong>（router）：词典把每个规范化的多词短语对应到一个动作族（action family）。在生成的文本中，路由器在每个短语结束处保留<strong>最长匹配</strong>，把候选挂在短语最后一个子词 token 上。这一步只说明“有一个可用的动作”。</li>
+<li><strong>调用头</strong>：在候选 token <span class="arithmatex">\(i\)</span> 处，混合主干<strong>第 16、20、24 层</strong>的隐状态，经过 LayerNorm → Linear → SiLU → Dropout 0.1 → 标量 sigmoid，输出调用概率 <span class="arithmatex">\(p_i\)</span>。它的输入是因果的回复前缀和之前已观察到的对话上下文。</li>
+<li><strong>判定</strong>：要求 <span class="arithmatex">\(p_i\ge\tau\)</span> 且动作族唯一确定，再加 2-token 非极大值抑制。阈值 <span class="arithmatex">\(\tau=0.706\)</span>，在平衡的开发集上按事件 F1 选定（0.001 网格搜索），测试时固定。</li>
+<li><strong>选模板</strong>：同一动作族内按语义置信度、动作质量、可见度排序，默认取第一名。</li>
+<li><strong>引导生成</strong>：把模板的 token（带分隔符）插在对应块的开头，位于语音条件和目标码之前。生成器学的是“在有引导时续写”，而<strong>不是</strong>把模板姿态直接贴上去。模板只引导上半身和双手的 12 路码本；<strong>面部和嘴部仍然跟随当前对话</strong>，避免把模板说话人的口型搬过来。模板 token 的标签设为 <span class="arithmatex">\(-100\)</span>，不进损失。引导覆盖已核验的事件区间，按 133 ms 的潜变量网格量化，每个区间最多 6 个引导步；区间结束后恢复自由生成。</li>
+</ol>
+<p><strong>为什么不增加延迟</strong>：语义调用的决定必须在对应手势生成<strong>之前</strong>做出，否则检索和引导都会带来额外延迟。thinker-talker 架构天然满足这一点：文本生成跑在语音合成前面，调用头可以在“超前”的文本表征上预测，提前准备好模板，再和语音同步执行。模板按锚定短语结束词的时间戳排期，让语义手势和这个词对齐；超前的文本为模板的准备动作和计算留出了提前量。作者把这一点视为“手势生成接入全双工主干”的额外好处。</p>
+<p><strong>调用头的监督信号</strong>（<a href="https://arxiv.org/html/2610.21452v1#A1.SS4">附录 A.4</a>）：作者刻意区分“原说话人<strong>实际做了</strong>某个手势”和“此处<strong>适合</strong>做某个手势”。监督用的是后者：</p>
+<ul>
+<li>让两个 LLM（<code>gpt-5.4-2026-03-05</code> 和 <code>Seed-2.0-lite-260428</code>）在只看到截至短语结束处的因果上下文、看不到后文和原始标签的条件下，对候选动作打 0–4 分，即 <span class="arithmatex">\(s_i^{(m)}\in\{0,1,2,3,4\}\)</span>；</li>
+<li>训练时保留两者分差 <span class="arithmatex">\(\lvert s_i^{(1)}-s_i^{(2)}\rvert\le 1\)</span> 的样本，用归一化均值做软标签；</li>
+<li>开发集和测试集用硬标签：<span class="arithmatex">\(\bar s_i=(s_i^{(1)}+s_i^{(2)})/2\)</span>，<span class="arithmatex">\(\bar s_i\ge 3.5\)</span> 记为正例，<span class="arithmatex">\(\bar s_i\le 1.5\)</span> 记为负例，中间分数剔除；</li>
+<li>共标注 24,527 个端点，过滤后得到 10,145 段文本里的 18,621 个软标签；开发集 312、测试集 308 个端点，会话互不重叠。</li>
+</ul>
+<p>标注提示词的输出 schema 原文如下（<a href="https://arxiv.org/html/2610.21452v1#A7.SS5">附录 G.5</a>，双花括号是 Python <code>str.format</code> 的转义）：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>At each item, decide whether inserting exactly the supplied action_family gesture
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>immediately when the marked trigger phrase ends would be semantically natural and useful.
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Judge semantic policy, NOT whether the original recorded speaker happened to gesture.
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>The provided dialogue is strictly causal and contains no words after the endpoint.
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>Score rubric:
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>4 strong_yes: the completed causal meaning clearly supports this exact distinctive gesture and it should be inserted.
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>3 yes: the gesture is natural, context-supported, and adds useful visible meaning.
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>2 optional: it could be acceptable, but doing nothing is equally natural or evidence is insufficient.
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>1 no: weak, awkward, overly repetitive, generic emphasis, or probably not useful here.
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>0 strong_no: wrong family, idiomatic/nonliteral mismatch, contradicted, incomplete, or clearly unnatural.
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>Return exactly one top-level object with this shape and no omitted or extra fields:
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>{{
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>  "annotations": [
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>    {{
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>      "id": "copy input id",
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>      "score": 0,
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>      "decision": "strong_no",
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>      "confidence": 0.9,
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>      "endpoint_complete": true,
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>      "semantic_fit": "exact|reasonable|weak|mismatch",
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>      "redundancy": "none|possible|clear",
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>      "reason": "concise reason"
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>    }}
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>  ]
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>}}
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>Items:
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>{payload}
+</span></code></pre></div>
+<h3 id="35-34-a6">3.5 多模态课程训练（<a href="https://arxiv.org/html/2610.21452v1#S3.SS4">§3.4</a>，<a href="https://arxiv.org/html/2610.21452v1#A1.SS6">附录 A.6</a>）<a class="headerlink" href="#35-34-a6" title="Permanent link">&para;</a></h3>
+<p><strong>先单独训练手势-表情生成器，分 3 个阶段</strong>（<a href="https://arxiv.org/html/2610.21452v1#A1.T5">Table 5</a>）：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>任务</th>
+<th>峰值/最小学习率</th>
+<th>步数</th>
+<th>全局 batch</th>
+<th>音频编码器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>S1</td>
+<td>流式 ASR（让语音和 LM 对齐）</td>
+<td><span class="arithmatex">\(10^{-4}\)</span> / <span class="arithmatex">\(10^{-5}\)</span></td>
+<td>50k</td>
+<td>256</td>
+<td>冻结</td>
+</tr>
+<tr>
+<td>S2</td>
+<td>把块内的文本目标换成手势 token</td>
+<td><span class="arithmatex">\(4\times10^{-5}\)</span> / <span class="arithmatex">\(4\times10^{-6}\)</span></td>
+<td>50k</td>
+<td>256</td>
+<td>可训</td>
+</tr>
+<tr>
+<td>S3</td>
+<td>再加入表情 token</td>
+<td><span class="arithmatex">\(10^{-4}\)</span> / <span class="arithmatex">\(10^{-5}\)</span></td>
+<td>50k</td>
+<td>128</td>
+<td>可训</td>
+</tr>
+</tbody>
+</table>
+<p>三个阶段都用 fused AdamW，<span class="arithmatex">\(\beta=(0.9,0.95)\)</span>，<span class="arithmatex">\(\epsilon=10^{-6}\)</span>，weight decay 0.1，梯度裁剪 5，bf16。</p>
+<p><strong>再与对话模型整合，分 4 个阶段</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>内容</th>
+<th>学习率 / batch / 步数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>按 SALMONN-omni：流式语音编码器接 LLM，训练连接器和 LoRA，任务为 ASR + QA</td>
+<td><span class="arithmatex">\(2\times10^{-4}\)</span> / 256 / 40k</td>
+</tr>
+<tr>
+<td>2</td>
+<td>接入流式语音合成器，学习语音内容和对话时机，任务为 ASR + QA + 多轮对话</td>
+<td><span class="arithmatex">\(2\times10^{-4}\)</span> / 128 / 60k</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>冻结语音对话模型</strong>，只训手势连接器和生成器（表征对齐），自由:引导 = 4:1</td>
+<td><span class="arithmatex">\(2\times10^{-5}\)</span> / 64 / 2.5k</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>联合优化</strong>，语音对话 : 语义调用 : 自由生成 : 引导生成 = 2:1:4:1</td>
+<td><span class="arithmatex">\(2\times10^{-5}\)</span> / 64 / 20k</td>
+</tr>
+</tbody>
+</table>
+<p>第 4 阶段的学习率倍率是：LLM LoRA 0.25、语音合成器 0.5、调用头 1、手势生成器和连接器 1。也就是说，已经学好的对话能力用更小的步子更新，尽量减少干扰。LLM 主干在所有阶段都冻结，只训练 LoRA（<span class="arithmatex">\(r=32\)</span>，<span class="arithmatex">\(\alpha=32\)</span>，作用于全部注意力的 q/v 投影）；合成器 LoRA 为 <span class="arithmatex">\(r=16\)</span>，<span class="arithmatex">\(\alpha=32\)</span>。上下文上限：对话 4,800 token，音频 180 s，手势 20 s（<a href="https://arxiv.org/html/2610.21452v1#A1.T6">Table 6</a>）。</p>
+<p>联合目标（<a href="https://arxiv.org/html/2610.21452v1#A1.E5">式 (5)</a>）：</p>
+<div class="arithmatex">\[
+\mathcal{L} = \mathcal{L}_{\rm text} + 0.5\,\mathcal{L}_{\rm speech} + \mathcal{L}_{\rm GE} + 0.25\,\mathcal{L}_{\rm call}
+\]</div>
+<p><span class="arithmatex">\(\mathcal{L}_{\rm text}\)</span> 是含对话控制 token 的文本交叉熵；<span class="arithmatex">\(\mathcal{L}_{\rm speech}\)</span> 是合成器的声学 token 交叉熵；<span class="arithmatex">\(\mathcal{L}_{\rm call}\)</span> 是调用头的损失；<span class="arithmatex">\(\mathcal{L}_{\rm GE}\)</span> 是分码本加权的手势-表情交叉熵，权重随 RVQ 深度递减（<a href="https://arxiv.org/html/2610.21452v1#A1.E6">式 (6)</a>）：</p>
+<div class="arithmatex">\[
+\boldsymbol{w} = (\underbrace{1,.5,.25,.1,.05,.025}_{\text{上半身}};\ \underbrace{1,.5,.25,.1,.05,.025}_{\text{双手}};\ \underbrace{1,.5,.25,.1}_{\text{非嘴部表情}};\ \underbrace{1,.5}_{\text{嘴部}})
+\]</div>
+<p>理由是 RVQ 的前几级承载了动作的主要成分，感知上最重要。发布代码中的实现（摘自 <code>modeling_ellsa2.py</code> 的 <code>_compute_motion_loss</code>，原文照录，略去开头两行初始化）：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">for</span> <span class="n">head_idx</span><span class="p">,</span> <span class="n">head_logits</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">motion_logits</span><span class="p">):</span>        <span class="c1"># 18 个独立分类头</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">head_labels</span> <span class="o">=</span> <span class="n">motion_labels</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">head_idx</span><span class="p">]</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">valid_mask</span> <span class="o">=</span> <span class="n">head_labels</span> <span class="o">&gt;=</span> <span class="mi">0</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">torch</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">valid_mask</span><span class="p">):</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="k">continue</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="k">if</span> <span class="n">motion_loss_mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        <span class="n">head_loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>            <span class="n">head_logits</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">head_logits</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>            <span class="n">head_labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>            <span class="n">ignore_index</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="p">)</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>        <span class="n">token_loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>            <span class="n">head_logits</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">head_logits</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)),</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>            <span class="n">head_labels</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">),</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>            <span class="n">ignore_index</span><span class="o">=-</span><span class="mi">100</span><span class="p">,</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>            <span class="n">reduction</span><span class="o">=</span><span class="s2">"none"</span><span class="p">,</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="p">)</span><span class="o">.</span><span class="n">view_as</span><span class="p">(</span><span class="n">head_labels</span><span class="p">)</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>        <span class="n">token_weights</span> <span class="o">=</span> <span class="n">motion_loss_mask</span><span class="o">.</span><span class="n">masked_fill</span><span class="p">(</span><span class="o">~</span><span class="n">valid_mask</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">token_loss</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>        <span class="n">head_loss</span> <span class="o">=</span> <span class="p">(</span><span class="n">token_loss</span> <span class="o">*</span> <span class="n">token_weights</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">token_weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">clamp_min</span><span class="p">(</span><span class="mf">1e-8</span><span class="p">)</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a>    <span class="n">head_losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head_loss</span><span class="p">)</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>    <span class="n">valid_head_indices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">head_idx</span><span class="p">)</span>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">head_losses</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-4-24"><a id="__codelineno-4-24" name="__codelineno-4-24" href="#__codelineno-4-24"></a>    <span class="k">return</span> <span class="n">motion_logits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">*</span> <span class="mf">0.0</span>
+</span><span id="__span-4-25"><a id="__codelineno-4-25" name="__codelineno-4-25" href="#__codelineno-4-25"></a><span class="n">head_losses</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="n">head_losses</span><span class="p">)</span>
+</span><span id="__span-4-26"><a id="__codelineno-4-26" name="__codelineno-4-26" href="#__codelineno-4-26"></a><span class="n">loss_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">motion_loss_weights</span><span class="p">[</span><span class="n">valid_head_indices</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span>
+</span><span id="__span-4-27"><a id="__codelineno-4-27" name="__codelineno-4-27" href="#__codelineno-4-27"></a>    <span class="n">device</span><span class="o">=</span><span class="n">head_losses</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+</span><span id="__span-4-28"><a id="__codelineno-4-28" name="__codelineno-4-28" href="#__codelineno-4-28"></a>    <span class="n">dtype</span><span class="o">=</span><span class="n">head_losses</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+</span><span id="__span-4-29"><a id="__codelineno-4-29" name="__codelineno-4-29" href="#__codelineno-4-29"></a><span class="p">)</span>
+</span><span id="__span-4-30"><a id="__codelineno-4-30" name="__codelineno-4-30" href="#__codelineno-4-30"></a><span class="k">return</span> <span class="p">(</span><span class="n">head_losses</span> <span class="o">*</span> <span class="n">loss_weights</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">loss_weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</span></code></pre></div>
+<p>对应的权重写在 <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/configs/training.json"><code>code/configs/training.json</code></a> 里，两阶段分别是 12 路和 18 路：</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nt">"gesture_expression"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"model_args"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">"num_motion_codebooks"</span><span class="p">:</span><span class="w"> </span><span class="mi">18</span><span class="p">,</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="nt">"gesture_num_codebooks"</span><span class="p">:</span><span class="w"> </span><span class="mi">12</span><span class="p">,</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">    </span><span class="nt">"expression_num_codebooks"</span><span class="p">:</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">    </span><span class="nt">"motion_level_weights"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w"> </span><span class="mf">0.025</span><span class="p">,</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">                             </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span><span class="w"> </span><span class="mf">0.05</span><span class="p">,</span><span class="w"> </span><span class="mf">0.025</span><span class="p">,</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">                             </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">,</span><span class="w"> </span><span class="mf">0.25</span><span class="p">,</span><span class="w"> </span><span class="mf">0.1</span><span class="p">,</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">                             </span><span class="mf">1.0</span><span class="p">,</span><span class="w"> </span><span class="mf">0.5</span><span class="p">]</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">  </span><span class="p">}</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="p">}</span>
+</span></code></pre></div>
+<p><strong>规模</strong>（<a href="https://arxiv.org/html/2610.21452v1#A1.SS7">附录 A.7</a>）：ELLSA 2 共 10.78B 参数，可训练 776M，其中生成器 696M、手势连接器 15M、LLM LoRA 13M、合成器 LoRA 1M、语音连接器 38M、合成连接器 10M、语义头 2M。主干和合成器的选型与 SALMONN-omni 完全一致。</p>
+<hr />
+<h2 id="41-figure-2-b">四、数据（<a href="https://arxiv.org/html/2610.21452v1#S4.SS1">§4.1</a>，流程见 <a href="https://arxiv.org/html/2610.21452v1#S3.F2">Figure 2</a>，细节见 <a href="https://arxiv.org/html/2610.21452v1#A2">附录 B</a>）<a class="headerlink" href="#41-figure-2-b" title="Permanent link">&para;</a></h2>
+<p><img alt="Figure 2 数据与评测流程" src="https://arxiv.org/html/2610.21452v1/seg_2.svg" /></p>
+<p><em><a href="https://arxiv.org/html/2610.21452v1#S3.F2">Figure 2</a>：说话人筛选和表情提取提供配对训练监督；更大的源数据池提供语义模板；人工核验片段用于活跃度、韵律、双工和语义评测。</em></p>
+<h3 id="41-3401-81-b1">4.1 说话人级筛选：3,401 人里只留 81 人（<a href="https://arxiv.org/html/2610.21452v1#A2.SS1">附录 B.1</a>）<a class="headerlink" href="#41-3401-81-b1" title="Permanent link">&para;</a></h3>
+<p>训练数据只用 <a href="https://arxiv.org/abs/2506.22554">Seamless Interaction</a> 的一个子集。作者的观察是：同一句话，有人大幅比划，有人轻微晃动，有人几乎不动，这些都是自然的；但<strong>几乎静止的说话人对学习区分说话和倾听没有帮助，还会把模型带向过度静止</strong>。所以要挑说话时手势清晰、说话和倾听状态差异明显的人。</p>
+<p>做法是在 60 s 窗口（30 s 步长）上计算 6 个质量分量，加权得到窗口总分（<a href="https://arxiv.org/html/2610.21452v1#A2.E19">式 (19)</a>）：</p>
+<div class="arithmatex">\[
+Q_w = 0.12S_w^{\rm valid} + 0.10S_w^{\rm smooth} + 0.10S_w^{\rm range} + 0.32S_w^{\rm energy} + 0.30S_w^{\rm compat} + 0.06S_w^{\rm vis}
+\]</div>
+<ul>
+<li><span class="arithmatex">\(S^{\rm energy}\)</span>：按动作能量在全库中的分位数打分，偏好中等活跃度，压低静止和极端活跃的窗口；</li>
+<li><span class="arithmatex">\(S^{\rm compat}\)</span>：按“说话占比”<span class="arithmatex">\(f_w\)</span> 插值，说话为主的窗口偏好中等活跃，几乎不说话的窗口偏好低活跃。</li>
+</ul>
+<p>能量定义为 <span class="arithmatex">\(E_w = 0.45E_w^{\mathcal B} + 0.55E_w^{\mathcal H}\)</span>，其中</p>
+<div class="arithmatex">\[
+E_w^{\mathcal G} = \frac{1}{(T-1)\lvert\mathcal G\rvert}\sum_{t=1}^{T-1}\sum_{j\in\mathcal G}\lVert\Delta\boldsymbol\theta_{t,j}\rVert_2
+\]</div>
+<p>窗口通过还需满足一组硬阈值。然后在说话人级别汇总（<a href="https://arxiv.org/html/2610.21452v1#A2.E23">式 (23)</a>）：</p>
+<div class="arithmatex">\[
+\operatorname{keep}(s) = \mathbf 1\{N_s\ge 1,\ P_s\ge 0.70,\ \overline Q_s\ge 0.90,\ \overline C_s\ge 0.90,\ O_s\le 0.01\}
+\]</div>
+<p>其中 <span class="arithmatex">\(P_s\)</span> 是通过率，<span class="arithmatex">\(\overline Q_s\)</span> 是平均质量，<span class="arithmatex">\(\overline C_s\)</span> 是平均兼容分，<span class="arithmatex">\(O_s\)</span> 是极端活跃窗口占比。结果：735,705 个窗口里 294,700 个通过；最终保留 <strong>81 名说话人、1,318 段录音</strong>。</p>
+<p><strong>消融</strong>（<a href="https://arxiv.org/html/2610.21452v1#A5.T12">Table 12</a>）：只用这 1,318 段训练，比用全量 121,054 段训练的结果全面更好：</p>
+<table>
+<thead>
+<tr>
+<th>训练池</th>
+<th>录音数</th>
+<th>说话人</th>
+<th><span class="arithmatex">\(R_{\rm SL}\)</span></th>
+<th><span class="arithmatex">\(A\)</span></th>
+<th>MLLM D</th>
+<th>MLLM S</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全量</td>
+<td>121,054</td>
+<td>3,401</td>
+<td>1.398</td>
+<td>0.525</td>
+<td>0.080</td>
+<td>0.184</td>
+</tr>
+<tr>
+<td>精选</td>
+<td>1,318</td>
+<td>81</td>
+<td><strong>1.487</strong></td>
+<td><strong>0.668</strong></td>
+<td><strong>0.332</strong></td>
+<td><strong>0.364</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>数据少两个数量级，效果反而更好</strong>，这是本文最反直觉的结论之一。</p>
+<h3 id="42-b2">4.2 面部监督（<a href="https://arxiv.org/html/2610.21452v1#A2.SS2">附录 B.2</a>）<a class="headerlink" href="#42-b2" title="Permanent link">&para;</a></h3>
+<p>Seamless Interaction 没有现成的表情标注。作者用 <a href="https://arxiv.org/search/?query=KaoLRM&amp;searchtype=title">KaoLRM</a>（<a href="https://github.com/CyberAgentAILab/KaoLRM">GitHub</a>）从视频估计 FLAME 参数，并做两件事：一是过滤无效检测，二是对裁剪框做时间平滑（中心平滑 15 帧、尺寸平滑 21 帧），得到 30 Hz、时间上稳定的表情监督。</p>
+<h3 id="43-b3-table-7">4.3 语义模板库（<a href="https://arxiv.org/html/2610.21452v1#A2.SS3">附录 B.3</a>，漏斗见 <a href="https://arxiv.org/html/2610.21452v1#A2.T7">Table 7</a>）<a class="headerlink" href="#43-b3-table-7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>阶段（计数单位不同）</th>
+<th>保留数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>配对源数据池（参与者录音）</td>
+<td>121,054</td>
+</tr>
+<tr>
+<td>至少含一个经视频核验的语义事件的录音</td>
+<td>29,248</td>
+</tr>
+<tr>
+<td>这些录音里标注出的事件</td>
+<td>77,585</td>
+</tr>
+<tr>
+<td>以事件为中心、通过姿态筛选的 192 帧窗口</td>
+<td>46,894</td>
+</tr>
+<tr>
+<td>通过文本、动作族、锚定短语检查</td>
+<td>35,436</td>
+</tr>
+<tr>
+<td>再通过视频置信度 ≥0.9、综合可见度 ≥0.8</td>
+<td>34,817</td>
+</tr>
+<tr>
+<td>多样性筛选（每族最多 12 条，每人每族最多 2 条）+ 转写检索检查</td>
+<td>7,665</td>
+</tr>
+<tr>
+<td>语义置信度 × 动作族置信度 &gt; 0.8</td>
+<td>3,672</td>
+</tr>
+<tr>
+<td>短语消歧、语料重扫后的最终模板</td>
+<td><strong>3,227</strong>（1,125 个动作族，2,072 个短语）</td>
+</tr>
+</tbody>
+</table>
+<p>流程是：Gemini（<code>gemini-2.5-pro-preview-03-25</code>）看视频和转写，提出带时间戳的语义动作；另一轮视频核验确认动作确实可见；再由 GPT 做动作族分类和规范化合并。提议阶段的提示词只收录三类手势：<strong>象征手势</strong>（打电话手势、竖拇指、OK、嘘）、<strong>指示手势</strong>（指向人、物、位置）、<strong>图像/模仿手势</strong>（描形状、用手指比数量、模仿喝水写字），并明确排除节拍、隐喻、有歧义的手势（<a href="https://arxiv.org/html/2610.21452v1#A7.SS6">附录 G.6</a>）。</p>
+<h3 id="44-b4">4.4 人工核验测试集（<a href="https://arxiv.org/html/2610.21452v1#A2.SS4">附录 B.4</a>）<a class="headerlink" href="#44-b4" title="Permanent link">&para;</a></h3>
+<p>现有测试集主要关注“说话时的手势”，很少覆盖听说切换和明确的语义手势。作者因此构建了 <strong>138 条、每条 20 s</strong> 的测试片段，取自 Seamless Interaction 的测试划分：</p>
+<ul>
+<li><strong>全双工类 67 条</strong>：附和（backchannel）22、重叠说话 20、目标人打断对方 15、对方打断目标人 10；</li>
+<li><strong>语义类 71 条</strong>：含现有模板库能覆盖的、有明确含义的可见手势；</li>
+<li>来源上，82 条是自然对话，56 条是即兴表演。</li>
+</ul>
+<p>流程是先用传统手势指标预筛，再用 MLLM 筛选，最后人工核验，只保留明确通过的样本。客观活跃度和面部指标只在中间的 4–16 s 计算，给动作的准备和收尾留出余量。</p>
+<hr />
+<h2 id="42-c">五、评测指标（<a href="https://arxiv.org/html/2610.21452v1#S4.SS2">§4.2</a>，细节见 <a href="https://arxiv.org/html/2610.21452v1#A3">附录 C</a>）<a class="headerlink" href="#42-c" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 语音<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<p>语音评测沿用常规协议（<a href="https://arxiv.org/html/2610.21452v1#A3.SS1">附录 C.1</a>）：</p>
+<ul>
+<li><strong>问答</strong>：Llama Questions（<a href="https://arxiv.org/abs/2305.15255">Spectron</a>）300 题、<a href="https://aclanthology.org/D13-1160/">Web Questions</a> 2,032 题、<a href="https://arxiv.org/abs/1705.03551">TriviaQA</a> 1,000 题，报告 S2T 和 S2S 准确率；S2S 先用 <a href="https://huggingface.co/openai/whisper-large-v3">Whisper-large-v3</a> 转写再判分；</li>
+<li><strong>开放式回答</strong>：<a href="https://arxiv.org/abs/2410.17196">AlpacaEval（VoiceBench 版）</a> 199 条，由 GPT-4.1 按 1–5 分打分；</li>
+<li><strong>轮次转换成功率</strong>：用户提问结束后 2 s 内开始回答即算成功。</li>
+</ul>
+<h3 id="52-mllm">5.2 手势：两个运动学指标 + 两个 MLLM 指标<a class="headerlink" href="#52-mllm" title="Permanent link">&para;</a></h3>
+<p><strong>说话-倾听活跃度比</strong>（<a href="https://arxiv.org/html/2610.21452v1#A3.E24">式 (24)</a>）：<span class="arithmatex">\(R_{\rm SL} = E_S / E_L\)</span>。<span class="arithmatex">\(E_S\)</span>、<span class="arithmatex">\(E_L\)</span> 分别是说话帧和仅倾听帧上 13 个上半身关节的平均相邻帧位移。目标人说话（含重叠）算 S，目标人沉默且对方说话算 L，双方都沉默的帧剔除。</p>
+<p><strong>韵律对齐分 <span class="arithmatex">\(A\)</span></strong>（<a href="https://arxiv.org/html/2610.21452v1#A3.E25">式 (25)</a>）：对<strong>同一段手势</strong>，分别计算它和<strong>匹配语音</strong>、<strong>另一会话另一个人的不匹配语音</strong>的相关性，再比较二者：</p>
+<div class="arithmatex">\[
+A = \frac{1}{N}\sum_{n=1}^{N}\sigma\!\left(\operatorname{clip}\!\left(\frac{c(a_n,g_n)-c(a_n^{-},g_n)}{s},\,-8,\,8\right)\right), \qquad s=0.207
+\]</div>
+<p>其中 <span class="arithmatex">\(c(a,g)\)</span> 是音频起音强度与上身角速度能量（都插值到 20 Hz、做 0.25 s 高斯平滑、稳健标准化）在 <span class="arithmatex">\(\pm0.4\)</span> s 延迟范围内的最大余弦相关。<span class="arithmatex">\(A=0.5\)</span> 表示匹配和不匹配一样。这种对比式设计的好处是：<strong>一味乱动的动作拿不到高分</strong>，因为它和任何语音的相关性都差不多。</p>
+<p>在 GENEA 的 7 个系统、616 组比较上，<span class="arithmatex">\(A\)</span> 与人工排名高度一致，而常用的 BeatAlign 反而是负相关（<a href="https://arxiv.org/html/2610.21452v1#A3.T8">Table 8</a>，<span class="arithmatex">\(n=7\)</span>，仅作描述性参考）：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>Spearman <span class="arithmatex">\(\rho\)</span></th>
+<th>Kendall <span class="arithmatex">\(\tau\)</span></th>
+<th>Pearson <span class="arithmatex">\(r\)</span></th>
+<th>正确排序对</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="arithmatex">\(A\)</span>（冻结）</td>
+<td><strong>0.9643</strong></td>
+<td><strong>0.9048</strong></td>
+<td><strong>0.9729</strong></td>
+<td><strong>20/21</strong></td>
+</tr>
+<tr>
+<td>BeatAlign 匹配均值</td>
+<td>−0.6786</td>
+<td>−0.5238</td>
+<td>−0.7452</td>
+<td>5/21</td>
+</tr>
+<tr>
+<td>BeatAlign 匹配−不匹配差值</td>
+<td>0.5357</td>
+<td>0.4286</td>
+<td>0.8828</td>
+<td>15/21</td>
+</tr>
+<tr>
+<td>BeatAlign sigmoid 对比</td>
+<td>0.3929</td>
+<td>0.2381</td>
+<td>0.8098</td>
+<td>13/21</td>
+</tr>
+</tbody>
+</table>
+<p>发布代码的核心实现（摘自 <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/evaluation/alignment.py"><code>code/evaluation/alignment.py</code></a>，原文照录，<code>score_one</code> 只保留计算部分）：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">standardize</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">))</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="n">scale</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">values</span> <span class="o">-</span> <span class="n">median</span><span class="p">),</span> <span class="mf">0.75</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1e-06</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">((</span><span class="n">values</span> <span class="o">-</span> <span class="n">median</span><span class="p">)</span> <span class="o">/</span> <span class="n">scale</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">correlation</span><span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">):</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="p">(</span><span class="n">left</span><span class="p">,</span> <span class="n">right</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">standardize</span><span class="p">(</span><span class="n">left</span><span class="p">),</span> <span class="n">standardize</span><span class="p">(</span><span class="n">right</span><span class="p">))</span>
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>    <span class="n">denominator</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">left</span> <span class="o">*</span> <span class="n">left</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">right</span> <span class="o">*</span> <span class="n">right</span><span class="p">))</span>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">left</span> <span class="o">*</span> <span class="n">right</span><span class="p">)</span> <span class="o">/</span> <span class="n">denominator</span><span class="p">)</span> <span class="k">if</span> <span class="n">denominator</span> <span class="o">&gt;</span> <span class="mf">1e-08</span> <span class="k">else</span> <span class="mf">0.0</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="k">def</span><span class="w"> </span><span class="nf">plausible_correlation</span><span class="p">(</span><span class="n">audio_cache</span><span class="p">,</span> <span class="n">motion_times</span><span class="p">,</span> <span class="n">motion_energy</span><span class="p">):</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="n">cached</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">audio_cache</span><span class="p">)</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="n">audio_times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">cached</span><span class="p">[</span><span class="s1">'times'</span><span class="p">])</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>    <span class="n">duration</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">audio_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">motion_times</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">duration</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>                      <span class="c1"># 20 Hz 公共时间轴</span>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">:</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Clip too short: </span><span class="si">{</span><span class="n">audio_cache</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a>    <span class="n">onset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">audio_times</span><span class="p">,</span> <span class="n">cached</span><span class="p">[</span><span class="s1">'onset'</span><span class="p">])</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>    <span class="n">body</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">motion_times</span><span class="p">,</span> <span class="n">motion_energy</span><span class="p">)</span>
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>    <span class="n">onset</span> <span class="o">=</span> <span class="n">gaussian_filter1d</span><span class="p">(</span><span class="n">onset</span><span class="p">,</span> <span class="mf">0.25</span> <span class="o">/</span> <span class="mf">0.05</span><span class="p">)</span>             <span class="c1"># σ = 0.25 s</span>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a>    <span class="n">body</span> <span class="o">=</span> <span class="n">gaussian_filter1d</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="mf">0.25</span> <span class="o">/</span> <span class="mf">0.05</span><span class="p">)</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a>    <span class="k">for</span> <span class="n">lag</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">):</span>                                  <span class="c1"># ±8 帧 = ±0.4 s</span>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>        <span class="k">if</span> <span class="n">lag</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-6-26"><a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a>            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">correlation</span><span class="p">(</span><span class="n">onset</span><span class="p">[</span><span class="o">-</span><span class="n">lag</span><span class="p">:],</span> <span class="n">body</span><span class="p">[:</span><span class="n">lag</span><span class="p">]))</span>
+</span><span id="__span-6-27"><a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a>        <span class="k">elif</span> <span class="n">lag</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-6-28"><a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a>            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">correlation</span><span class="p">(</span><span class="n">onset</span><span class="p">[:</span><span class="o">-</span><span class="n">lag</span><span class="p">],</span> <span class="n">body</span><span class="p">[</span><span class="n">lag</span><span class="p">:]))</span>
+</span><span id="__span-6-29"><a id="__codelineno-6-29" name="__codelineno-6-29" href="#__codelineno-6-29"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-6-30"><a id="__codelineno-6-30" name="__codelineno-6-30" href="#__codelineno-6-30"></a>            <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">correlation</span><span class="p">(</span><span class="n">onset</span><span class="p">,</span> <span class="n">body</span><span class="p">))</span>
+</span><span id="__span-6-31"><a id="__codelineno-6-31" name="__codelineno-6-31" href="#__codelineno-6-31"></a>    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">values</span><span class="p">))</span>
+</span><span id="__span-6-32"><a id="__codelineno-6-32" name="__codelineno-6-32" href="#__codelineno-6-32"></a>
+</span><span id="__span-6-33"><a id="__codelineno-6-33" name="__codelineno-6-33" href="#__codelineno-6-33"></a><span class="c1"># score_one 中：</span>
+</span><span id="__span-6-34"><a id="__codelineno-6-34" name="__codelineno-6-34" href="#__codelineno-6-34"></a><span class="n">matched</span> <span class="o">=</span> <span class="n">plausible_correlation</span><span class="p">(</span><span class="n">audio_cache_path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">matched_audio</span><span class="p">),</span> <span class="n">motion_times</span><span class="p">,</span> <span class="n">motion_energy</span><span class="p">)</span>
+</span><span id="__span-6-35"><a id="__codelineno-6-35" name="__codelineno-6-35" href="#__codelineno-6-35"></a><span class="n">mismatched</span> <span class="o">=</span> <span class="n">plausible_correlation</span><span class="p">(</span><span class="n">audio_cache_path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">,</span> <span class="n">mismatched_audio</span><span class="p">),</span> <span class="n">motion_times</span><span class="p">,</span> <span class="n">motion_energy</span><span class="p">)</span>
+</span><span id="__span-6-36"><a id="__codelineno-6-36" name="__codelineno-6-36" href="#__codelineno-6-36"></a><span class="n">difference</span> <span class="o">=</span> <span class="n">matched</span> <span class="o">-</span> <span class="n">mismatched</span>
+</span><span id="__span-6-37"><a id="__codelineno-6-37" name="__codelineno-6-37" href="#__codelineno-6-37"></a><span class="n">probability</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">expit</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">difference</span> <span class="o">/</span> <span class="n">pair_scale</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">)))</span>   <span class="c1"># pair_scale = 0.207</span>
+</span></code></pre></div>
+<p><strong>双工分 <span class="arithmatex">\(D\)</span> 与语义分 <span class="arithmatex">\(S\)</span></strong>（<a href="https://arxiv.org/html/2610.21452v1#A3.SS3">附录 C.3</a>）：由 Gemini-2.5-Pro 和 Seed-2.0-lite 各评两次，视频按 5 fps 输入，同时给<strong>同步的人类参考视频</strong>作为“什么是合适行为”的上下文证据。</p>
+<div class="arithmatex">\[
+D_0 = 0.45T + 0.45P + 0.10V, \qquad S_0 = \operatorname{clip}(0.35V + 0.45M + 0.20K - 0.30F,\,0,\,1)
+\]</div>
+<ul>
+<li><span class="arithmatex">\(D_0\)</span> 中：<span class="arithmatex">\(T\)</span> 是时机，<span class="arithmatex">\(P\)</span> 是对话适切性，<span class="arithmatex">\(V\)</span> 是可见度；</li>
+<li><span class="arithmatex">\(S_0\)</span> 中：<span class="arithmatex">\(V\)</span> 是可见证据，<span class="arithmatex">\(M\)</span> 是语义匹配，<span class="arithmatex">\(K\)</span> 是具体程度，<span class="arithmatex">\(F\)</span> 是节拍/小动作惩罚。</li>
+</ul>
+<p>两者再对事件之外的行为打折：<span class="arithmatex">\(Q = Q_0(1-0.45U-0.35O)\)</span>。<span class="arithmatex">\(U\)</span> 惩罚目标人沉默时无理由的动作，<span class="arithmatex">\(O\)</span> 惩罚其他时段的过度活跃。沉默区间来自低于 −40 dBFS 的 20 ms 音频窗，两端各裁 0.3 s，剩余至少 1 s 才保留。评委必须给出带时间戳的证据，同一区间不能被两种惩罚重复计算。</p>
+<p>提示词里有一条“<strong>防幻觉规则</strong>”（<a href="https://arxiv.org/html/2610.21452v1#A7.SS1">附录 G.1</a>），原文如下：</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>ANTI-HALLUCINATION RULE: transcript, VAD, category, audio, and VIDEO 1 identify what and
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>when to inspect, but they do not prove that VIDEO 2 performs a motion. Independently verify
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>the candidate's visible change. Do not copy the reference description into the candidate
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>description.
+</span></code></pre></div>
+<p>双工评分的输出格式（<a href="https://arxiv.org/html/2610.21452v1#A7.SS1">附录 G.1</a>，加上 <a href="https://arxiv.org/html/2610.21452v1#A7.SS3">G.3</a> 追加的全局惩罚字段）：</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span><span class="nt">"Analysis"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reference time/start-change-end; candidate same-time start-change-end; strongest local evidence; comparison judgment"</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span><span class="nt">"Timing"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span><span class="nt">"Appropriateness"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span><span class="nt">"Gesture backchannel visibility"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span><span class="nt">"Silence motion penalty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span><span class="nt">"Overactivity penalty"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.0</span><span class="p">,</span>
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">  </span><span class="nt">"Silence evidence"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span>
+</span><span id="__span-8-9"><a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">  </span><span class="nt">"Overactivity evidence"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+</span><span id="__span-8-10"><a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>评分解析与合成（摘自 <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/evaluation/activity.py"><code>code/evaluation/activity.py</code></a> 的 <code>parse</code>，原文照录，略去前半段的格式校验）：</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">if</span> <span class="n">entry</span><span class="p">[</span><span class="s1">'task'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'duplex'</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="n">base</span> <span class="o">=</span> <span class="mf">0.45</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s1">'Timing'</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.45</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s1">'Appropriateness'</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.10</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s1">'Gesture backchannel visibility'</span><span class="p">]</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="k">else</span><span class="p">:</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">base</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="mf">0.35</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s1">'Visual clarity'</span><span class="p">]</span> <span class="o">+</span> <span class="mf">0.45</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s1">'Text-motion semantic match'</span><span class="p">]</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>                         <span class="o">+</span> <span class="mf">0.20</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s1">'Concreteness'</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.30</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="s1">'Beat/fidget penalty'</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="k">return</span> <span class="p">{</span><span class="s1">'base'</span><span class="p">:</span> <span class="n">base</span><span class="p">,</span> <span class="s1">'silence'</span><span class="p">:</span> <span class="n">S</span><span class="p">,</span> <span class="s1">'overactivity'</span><span class="p">:</span> <span class="n">O</span><span class="p">,</span>
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        <span class="s1">'deduction'</span><span class="p">:</span> <span class="n">base</span> <span class="o">*</span> <span class="p">(</span><span class="mf">0.45</span> <span class="o">*</span> <span class="n">S</span> <span class="o">+</span> <span class="mf">0.35</span> <span class="o">*</span> <span class="n">O</span><span class="p">),</span>
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        <span class="s1">'final'</span><span class="p">:</span> <span class="n">base</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.45</span> <span class="o">*</span> <span class="n">S</span> <span class="o">-</span> <span class="mf">0.35</span> <span class="o">*</span> <span class="n">O</span><span class="p">),</span> <span class="s1">'parsed'</span><span class="p">:</span> <span class="n">d</span><span class="p">}</span>
+</span></code></pre></div>
+<p>被略去的校验部分会检查：每个正的惩罚至少有一个具体区间；沉默证据必须 ≥1 s、<code>target_speech_absent</code> 为真，且落在低能量窗内；两类惩罚的区间不能重叠。这套校验相当严格，值得借鉴。</p>
+<p><strong>人工评测</strong>（<a href="https://arxiv.org/html/2610.21452v1#A3.SS4">附录 C.4</a>）：2 名标注者，每人 966 条（7 个系统 × 138 条），以人类参考为 5 分锚点，给 1–5 分。评测界面隐藏系统名，见 <a href="https://arxiv.org/html/2610.21452v1#A3.F5">Figure 5</a>。</p>
+<h3 id="53">5.3 表情<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<p>表情指标沿用 <a href="https://arxiv.org/search/?query=UniLS+listening+speaking&amp;searchtype=title">UniLS</a> 的实现（<a href="https://arxiv.org/html/2610.21452v1#A3.SS5">附录 C.5</a>）：</p>
+<div class="arithmatex">\[
+\mathrm{LVE} = \sqrt{\frac{1}{\lvert T\rvert}\sum_{t\in T}\max_{j\in J_{\rm lip}}\lVert\hat v_{tj}-v_{tj}\rVert_2^2}, \qquad
+\mathrm{JDD} = 100\left\lvert \operatorname{sd}_{t}(\hat\theta_{t,x}) - \operatorname{sd}_{t}(\theta_{t,x})\right\rvert
+\]</div>
+<ul>
+<li><strong>LVE</strong>：说话帧上的最大唇部顶点误差；</li>
+<li><strong>MHD</strong>：整个头部的顶点误差；</li>
+<li><strong>FDD</strong>：上半脸顶点时间标准差之差；</li>
+<li><strong>JDD</strong>：下颌张开角时间标准差之差。</li>
+</ul>
+<p>FDD 和 JDD 分说话（S）和非说话（N）两种状态分别计算。比较时都固定头、颈、眼的姿态，只看表情和下颌。</p>
+<hr />
+<h2 id="5">六、实验结果（<a href="https://arxiv.org/html/2610.21452v1#S5">§5</a>）<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="61-salmonn-omni-table-1">6.1 语音交互：基本保住了 SALMONN-omni 的水平（<a href="https://arxiv.org/html/2610.21452v1#S5.T1">Table 1</a>）<a class="headerlink" href="#61-salmonn-omni-table-1" title="Permanent link">&para;</a></h3>
+<p>每格是 S2T/S2S（问答为准确率 %，AlpacaEval 为 1–5 分）；TT 为轮次转换成功率（%）。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Llama Q.</th>
+<th>TT</th>
+<th>Web Q.</th>
+<th>TT</th>
+<th>TriviaQA</th>
+<th>TT</th>
+<th>AlpacaEval</th>
+<th>TT</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/2410.00037">Moshi</a></td>
+<td>60.8/54.5</td>
+<td>85.0</td>
+<td>23.4/22.1</td>
+<td>76.0</td>
+<td>25.6/16.7</td>
+<td>37.1</td>
+<td>1.84/1.76</td>
+<td>83.4</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=PersonaPlex&amp;searchtype=title">PersonaPlex</a></td>
+<td>62.7/61.7</td>
+<td>93.3</td>
+<td>22.8/22.5</td>
+<td><strong>100.0</strong></td>
+<td>24.5/22.8</td>
+<td>49.1</td>
+<td>2.71/2.62</td>
+<td>65.3</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a></td>
+<td>74.2/56.2</td>
+<td><strong>99.7</strong></td>
+<td>40.8/27.9</td>
+<td>99.8</td>
+<td>45.1/28.5</td>
+<td>72.0</td>
+<td>3.90/2.46</td>
+<td>87.9</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=SALMONN-omni&amp;searchtype=title">SALMONN-omni</a></td>
+<td><strong>79.3</strong>/73.6</td>
+<td><strong>99.7</strong></td>
+<td>49.7/43.7</td>
+<td>99.6</td>
+<td>63.6/56.0</td>
+<td>92.8</td>
+<td><strong>4.01/3.22</strong></td>
+<td><strong>92.0</strong></td>
+</tr>
+<tr>
+<td><strong>ELLSA 2</strong></td>
+<td><strong>79.3/78.0</strong></td>
+<td>99.3</td>
+<td><strong>52.6/47.3</strong></td>
+<td>99.3</td>
+<td><strong>68.9/63.6</strong></td>
+<td><strong>94.4</strong></td>
+<td>3.97/3.20</td>
+<td>87.9</td>
+</tr>
+</tbody>
+</table>
+<p>ELLSA 2 在三个问答集上的 S2S 准确率都是最高。AlpacaEval 与 SALMONN-omni 基本持平。TT 平均 95.2%，其中 TriviaQA 的 94.4% 最高。加上手势和表情之后，语音能力没有明显退化，三个问答集的 S2S 甚至比 SALMONN-omni 高 3.6–7.6 个点。</p>
+<h3 id="62-table-2">6.2 手势（<a href="https://arxiv.org/html/2610.21452v1#S5.T2">Table 2</a>）<a class="headerlink" href="#62-table-2" title="Permanent link">&para;</a></h3>
+<p>人工 D/S 是 1–5 分，MLLM D/S 是 0–1 分；† 表示作者复现的结果。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>类型</th>
+<th><span class="arithmatex">\(R_{\rm SL}\)</span>↑</th>
+<th><span class="arithmatex">\(A\)</span>↑</th>
+<th>人工 D↑</th>
+<th>人工 S↑</th>
+<th>MLLM D/S↑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/search/?query=GestureLSM&amp;searchtype=title">GestureLSM</a></td>
+<td>仅说话</td>
+<td>1.217</td>
+<td>0.612</td>
+<td>2.164</td>
+<td>1.444</td>
+<td>0.205/0.309</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=MIBURI+interactive+gesture&amp;searchtype=title">MIBURI</a></td>
+<td>仅说话</td>
+<td>1.041</td>
+<td>0.471</td>
+<td>1.858</td>
+<td>2.014</td>
+<td>0.194/0.313</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=ConvoFusion&amp;searchtype=title">ConvoFusion</a>†</td>
+<td>双人</td>
+<td>1.326</td>
+<td>0.606</td>
+<td>1.321</td>
+<td>1.049</td>
+<td>0.234/0.270</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2401.01885">audio2photoreal</a>†</td>
+<td>双人</td>
+<td>1.446</td>
+<td>0.572</td>
+<td>1.545</td>
+<td>1.120</td>
+<td>0.161/0.239</td>
+</tr>
+<tr>
+<td>独立生成器（本文）</td>
+<td>双人</td>
+<td>1.545</td>
+<td>0.703</td>
+<td>3.007</td>
+<td>2.070</td>
+<td><strong>0.318</strong>/0.351</td>
+</tr>
+<tr>
+<td>ELLSA 2</td>
+<td>端到端</td>
+<td>1.563</td>
+<td><strong>0.723</strong></td>
+<td><strong>3.201</strong></td>
+<td>2.014</td>
+<td>0.300/0.347</td>
+</tr>
+<tr>
+<td>ELLSA 2 + 模板引导</td>
+<td>端到端</td>
+<td><strong>1.597</strong></td>
+<td>0.710</td>
+<td>3.090</td>
+<td><strong>2.711</strong></td>
+<td>0.299/<strong>0.495</strong></td>
+</tr>
+</tbody>
+</table>
+<p>要点：</p>
+<ul>
+<li><strong>联合优化的 ELLSA 2</strong> 拿到最高的 <span class="arithmatex">\(A\)</span> 和最高的人工双工分。人工双工分比独立生成器高 0.194，说明对话主干的隐状态确实有助于倾听和切换行为。</li>
+<li><strong>模板引导</strong>把人工语义分从 2.014 提到 2.711，MLLM 语义分从 0.347 提到 0.495，其他指标基本不变，说明语义提升没有以牺牲一般手势质量为代价。</li>
+<li><strong>语义调用头</strong>在平衡测试集上达到 F1 87.8%、准确率 87.0%（混淆矩阵 TP/FP/FN/TN = 144/30/10/124，<a href="https://arxiv.org/html/2610.21452v1#A1.SS4">附录 A.4</a>）。</li>
+<li>实际引导运行时：71 条语义片段里有 53 条触发了引导（共 83 个候选，54 个被排期，28 个低于阈值，1 个被抑制）；67 条双工片段里只有 2 条各触发了 1 次（<a href="https://arxiv.org/html/2610.21452v1#A1.SS5">附录 A.5</a>）。</li>
+<li>定性例子见 <a href="https://arxiv.org/html/2610.21452v1#S4.F3">Figure 3</a>：说“The house is big and spacious”时，引导版本双手先在胸前抬起再向外打开，表达空间大小。</li>
+</ul>
+<p><img alt="Figure 3 定性对比" src="https://arxiv.org/html/2610.21452v1/seg_3.png" /></p>
+<h3 id="63-mllm-table-3-table-10">6.3 MLLM 评委与人工评测的一致性（<a href="https://arxiv.org/html/2610.21452v1#S5.T3">Table 3</a>，细节见 <a href="https://arxiv.org/html/2610.21452v1#A3.T10">Table 10</a>）<a class="headerlink" href="#63-mllm-table-3-table-10" title="Permanent link">&para;</a></h3>
+<p>下表是系统级 Pearson 相关（<span class="arithmatex">\(n=7\)</span> 个系统）：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>MLLM–MLLM</th>
+<th>人–人</th>
+<th>MLLM–人（两两平均）</th>
+<th>MLLM 均值–人均值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>双工</td>
+<td>0.845</td>
+<td>0.987</td>
+<td>0.806</td>
+<td>0.853</td>
+</tr>
+<tr>
+<td>语义</td>
+<td>0.950</td>
+<td>0.940</td>
+<td>0.904</td>
+<td>0.919</td>
+</tr>
+</tbody>
+</table>
+<p>但<strong>样本级</strong>相关要低得多：MLLM 均值与人均值只有 0.3966（双工）/ 0.5579（语义），人–人也只有 0.6332 / 0.5906。作者的结论是：MLLM 评分可以作为“初步的系统级自动指标”，用于快速比较模型，但还不能替代逐条的人工判断。</p>
+<h3 id="64-table-4">6.4 表情（<a href="https://arxiv.org/html/2610.21452v1#S5.T4">Table 4</a>）<a class="headerlink" href="#64-table-4" title="Permanent link">&para;</a></h3>
+<p>越低越好。LVE、MHD 单位为 mm；FDD 单位为 <span class="arithmatex">\(10^{-2}\)</span> mm，JDD 单位为 <span class="arithmatex">\(10^{-2}\)</span> rad；S/N 表示说话/非说话。</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>LVE</th>
+<th>MHD</th>
+<th>FDD (S/N)</th>
+<th>JDD (S/N)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/search/?query=ARTalk+speech-driven+3D+head+animation&amp;searchtype=title">ARTalk</a></td>
+<td>9.35</td>
+<td>2.07</td>
+<td>26.07/n/a</td>
+<td>1.74/n/a</td>
+</tr>
+<tr>
+<td>MIBURI</td>
+<td>13.52</td>
+<td>2.90</td>
+<td>22.87/n/a</td>
+<td>3.45/n/a</td>
+</tr>
+<tr>
+<td>UniLS</td>
+<td>9.37</td>
+<td>2.06</td>
+<td>19.14/19.88</td>
+<td>1.41/1.79</td>
+</tr>
+<tr>
+<td>DualTalk（额外输入对方的面部）</td>
+<td>12.72</td>
+<td>2.66</td>
+<td>22.54/20.41</td>
+<td>1.08/1.33</td>
+</tr>
+<tr>
+<td>独立生成器</td>
+<td>8.82</td>
+<td>1.90</td>
+<td>14.90/15.16</td>
+<td>1.01/1.26</td>
+</tr>
+<tr>
+<td>ELLSA 2</td>
+<td>8.77</td>
+<td>1.89</td>
+<td>14.44/14.82</td>
+<td><strong>0.98</strong>/1.25</td>
+</tr>
+<tr>
+<td>ELLSA 2 + 引导</td>
+<td><strong>8.74</strong></td>
+<td><strong>1.88</strong></td>
+<td><strong>14.42/14.78</strong></td>
+<td><strong>0.98/1.23</strong></td>
+</tr>
+</tbody>
+</table>
+<p>ELLSA 2 在 6 个面部指标上都超过所有级联基线，也都优于独立生成器。引导只作用于身体和手，但表情也略有改善，说明共享的 Transformer 状态会间接影响面部输出。</p>
+<hr />
+<h2 id="_2">七、存疑与不一致之处<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p><strong>轮次转换其实比 SALMONN-omni 略差，正文没有点明。</strong> SALMONN-omni 的四项 TT 平均是 <span class="arithmatex">\((99.7+99.6+92.8+92.0)/4 = 96.0\%\)</span>，ELLSA 2 是 95.2%。差距主要来自 AlpacaEval（87.9 vs 92.0）。正文用“保留了可靠的对话时机”带过，并没有说这是一次小幅退化。另外，TT 只衡量“提问结束后 2 s 内开口”，语音侧没有评测打断、附和等更难的全双工行为；这些只在手势侧的双工分里体现。</p>
+</li>
+<li>
+<p><strong>联合训练本身并没有提升语义手势，提升几乎全部来自模板。</strong> 不加引导时，ELLSA 2 的人工语义分（2.014）<strong>低于</strong>独立生成器（2.070），和仅说话的 MIBURI（2.014）持平。MLLM 双工分的第一名也是独立生成器（0.318），而不是 ELLSA 2（0.300）。所以“联合优化提升手势质量”这个结论主要建立在人工双工分（3.007 → 3.201）和 <span class="arithmatex">\(A\)</span> 上。</p>
+</li>
+<li>
+<p><strong>语义测试集与模板库存在有利于本方法的选择偏差。</strong> 附录 B.4 写明，71 条语义片段是按“<strong>现有模板库能支持</strong>”筛选的。另外，模板库的源池是 121,054 段录音，和消融里“全量训练池”的数字完全一样，而测试集取自 Seamless 的测试划分。论文没有明确说明模板库是否排除了测试会话，因此无法判断是否可能存在泄漏。</p>
+</li>
+<li>
+<p><strong>调用头的 87.8 F1 不是端到端检测指标。</strong> 它衡量的是：在词典已经匹配到短语的位置（候选条件化），并且在正负平衡的测试集上，判断“这个可用动作是否合适”。召回上限受 2,072 个短语的词典限制，标签也来自 GPT 和 Seed 两个 LLM，而不是人工标注。</p>
+</li>
+<li>
+<p><strong><span class="arithmatex">\(R_{\rm SL}\)</span> 标为“越高越好”值得商榷。</strong> 它只是说话与倾听活跃度之比，并不是越大越自然；论文也没有报告人类参考动作的 <span class="arithmatex">\(R_{\rm SL}\)</span> 是多少。附录 C.2 自己也说它“只衡量相对活跃度”。</p>
+</li>
+<li>
+<p><strong>相关性分析的样本量很小。</strong> 系统级相关只有 <span class="arithmatex">\(n=7\)</span>；GENEA 上 <span class="arithmatex">\(A\)</span> 的验证也只有 7 个系统，附录承认这些只是描述性统计。样本级相关只有 0.40–0.56，说明单条片段上 MLLM 评委并不可靠。</p>
+</li>
+<li>
+<p><strong>发布配置与论文超参不完全一致。</strong> <a href="https://arxiv.org/html/2610.21452v1#A1.T5">Table 5</a> 写的 S2（手势）阶段是学习率 <span class="arithmatex">\(4\times10^{-5}\)</span>、50k 步、全局 batch 256。但发布的 <code>training.json</code> 里 gesture 阶段是学习率 <span class="arithmatex">\(10^{-4}\)</span>、<code>max_steps: 10000</code>，每卡 batch 8 × 梯度累积 2（按 README 的 8 卡计算，全局 batch 是 128）。可能是开源版换了配方，但仓库没有说明。</p>
+</li>
+<li>
+<p><strong>代码里有论文没提到的模块。</strong> <code>modeling_ellsa2.py</code> 中有 <code>ListenerLowRankDelta</code>、<code>ListenerCausalConvGate</code> 和一个基于 <code>motion_backchannel_mask</code> 的“倾听门控”损失（带正样本权重和死区损失），正文和附录都没有描述。它可能是专门针对附和类倾听反应的结构，但论文没有交代，影响可复现性的判断。</p>
+</li>
+<li>
+<p><strong>状态定义前后不统一（论文自己有说明）。</strong> 表情指标的“非说话”包含双方都沉默的帧，而 <span class="arithmatex">\(R_{\rm SL}\)</span> 的“倾听”排除了这种帧。Table 4 的图注写 S/N，附录 E 又写成 S/L，读表时容易混淆。</p>
+</li>
+<li>
+<p><strong>完整模型未开源。</strong> 目前只能复现独立生成器。主干、合成器、语义调用头和 10.78B 的完整权重都要等“录用后”。</p>
+</li>
+</ol>
+<hr />
+<h2 id="_3">八、与对话交互研究的关系<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><strong>1. “语义调用”本质上是一种工具调用，而且给出了一个低延迟的范式。</strong> 把它和全双工模型中的工具调用对照，结构几乎一一对应：</p>
+<table>
+<thead>
+<tr>
+<th>ELLSA 2 的语义调用</th>
+<th>全双工工具调用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>词典匹配：确认有一个可用动作</td>
+<td>确认有一个可用工具（候选生成）</td>
+</tr>
+<tr>
+<td>调用头读主干中间层（第 16/20/24 层），sigmoid 判断“是否适合”</td>
+<td>一个轻量的判定头决定是否调用（不占主干的自回归步）</td>
+</tr>
+<tr>
+<td>从模板库检索示范动作</td>
+<td>执行工具，取回结果</td>
+</tr>
+<tr>
+<td>模板 token 插进<strong>下游生成器</strong>的序列，而不是主干的序列</td>
+<td>工具结果注入负责执行的子模块，而不是塞进主干上下文</td>
+</tr>
+<tr>
+<td>利用 thinker 领先 talker 的时间差，提前准备模板</td>
+<td>利用文本领先语音的时间差，异步执行工具、掩盖延迟</td>
+</tr>
+</tbody>
+</table>
+<p>其中“<strong>whether 和 how 解耦</strong>”以及“<strong>利用超前文本获得提前量</strong>”两点，可以直接借用到异步工具调用的设计里。软标签的构造方式（两个 LLM 独立打分，只保留分歧不超过 1 的样本）也可以用来标注“此处是否应该调用工具”这类没有标准答案的策略数据。</p>
+<p><strong>2. 对“上下文爆炸”问题，它给出了第三种做法：把新模态放进独立的子模型，并单独封顶。</strong> <a href="../Moshi-Face_论文总结/">Moshi-Face</a> 的做法是在每个时间步多加几路并行流，增加的是“宽度”，时间轴长度不变。ELLSA 2 则把手势和表情放进一个 0.5B 的<strong>独立生成器</strong>，它有自己的 20 s 上下文（刷新时保留 3 个块），主干的对话上下文（4,800 token）<strong>一个手势 token 都不用承担</strong>。主干只通过隐状态向生成器单向供给条件。这种“主干 + 带独立短窗口的从属生成器”的结构，可以推广到任何高频、低语义密度的输出流（动作、表情、机器人电机指令等）。代价是生成器只能看到 20 s 的历史，长程的风格一致性要靠风格 prompt 来维持。</p>
+<p><strong>3. 倾听行为必须依赖全双工。</strong> 论文最有说服力的论点是：模型沉默时，说话流换成空向量，倾听流继续驱动点头和表情。轮次制模型在不回答时根本不处理输入，自然做不到这一点。这为“为什么要做全双工”提供了一个语音之外的理由。</p>
+<p><strong>4. 对数字人和机器人脸的直接价值。</strong></p>
+<ul>
+<li><strong>已开源的独立生成器可以单独用</strong>：它只需要双方音频和一段风格参考，输出 SMPL-H 身体 + FLAME 表情，每 0.8 s 一块。可以接在任何全双工语音模型后面做级联，作为 <a href="../../notes/NVIDIA_Audio2Face-3D_仓库总结/">Audio2Face-3D</a> 之外的另一个 avatar 驱动层（A2F 只管脸，而且只看说话人自己的音频）。</li>
+<li>0.8 s 一块意味着动作延迟至少有一个块长，比 A2F 那种帧级流式要粗。</li>
+<li><strong>嘴部 8 维子空间 + 下颌单独编码</strong>这一做法，对机器人口型很有参考价值（参见 <a href="../Lip_Learning_realistic_lip_motions_论文总结/">Lip</a>）：它从几何上保证口型通道不被其他表情挤占，消融显示 LVE 下降了 0.67 mm。</li>
+<li><strong>说话人筛选</strong>的结论（81 人好于 3,401 人）提醒我们：做数字人或机器人的动作数据时，“动作是否清晰、听说差异是否明显”比数据量更重要。</li>
+</ul>
+<p><strong>5. 评测上可以直接借用的东西。</strong></p>
+<ul>
+<li><strong>匹配/不匹配对比式的韵律分 <span class="arithmatex">\(A\)</span></strong>：能防止“乱动刷分”，代码已开源；</li>
+<li><strong>带人类参考的 MLLM 评委</strong>，加上严格的 JSON 校验（每个惩罚都要给时间戳证据，区间不能重复计算），适合做全双工行为的批量回归测试；</li>
+<li>138 条按附和、重叠、双向打断分类的测试集，可以直接拿来评测我们自己的 avatar 层。</li>
+</ul>
+<p><strong>6. 局限</strong>：只有英文的 Seamless Interaction 数据；没有视觉输入（论文自己承认）；模板库只来自单一数据源；完整模型未开源。目前更适合把它当作“架构与评测方法的参考”，可以直接拿来用的只有独立生成器和评测工具。</p>
+<p>本地文件夹根目录还有一份之前做的交互式学习页 ELLSA2_全双工语音手势表情_交互式学习指南.html（仅本地，未发布），可以配合本文阅读。</p>
+<hr />
+<h2 id="_4">九、链接汇总<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>本文</strong>：<a href="https://arxiv.org/abs/2610.21452">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21452v1">PDF</a> ｜ <a href="https://arxiv.org/html/2610.21452v1">HTML</a> ｜ <a href="https://arxiv.org/src/2610.21452v1">TeX 源码</a> ｜ <a href="https://doi.org/10.48550/arXiv.2610.21452">DOI</a> ｜ <a href="https://scholar.google.com/scholar_lookup?arxiv_id=2610.21452">Google Scholar</a> ｜ <a href="https://api.semanticscholar.org/arXiv:2610.21452">Semantic Scholar</a></p>
+<p><strong>代码与权重</strong>：<a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">GitHub ELLSA2 分支</a> ｜ <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/README.md">README</a> ｜ <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/modeling_ellsa2.py">modeling_ellsa2.py</a> ｜ <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/models/vq/factorized_flame_model.py">factorized_flame_model.py</a> ｜ <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/configs/training.json">training.json</a> ｜ <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/evaluation/alignment.py">alignment.py</a> ｜ <a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/evaluation/activity.py">activity.py（评委解析）</a> ｜ <a href="https://github.com/bytedance/SALMONN/tree/ELLSA2/code/evaluation/protocols">评委提示词目录</a> ｜ <a href="https://huggingface.co/tsinghua-ee/ELLSA2">HF 模型</a> ｜ <a href="https://huggingface.co/datasets/tsinghua-ee/ELLSA2_data">HF 数据</a></p>
+<p><strong>章节</strong>：<a href="https://arxiv.org/html/2610.21452v1#S1">§1 引言</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S2">§2 相关工作</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S3.SS1">§3.1 流式手势表情生成</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S3.SS2">§3.2 与语音交互结合</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S3.SS3">§3.3 语义调用与模板引导</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S3.SS4">§3.4 课程训练</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S4.SS1">§4.1 数据</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S4.SS2">§4.2 评测</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S5">§5 结果</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S6">§6 结论</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#bib">参考文献</a></p>
+<p><strong>附录</strong>：<a href="https://arxiv.org/html/2610.21452v1#A1">A 实现细节</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A1.SS4">A.4 语义调用</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A1.SS5">A.5 模板引导</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A1.SS6">A.6 训练配置</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A2">B 数据整理</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A3">C 评测细节</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A4">D 训练数据</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A5">E 消融</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A6">F 局限</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A7">G 提示词全文</a></p>
+<p><strong>图表</strong>：<a href="https://arxiv.org/html/2610.21452v1#S3.F1">Figure 1 架构</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S3.F2">Figure 2 数据流程</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S4.F3">Figure 3 定性对比</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A2.F4">Figure 4 测试集核验界面</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A3.F5">Figure 5 人工评测界面</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S5.T1">Table 1 语音</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S5.T2">Table 2 手势</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S5.T3">Table 3 评委一致性</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#S5.T4">Table 4 表情</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A2.T7">Table 7 模板库漏斗</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A3.T8">Table 8 GENEA 验证</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A5.T12">Table 12 数据消融</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A5.T13">Table 13 面部分词消融</a></p>
+<p><strong>全双工语音模型</strong>：<a href="https://arxiv.org/abs/2410.00037">Moshi</a> ｜ <a href="https://arxiv.org/search/?query=SALMONN-omni&amp;searchtype=title">SALMONN-omni</a> ｜ <a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a> ｜ <a href="https://arxiv.org/abs/2501.01957">VITA-1.5</a> ｜ <a href="https://arxiv.org/search/?query=PersonaPlex&amp;searchtype=title">PersonaPlex</a> ｜ <a href="https://arxiv.org/search/?query=End-to-end+listen%2C+look%2C+speak+and+act&amp;searchtype=title">ELLSA（上一代）</a> ｜ <a href="https://arxiv.org/abs/2412.02612">GLM-4-Voice</a> ｜ <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni</a> ｜ <a href="https://arxiv.org/abs/2504.18425">Kimi-Audio</a> ｜ <a href="https://arxiv.org/abs/2509.06502">FireRedChat</a> ｜ <a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a></p>
+<p><strong>手势与表情生成</strong>：<a href="https://arxiv.org/abs/2506.22554">Seamless Interaction</a>（<a href="https://github.com/facebookresearch/seamless_interaction">GitHub</a>） ｜ <a href="https://arxiv.org/abs/2606.03874">DyaPlex</a> ｜ <a href="https://arxiv.org/abs/2606.30145">FacePlex</a> ｜ <a href="https://arxiv.org/search/?query=MIBURI+interactive+gesture&amp;searchtype=title">MIBURI</a> ｜ <a href="https://arxiv.org/search/?query=ViBES+behaviorally-intelligent&amp;searchtype=title">ViBES</a> ｜ <a href="https://arxiv.org/abs/2401.01885">audio2photoreal</a> ｜ <a href="https://arxiv.org/search/?query=ConvoFusion&amp;searchtype=title">ConvoFusion</a> ｜ <a href="https://arxiv.org/search/?query=GestureLSM&amp;searchtype=title">GestureLSM</a>（<a href="https://github.com/andypinxinliu/GestureLSM">GitHub</a>） ｜ <a href="https://arxiv.org/abs/2401.00374">EMAGE</a> ｜ <a href="https://arxiv.org/abs/2203.05297">BEAT</a> ｜ <a href="https://arxiv.org/abs/2505.15197">Intentional Gesture</a> ｜ <a href="https://arxiv.org/search/?query=Semantic+Gesticulator&amp;searchtype=title">Semantic Gesticulator</a> ｜ <a href="https://arxiv.org/search/?query=SemGes+semantics-aware+co-speech+gesture&amp;searchtype=title">SemGes</a> ｜ <a href="https://arxiv.org/search/?query=DyaDiT&amp;searchtype=title">DyaDiT</a> ｜ <a href="https://arxiv.org/search/?query=UniLS+listening+speaking&amp;searchtype=title">UniLS</a>（<a href="https://github.com/xg-chu/UniLS">GitHub</a>） ｜ <a href="https://arxiv.org/search/?query=DualTalk+dual-speaker&amp;searchtype=title">DualTalk</a> ｜ <a href="https://arxiv.org/search/?query=ARTalk+speech-driven+3D+head+animation&amp;searchtype=title">ARTalk</a> ｜ <a href="https://github.com/RobinWitch/MECo">MECo</a></p>
+<p><strong>表示与组件</strong>：<a href="https://mano.is.tue.mpg.de/">SMPL-H / MANO</a> ｜ <a href="https://github.com/vchoutas/smplx">SMPL-X</a> ｜ <a href="https://flame.is.tue.mpg.de/">FLAME</a> ｜ <a href="https://arxiv.org/abs/2203.01941">RQ-VAE（Lee et al. 2022）</a> ｜ <a href="https://github.com/CyberAgentAILab/KaoLRM">KaoLRM</a> ｜ <a href="https://arxiv.org/abs/2510.25955">SPEAR</a>（<a href="https://huggingface.co/marcoyang/transformer-causal-600m-spear-speech">因果编码器权重</a>） ｜ <a href="https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct">Qwen2.5-0.5B-Instruct</a></p>
+<p><strong>评测</strong>：<a href="https://genea-workshop.github.io/leaderboard/">GENEA 排行榜</a> ｜ <a href="https://arxiv.org/abs/2305.15255">Llama Questions（Spectron）</a> ｜ <a href="https://aclanthology.org/D13-1160/">Web Questions</a> ｜ <a href="https://arxiv.org/abs/1705.03551">TriviaQA</a> ｜ <a href="https://arxiv.org/abs/2410.17196">VoiceBench（AlpacaEval 语音版）</a> ｜ <a href="https://huggingface.co/openai/whisper-large-v3">Whisper-large-v3</a></p>
+<p><strong>本库相关笔记</strong>：<a href="../Moshi-Face_论文总结/">Moshi-Face 论文总结</a> ｜ <a href="../../notes/全双工语音模型对比_上下文与工具调用/">全双工语音模型对比：上下文与工具调用</a> ｜ <a href="../Easy-Turn_论文总结/">Easy Turn 论文总结</a> ｜ <a href="../../notes/NVIDIA_Audio2Face-3D_仓库总结/">NVIDIA Audio2Face-3D 仓库总结</a> ｜ <a href="../FaceFormer_论文总结/">FaceFormer 论文总结</a> ｜ <a href="../Lip_Learning_realistic_lip_motions_论文总结/">Lip 论文总结</a> ｜ <a href="../Emo_Human-robot_facial_coexpression_论文总结/">Emo 论文总结</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Easy Turn">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Easy Turn
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-footer__link md-footer__link--next" aria-label="下一页: 横向对比：上下文与工具调用">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                横向对比：上下文与工具调用
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/hero.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

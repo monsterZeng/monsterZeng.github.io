@@ -59,6 +59,8 @@
       
     
     
+      <link rel="stylesheet" href="./assets/stylesheets/extra.css">
+    
     <script>__md_scope=new URL(".",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
     
       
@@ -199,6 +201,19 @@
     
     <div class="md-container" data-md-component="container">
       
+<section class="nv-hero">
+  <canvas class="nv-hero__canvas" aria-hidden="true"></canvas>
+  <div class="nv-hero__inner md-grid">
+    <p class="nv-hero__eyebrow">全仿生机器人 · 技术阅读</p>
+    <h1 class="nv-hero__title">让机器人<br>听懂、开口、有表情</h1>
+    <p class="nv-hero__lead">全双工语音对话、语音驱动的人脸动画、机器人脸的表情与口型，一份持续更新的论文阅读笔记。</p>
+    <div class="nv-hero__actions">
+      <a class="nv-btn nv-btn--primary" href="#reading">开始阅读</a>
+      <a class="nv-btn" href="https://github.com/monsterZeng" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</section>
+
       
         
           
@@ -209,7 +224,9 @@
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -254,14 +271,10 @@
       
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
   
-  
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
   
   <span class="md-ellipsis">
     
@@ -279,8 +292,6 @@
       <a href="" class="md-nav__link md-nav__link--active">
         
   
-  
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
   
   <span class="md-ellipsis">
     
@@ -301,8 +312,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -311,7 +320,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         全双工语音对话
@@ -322,7 +331,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         语音驱动人脸动画
@@ -333,7 +342,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         机器人脸
@@ -359,6 +368,8 @@
   
     
     
+      
+        
       
         
       
@@ -510,6 +521,33 @@
     
   
   Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./papers/ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2
 
     
   </span>
@@ -832,13 +870,13 @@
             
             
               
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
                 <div class="md-sidebar__scrollwrap">
                   
                     
                     
-                    
-                      
                     
                     
                       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
@@ -855,8 +893,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -865,7 +901,7 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         全双工语音对话
@@ -876,7 +912,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
+  <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         语音驱动人脸动画
@@ -887,7 +923,7 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
+  <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
         机器人脸
@@ -910,6 +946,8 @@
               
                 
 
+  
+
 
 
   
@@ -918,106 +956,78 @@
               
               <article class="md-content__inner md-typeset">
                 <a id="__skip" tabindex="-1"></a>
-                
-                  
+                <div id="reading"></div>
 
-  
-  
-
-
-<h1 id="_1">论文阅读笔记<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p>围绕<strong>全仿生机器人</strong>的技术路线整理的阅读笔记：全双工语音对话、语音驱动的人脸动画、机器人脸的表情与口型。</p>
-<h2 id="_2">全双工语音对话<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>笔记</th>
-<th>一句话</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="papers/Moshi-Face_论文总结/">Moshi-Face</a></td>
-<td>给全双工语音对话模型加上 3D 人脸</td>
-</tr>
-<tr>
-<td><a href="papers/DuplexJev_论文总结/">DuplexJev</a></td>
-<td>不解码的批量语音决策</td>
-</tr>
-<tr>
-<td><a href="papers/Qwen-Audio-Jev_论文总结/">Qwen-Audio-Jev</a></td>
-<td>统一的音频决策接口</td>
-</tr>
-<tr>
-<td><a href="papers/Easy-Turn_论文总结/">Easy Turn</a></td>
-<td>融合声学与语言双模态的全双工轮次检测</td>
-</tr>
-<tr>
-<td><a href="notes/全双工语音模型对比_上下文与工具调用/">横向对比</a></td>
-<td>全双工语音模型的上下文消耗与工具调用</td>
-</tr>
-</tbody>
-</table>
-<h2 id="_3">语音驱动人脸动画<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>笔记</th>
-<th>一句话</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="papers/FaceFormer_论文总结/">FaceFormer</a></td>
-<td>用 Transformer 做语音驱动 3D 人脸动画（CVPR 2022）</td>
-</tr>
-<tr>
-<td><a href="notes/NVIDIA_Audio2Face-3D_仓库总结/">NVIDIA Audio2Face-3D</a></td>
-<td>开源仓库与 SDK 总结</td>
-</tr>
-<tr>
-<td><a href="papers/wav2vec/">wav2vec</a></td>
-<td>语音识别的无监督预训练</td>
-</tr>
-</tbody>
-</table>
-<h2 id="_4">机器人脸<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
-<table>
-<thead>
-<tr>
-<th>笔记</th>
-<th>一句话</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo</a></td>
-<td>人机面部共同表情（Science Robotics 2024）</td>
-</tr>
-<tr>
-<td><a href="papers/Lip_Learning_realistic_lip_motions_论文总结/">Lip</a></td>
-<td>人形机器人脸的逼真口型学习（Science Robotics 2026）</td>
-</tr>
-</tbody>
-</table>
-
-
-
-
-
-
-
-
-
-  
-  
-
-
-
-
-
-
-                
+<h2 id="_1">全双工语音对话<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-audio-lines" viewBox="0 0 24 24"><path d="M2 10v3M6 6v11M10 3v18M14 8v7M18 5v13M22 10v3"/></svg></span> <strong><a href="papers/Moshi-Face_论文总结/">Moshi-Face</a></strong></p>
+<hr />
+<p>给全双工语音对话模型加上 3D 人脸</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-split" viewBox="0 0 24 24"><path d="M16 3h5v5M8 3H3v5"/><path d="M12 22v-8.3a4 4 0 0 0-1.172-2.872L3 3M15 9l6-6"/></svg></span> <strong><a href="papers/DuplexJev_论文总结/">DuplexJev</a></strong></p>
+<hr />
+<p>不解码的批量语音决策</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-ear" viewBox="0 0 24 24"><path d="M6 8.5a6.5 6.5 0 1 1 13 0c0 6-6 6-6 10a3.5 3.5 0 1 1-7 0"/><path d="M15 8.5a2.5 2.5 0 0 0-5 0v1a2 2 0 1 1 0 4"/></svg></span> <strong><a href="papers/Qwen-Audio-Jev_论文总结/">Qwen-Audio-Jev</a></strong></p>
+<hr />
+<p>统一的音频决策接口</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-repeat" viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14M7 22l-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg></span> <strong><a href="papers/Easy-Turn_论文总结/">Easy Turn</a></strong></p>
+<hr />
+<p>融合声学与语言双模态的全双工轮次检测</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-hand" viewBox="0 0 24 24"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></span> <strong><a href="papers/ELLSA2_论文总结/">ELLSA 2</a></strong></p>
+<hr />
+<p>语音、手势、表情一体的全双工对话模型</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-git-compare" viewBox="0 0 24 24"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M13 6h3a2 2 0 0 1 2 2v7M11 18H8a2 2 0 0 1-2-2V9"/></svg></span> <strong><a href="notes/全双工语音模型对比_上下文与工具调用/">横向对比</a></strong></p>
+<hr />
+<p>全双工语音模型的上下文消耗与工具调用</p>
+</li>
+</ul>
+</div>
+<h2 id="_2">语音驱动人脸动画<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-scan-face" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></span> <strong><a href="papers/FaceFormer_论文总结/">FaceFormer</a></strong></p>
+<hr />
+<p>用 Transformer 做语音驱动 3D 人脸动画（CVPR 2022）</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-box" viewBox="0 0 24 24"><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></span> <strong><a href="notes/NVIDIA_Audio2Face-3D_仓库总结/">NVIDIA Audio2Face-3D</a></strong></p>
+<hr />
+<p>开源仓库与 SDK 总结</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-waves" viewBox="0 0 24 24"><path d="M2 12q2.5 2 5 0t5 0 5 0 5 0M2 19q2.5 2 5 0t5 0 5 0 5 0M2 5q2.5 2 5 0t5 0 5 0 5 0"/></svg></span> <strong><a href="papers/wav2vec/">wav2vec</a></strong></p>
+<hr />
+<p>语音识别的无监督预训练</p>
+</li>
+</ul>
+</div>
+<h2 id="_3">机器人脸<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<div class="grid cards">
+<ul>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-smile" viewBox="0 0 24 24"><path d="M15 10V9M16.472 15a6 6 0 0 1-8.943 0M9 10V9"/><circle cx="12" cy="12" r="10"/></svg></span> <strong><a href="papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo</a></strong></p>
+<hr />
+<p>人机面部共同表情（Science Robotics 2024）</p>
+</li>
+<li>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-mic" viewBox="0 0 24 24"><path d="M12 19v3M19 10v2a7 7 0 0 1-14 0v-2"/><rect width="6" height="13" x="9" y="2" rx="3"/></svg></span> <strong><a href="papers/Lip_Learning_realistic_lip_motions_论文总结/">Lip</a></strong></p>
+<hr />
+<p>人形机器人脸的逼真口型学习（Science Robotics 2026）</p>
+</li>
+</ul>
+</div>
               </article>
             </div>
           
@@ -1038,6 +1048,8 @@
         <footer class="md-footer">
   
     
+      
+        
       
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
@@ -1098,6 +1110,8 @@
     
     
       <script src="./assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="./assets/javascripts/hero.js"></script>
       
         <script src="./assets/javascripts/mathjax.js"></script>
       
