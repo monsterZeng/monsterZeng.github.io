@@ -1443,10 +1443,10 @@
 
 <h1 id="faceformer-transformer-3d">FaceFormer：用 Transformer 做语音驱动 3D 人脸动画 —— 论文总结<a class="headerlink" href="#faceformer-transformer-3d" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>原文</strong>：<a href="https://arxiv.org/abs/2112.05329">FaceFormer: Speech-Driven 3D Facial Animation with Transformers</a>（arXiv:2112.05329v4，2022-03-17，<strong>CVPR 2022</strong>）
-<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2112.05329">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2112.05329v4">PDF</a> ｜ <a href="https://openaccess.thecvf.com/content/CVPR2022/html/Fan_FaceFormer_Speech-Driven_3D_Facial_Animation_With_Transformers_CVPR_2022_paper.html">CVPR Open Access</a> ｜ <a href="https://evelynfan.github.io/audio2face/">项目页与补充视频</a> ｜ <a href="https://github.com/EvelynFan/FaceFormer">官方代码 EvelynFan/FaceFormer</a>
-<strong>作者</strong>：Yingruo Fan、Zhaojiang Lin、Jun Saito、Wenping Wang、Taku Komura（通讯）
-<strong>机构</strong>：香港大学、港科大、Adobe Research、Texas A&amp;M
+<p><strong>原文</strong>：<a href="https://arxiv.org/abs/2112.05329">FaceFormer: Speech-Driven 3D Facial Animation with Transformers</a>（arXiv:2112.05329v4，2022-03-17，<strong>CVPR 2022</strong>）<br />
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2112.05329">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2112.05329v4">PDF</a> ｜ <a href="https://openaccess.thecvf.com/content/CVPR2022/html/Fan_FaceFormer_Speech-Driven_3D_Facial_Animation_With_Transformers_CVPR_2022_paper.html">CVPR Open Access</a> ｜ <a href="https://evelynfan.github.io/audio2face/">项目页与补充视频</a> ｜ <a href="https://github.com/EvelynFan/FaceFormer">官方代码 EvelynFan/FaceFormer</a><br />
+<strong>作者</strong>：Yingruo Fan、Zhaojiang Lin、Jun Saito、Wenping Wang、Taku Komura（通讯）<br />
+<strong>机构</strong>：香港大学、港科大、Adobe Research、Texas A&amp;M<br />
 <strong>说明</strong>：arXiv 没有这篇的 HTML 版，下文的章节链接都指向 PDF 页码（<code>#page=N</code>，浏览器内置阅读器可以直接跳转）。图是我从 PDF 截出来的，放在 <a href="../faceformer_figs/">faceformer_figs/</a> 里。代码链接固定在提交 <a href="https://github.com/EvelynFan/FaceFormer/tree/dfaea81983665b22b99af336a80574208cfcc099"><code>dfaea81</code></a>。</p>
 </blockquote>
 <hr />
@@ -1583,15 +1583,15 @@
 <div class="arithmatex">\[
 k = \left\lceil \frac{f_a}{f_m} \right\rceil
 \]</div>
-<p>所以音频 token 数是 <span class="arithmatex">\(kT\)</span>，正好能和 <span class="arithmatex">\(T\)</span> 个人脸帧一一按块对齐。
-- <strong>Transformer</strong>：12 层、768 维、12 头，最后接一个随机初始化的线性层降到 <span class="arithmatex">\(d\)</span> 维。
+<p>所以音频 token 数是 <span class="arithmatex">\(kT\)</span>，正好能和 <span class="arithmatex">\(T\)</span> 个人脸帧一一按块对齐。<br />
+- <strong>Transformer</strong>：12 层、768 维、12 头，最后接一个随机初始化的线性层降到 <span class="arithmatex">\(d\)</span> 维。<br />
 - <strong>冻结与微调</strong>：只冻结 TCN，其余全部和解码器一起训练，学习率相同。设 TCN 参数为 <span class="arithmatex">\(\phi\)</span>、上层参数为 <span class="arithmatex">\(\psi\)</span>、解码器参数为 <span class="arithmatex">\(\omega\)</span>，则</p>
 <div class="arithmatex">\[
 \phi \leftarrow \phi,\qquad
 \psi \leftarrow \psi - \eta\,\mathrm{Adam}\!\left(\nabla_{\psi}\mathcal{L}\right),\qquad
 \omega \leftarrow \omega - \eta\,\mathrm{Adam}\!\left(\nabla_{\omega}\mathcal{L}\right),\qquad \eta = 10^{-4}
 \]</div>
-<p>按 config 算，冻结约 <span class="arithmatex">\(4.2\)</span>M，参与训练约 <span class="arithmatex">\(90.2\)</span>M。
+<p>按 config 算，冻结约 <span class="arithmatex">\(4.2\)</span>M，参与训练约 <span class="arithmatex">\(90.2\)</span>M。<br />
 - 编码器的自注意力是<strong>双向、全序列</strong>的。<a href="https://arxiv.org/pdf/2112.05329v4#page=7">Figure 3(a)</a> 显示它除了对角线附近，还会看较远的过去帧和<strong>未来帧</strong>。论文把这当作优点（长程上下文），但这也直接决定了模型不能流式运行，见第七节。</p>
 </li>
 </ul>
@@ -2015,6 +2015,8 @@ C_t \approx \underbrace{t \cdot d \cdot 3V}_{\text{Motion Decoder 投影}} + \un
         <script src="../../assets/javascripts/hero.js"></script>
       
         <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
       
         <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
       

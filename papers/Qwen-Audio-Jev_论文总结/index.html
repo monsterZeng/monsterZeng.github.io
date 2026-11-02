@@ -1361,9 +1361,9 @@
 
 <h1 id="qwen-audio-jev">Qwen-Audio-Jev：统一的音频决策接口 —— 论文总结<a class="headerlink" href="#qwen-audio-jev" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>原文</strong>：<a href="https://arxiv.org/html/2610.21614v2">Qwen-Audio-Jev: A Unified Interface for Audio Decisions</a>（arXiv:2610.21614v2，cs.SD，2026-10-22）
-<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2610.21614v2">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21614v2">PDF 下载</a> ｜ <a href="https://arxiv.org/html/2610.21614v2">HTML 全文</a>
-<strong>机构</strong>：Alibaba Group · Token Foundry（作者 22 人，按姓氏字母排序，见 <a href="https://arxiv.org/html/2610.21614v2#S6">第 6 节</a>）
+<p><strong>原文</strong>：<a href="https://arxiv.org/html/2610.21614v2">Qwen-Audio-Jev: A Unified Interface for Audio Decisions</a>（arXiv:2610.21614v2，cs.SD，2026-10-22）<br />
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2610.21614v2">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21614v2">PDF 下载</a> ｜ <a href="https://arxiv.org/html/2610.21614v2">HTML 全文</a><br />
+<strong>机构</strong>：Alibaba Group · Token Foundry（作者 22 人，按姓氏字母排序，见 <a href="https://arxiv.org/html/2610.21614v2#S6">第 6 节</a>）<br />
 <strong>许可</strong>：CC BY 4.0</p>
 </blockquote>
 <hr />
@@ -1449,8 +1449,8 @@
 </tr>
 </tbody>
 </table>
-<p>关键设计点：
-- Choice 的输出位置<strong>没有固定全局类别含义</strong>，含义由每个问题提供的候选描述决定（同一索引在一个问题里是“场景”，在另一个里是“情绪”）。
+<p>关键设计点：<br />
+- Choice 的输出位置<strong>没有固定全局类别含义</strong>，含义由每个问题提供的候选描述决定（同一索引在一个问题里是“场景”，在另一个里是“情绪”）。<br />
 - Choice / Score 是固定容量的投影，候选/等级不足时，<strong>只对有效位置做归一化</strong>，多余位置被屏蔽。</p>
 <hr />
 <h2 id="3-figure-2-svg">四、训练（<a href="https://arxiv.org/html/2610.21614v2#S3">§3</a>，流程图见 <a href="https://arxiv.org/html/2610.21614v2#S3.F2">Figure 2</a> / <a href="https://arxiv.org/html/2610.21614v2/training.svg">SVG 原图</a>）<a class="headerlink" href="#3-figure-2-svg" title="Permanent link">&para;</a></h2>
@@ -1683,22 +1683,22 @@
 </ul>
 <hr />
 <h2 id="_5">九、相关链接汇总<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p><strong>本文</strong>
-- <a href="https://arxiv.org/html/2610.21614v2">HTML 全文</a> ｜ <a href="https://arxiv.org/abs/2610.21614v2">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21614v2">PDF</a>
+<p><strong>本文</strong><br />
+- <a href="https://arxiv.org/html/2610.21614v2">HTML 全文</a> ｜ <a href="https://arxiv.org/abs/2610.21614v2">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21614v2">PDF</a><br />
 - <a href="https://arxiv.org/html/2610.21614v2/model.svg">架构图 model.svg</a> ｜ <a href="https://arxiv.org/html/2610.21614v2/training.svg">训练流程图 training.svg</a></p>
-<p><strong>直接相关的前置工作</strong>
-- <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">Introducing System One Models &amp; Jev（TypeSafe AI 博客，Jev 原语来源）</a>
-- <a href="https://arxiv.org/abs/2610.01293">AudioJev: Direct Audio Decisions with Order-Calibrated Probabilities（arXiv:2610.01293）</a>
+<p><strong>直接相关的前置工作</strong><br />
+- <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">Introducing System One Models &amp; Jev（TypeSafe AI 博客，Jev 原语来源）</a><br />
+- <a href="https://arxiv.org/abs/2610.01293">AudioJev: Direct Audio Decisions with Order-Calibrated Probabilities（arXiv:2610.01293）</a><br />
 - <a href="https://qwenaudio.github.io/qwen-audio-3.1-asr/report-assets/technical-report.pdf">Qwen-Audio-3.1-ASR 技术报告（骨干模型）</a></p>
-<p><strong>音频大模型背景</strong>
-- <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni 技术报告</a> ｜ <a href="https://arxiv.org/abs/2509.17765">Qwen3-Omni 技术报告</a> ｜ <a href="https://arxiv.org/abs/2604.15804">Qwen3.5-Omni 技术报告</a>
+<p><strong>音频大模型背景</strong><br />
+- <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni 技术报告</a> ｜ <a href="https://arxiv.org/abs/2509.17765">Qwen3-Omni 技术报告</a> ｜ <a href="https://arxiv.org/abs/2604.15804">Qwen3.5-Omni 技术报告</a><br />
 - <a href="https://openreview.net/forum?id=14rn7HpKVk">SALMONN</a> ｜ <a href="https://arxiv.org/abs/2305.10790">LTU: Listen, Think, and Understand</a> ｜ <a href="https://aclanthology.org/2024.emnlp-main.361/">GAMA</a></p>
-<p><strong>方法论参考</strong>
-- <a href="https://proceedings.mlr.press/v70/guo17a.html">On Calibration of Modern Neural Networks（Guo et al., 2017）</a>
+<p><strong>方法论参考</strong><br />
+- <a href="https://proceedings.mlr.press/v70/guo17a.html">On Calibration of Modern Neural Networks（Guo et al., 2017）</a><br />
 - <a href="https://doi.org/10.1198/016214506000001437">Strictly Proper Scoring Rules（Gneiting &amp; Raftery, 2007）</a></p>
-<p><strong>评测基准</strong>
-- Choice：<a href="https://arxiv.org/abs/2211.02289">CochlScene</a> · <a href="https://arxiv.org/abs/1704.01279">NSynth</a> · <a href="https://doi.org/10.1049/sil2.12233">NonSpeech7k</a> · <a href="https://arxiv.org/abs/2010.09275">DiDiSpeech</a> · <a href="https://aclanthology.org/P19-1050/">MELD</a> · <a href="https://arxiv.org/abs/2410.19168">MMAU</a> · <a href="https://arxiv.org/abs/2506.04779">MMSU</a> · <a href="https://arxiv.org/abs/2505.13032">MMAR</a>
-- Noul：<a href="https://arxiv.org/abs/1706.08612">VoxCeleb</a> · <a href="https://arxiv.org/abs/2204.09634">Clotho-AQA</a> · <a href="https://www.isca-archive.org/interspeech_2025/li25ba_interspeech.html">PodSarc</a> · <a href="https://www.isca-archive.org/interspeech_2022/muller22_interspeech.html">In-the-Wild</a>
+<p><strong>评测基准</strong><br />
+- Choice：<a href="https://arxiv.org/abs/2211.02289">CochlScene</a> · <a href="https://arxiv.org/abs/1704.01279">NSynth</a> · <a href="https://doi.org/10.1049/sil2.12233">NonSpeech7k</a> · <a href="https://arxiv.org/abs/2010.09275">DiDiSpeech</a> · <a href="https://aclanthology.org/P19-1050/">MELD</a> · <a href="https://arxiv.org/abs/2410.19168">MMAU</a> · <a href="https://arxiv.org/abs/2506.04779">MMSU</a> · <a href="https://arxiv.org/abs/2505.13032">MMAR</a><br />
+- Noul：<a href="https://arxiv.org/abs/1706.08612">VoxCeleb</a> · <a href="https://arxiv.org/abs/2204.09634">Clotho-AQA</a> · <a href="https://www.isca-archive.org/interspeech_2025/li25ba_interspeech.html">PodSarc</a> · <a href="https://www.isca-archive.org/interspeech_2022/muller22_interspeech.html">In-the-Wild</a><br />
 - Score：<a href="https://doi.org/10.21437/Interspeech.2021-299">NISQA</a> · <a href="https://arxiv.org/abs/2105.02373">BVCC / VoiceMOS</a></p>
 
 
@@ -1815,6 +1815,8 @@
         <script src="../../assets/javascripts/hero.js"></script>
       
         <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
       
         <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
       

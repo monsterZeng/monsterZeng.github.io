@@ -1549,12 +1549,12 @@
 
 <h1 id="ellsa-2">ELLSA 2：语音、手势、表情一体的全双工对话模型 —— 论文总结<a class="headerlink" href="#ellsa-2" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>原文</strong>：<a href="https://arxiv.org/html/2610.21452v1">Full-Duplex Interaction with Speech, Expressions and Gestures</a>（arXiv:2610.21452v1，eess.AS，2026-10-15，37 页 5 图）
-<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2610.21452v1">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21452v1">PDF</a> ｜ <a href="https://arxiv.org/html/2610.21452v1">HTML 全文</a> ｜ <a href="https://arxiv.org/src/2610.21452v1">TeX 源码</a> ｜ <a href="https://doi.org/10.48550/arXiv.2610.21452">DOI</a>
-<strong>作者</strong>：Siyin Wang、Wenyi Yu、Terumi Chiba、Xianzhao Chen、Xiaohai Tian、Jun Zhang、Lu Lu、Chao Zhang*（*通讯作者）
-<strong>机构</strong>：清华大学电子系（张超组，即 SALMONN 团队）、字节跳动
-<strong>开源</strong>：<a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">GitHub: bytedance/SALMONN 的 ELLSA2 分支</a>（Apache-2.0）｜ <a href="https://huggingface.co/tsinghua-ee/ELLSA2">HF 模型 tsinghua-ee/ELLSA2</a> ｜ <a href="https://huggingface.co/datasets/tsinghua-ee/ELLSA2_data">HF 数据 tsinghua-ee/ELLSA2_data</a>
-<strong>开源范围（2026-11-02 查看）</strong>：只放出了<strong>独立的手势-表情生成器</strong>（standalone generator）、数据筛选与评测流水线、138 条人工核验测试集。完整的 10.78B ELLSA 2（含对话主干、语音合成器、语义调用头）<strong>没有开源</strong>，论文说“录用后发布”。
+<p><strong>原文</strong>：<a href="https://arxiv.org/html/2610.21452v1">Full-Duplex Interaction with Speech, Expressions and Gestures</a>（arXiv:2610.21452v1，eess.AS，2026-10-15，37 页 5 图）<br />
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2610.21452v1">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2610.21452v1">PDF</a> ｜ <a href="https://arxiv.org/html/2610.21452v1">HTML 全文</a> ｜ <a href="https://arxiv.org/src/2610.21452v1">TeX 源码</a> ｜ <a href="https://doi.org/10.48550/arXiv.2610.21452">DOI</a><br />
+<strong>作者</strong>：Siyin Wang、Wenyi Yu、Terumi Chiba、Xianzhao Chen、Xiaohai Tian、Jun Zhang、Lu Lu、Chao Zhang*（*通讯作者）<br />
+<strong>机构</strong>：清华大学电子系（张超组，即 SALMONN 团队）、字节跳动<br />
+<strong>开源</strong>：<a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">GitHub: bytedance/SALMONN 的 ELLSA2 分支</a>（Apache-2.0）｜ <a href="https://huggingface.co/tsinghua-ee/ELLSA2">HF 模型 tsinghua-ee/ELLSA2</a> ｜ <a href="https://huggingface.co/datasets/tsinghua-ee/ELLSA2_data">HF 数据 tsinghua-ee/ELLSA2_data</a><br />
+<strong>开源范围（2026-11-02 查看）</strong>：只放出了<strong>独立的手势-表情生成器</strong>（standalone generator）、数据筛选与评测流水线、138 条人工核验测试集。完整的 10.78B ELLSA 2（含对话主干、语音合成器、语义调用头）<strong>没有开源</strong>，论文说“录用后发布”。<br />
 <strong>名字</strong>：ELLSA = <em>Expressive LLM that Listens, Speaks, and Acts</em>。上一代 ELLSA（<a href="https://arxiv.org/search/?query=End-to-end+listen%2C+look%2C+speak+and+act&amp;searchtype=title">End-to-end listen, look, speak and act</a>，ICLR 2026）做的是视觉感知和机械臂操作，这一代转向手势和表情。</p>
 </blockquote>
 <hr />
@@ -1611,7 +1611,7 @@
     GEN[手势-表情生成器&lt;br/&gt;Qwen2.5-0.5B, 每 0.8 s] --&gt; CODE[18 路 RVQ 码&lt;br/&gt;上身6 手6 脸4 嘴2]
     CODE --&gt; DEC[RVQ-VAE 解码&lt;br/&gt;SMPL-H + FLAME, 30 Hz]</code></pre>
 <h3 id="31-31-a1a2">3.1 流式、对话感知的手势-表情生成器（<a href="https://arxiv.org/html/2610.21452v1#S3.SS1">§3.1</a>，<a href="https://arxiv.org/html/2610.21452v1#A1.SS1">附录 A.1–A.2</a>）<a class="headerlink" href="#31-31-a1a2" title="Permanent link">&para;</a></h3>
-<p>**“对话感知”<strong>指生成时同时看模型自己的语音和对方的语音；</strong>“流式”**指可以在线逐块生成，满足实时交互的延迟要求。两者都通过“按块交错的自回归语言建模”实现：</p>
+<p>“<strong>对话感知</strong>”指生成时同时看模型自己的语音和对方的语音；“<strong>流式</strong>”指可以在线逐块生成，满足实时交互的延迟要求。两者都通过“按块交错的自回归语言建模”实现：</p>
 <ul>
 <li><strong>块长 0.8 s</strong>。每块内的序列顺序是：说话音频 → 倾听音频 → 手势/表情 token。因果注意力天然支持流式推理。</li>
 <li><strong>动作表示</strong>：身体用 <a href="https://mano.is.tue.mpg.de/">SMPL-H</a>，脸用 <a href="https://flame.is.tue.mpg.de/">FLAME</a>。目标拆成上半身、双手、面部三部分，各自用一个区域专用的 RVQ-VAE（残差向量量化，参见 <a href="https://arxiv.org/abs/2203.01941">Lee et al. 2022</a>）编码。<strong>下半身不建模</strong>，因为视频里经常看不到，监督不可靠（沿用 <a href="https://arxiv.org/search/?query=DyaDiT&amp;searchtype=title">DyaDiT</a> 的观察）。</li>
@@ -2688,6 +2688,8 @@ D_0 = 0.45T + 0.45P + 0.10V, \qquad S_0 = \operatorname{clip}(0.35V + 0.45M + 0.
         <script src="../../assets/javascripts/hero.js"></script>
       
         <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
       
         <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
       

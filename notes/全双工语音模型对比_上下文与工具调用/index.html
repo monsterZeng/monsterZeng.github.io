@@ -1271,9 +1271,9 @@
 
 <h1 id="_1">全双工语音模型横向对比：上下文消耗与工具调用<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <blockquote>
-<p><strong>整理日期</strong>：2026-10-27
-<strong>关注问题</strong>：语音进、语音出、能实时用工具的全双工模型，会不会把上下文窗口撑爆？各家框架怎么应对？
-<strong>覆盖范围</strong>：Moshi 系（含 PersonaPlex、Hibiki、MoshiRAG、KAME 等）、SALMONN-omni 系（v1 / v2 / SALMONN-duo）、模块化双工（Freeze-Omni、MinMo、VITA）、时分交错单序列（SyncLLM、OmniFlatten、BayLing-Duplex、MiniCPM-o 4.5）、Thinker-Talker（Qwen2.5/3/3.5-Omni）、轮次式基线（GLM-4-Voice、Step-Audio 2、Kimi-Audio），以及商用 API（OpenAI GPT-Live / gpt-realtime、Gemini Live、Qwen-Omni-Realtime）。
+<p><strong>整理日期</strong>：2026-10-27<br />
+<strong>关注问题</strong>：语音进、语音出、能实时用工具的全双工模型，会不会把上下文窗口撑爆？各家框架怎么应对？<br />
+<strong>覆盖范围</strong>：Moshi 系（含 PersonaPlex、Hibiki、MoshiRAG、KAME 等）、SALMONN-omni 系（v1 / v2 / SALMONN-duo）、模块化双工（Freeze-Omni、MinMo、VITA）、时分交错单序列（SyncLLM、OmniFlatten、BayLing-Duplex、MiniCPM-o 4.5）、Thinker-Talker（Qwen2.5/3/3.5-Omni）、轮次式基线（GLM-4-Voice、Step-Audio 2、Kimi-Audio），以及商用 API（OpenAI GPT-Live / gpt-realtime、Gemini Live、Qwen-Omni-Realtime）。<br />
 <strong>可信度标注</strong>：数字已对照 arXiv HTML 原文或官方文档核对。<strong>[推算]</strong> 表示根据原文参数算出来的值，原文没有直接给出；<strong>[存疑]</strong> 表示原文没写清楚，或者只读到了摘要。</p>
 </blockquote>
 <hr />
@@ -1750,46 +1750,46 @@
 </ul>
 <hr />
 <h2 id="_9">八、链接汇总<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
-<p><strong>Moshi 系</strong>
-- Moshi：<a href="https://arxiv.org/abs/2410.00037">abs</a> ｜ <a href="https://arxiv.org/html/2410.00037">HTML</a> ｜ <a href="https://github.com/kyutai-labs/moshi">GitHub</a>
-- Hibiki：<a href="https://arxiv.org/html/2502.03382">HTML</a> ｜ <a href="https://github.com/kyutai-labs/hibiki">GitHub</a>
-- Unmute / DSM：<a href="https://arxiv.org/html/2509.08753">HTML</a> ｜ <a href="https://github.com/kyutai-labs/delayed-streams-modeling">GitHub</a> ｜ <a href="https://kyutai.org/unmute/">Unmute</a>
-- MoshiRAG：<a href="https://arxiv.org/html/2604.12928">HTML</a> ｜ <a href="https://github.com/kyutai-labs/moshi-rag">GitHub</a> ｜ <a href="https://kyutai.org/blog/2026-04-30-moshi-rag">博客</a>
-- PersonaPlex：<a href="https://arxiv.org/html/2602.06053v1">HTML</a> ｜ <a href="https://huggingface.co/nvidia/personaplex-7b-v1">HF</a> ｜ <a href="https://github.com/NVIDIA/personaplex">GitHub</a>
-- KAME：<a href="https://arxiv.org/html/2510.02327v2">HTML</a> ｜ <a href="https://github.com/SakanaAI/kame">GitHub</a>
-- Context Spanning：<a href="https://arxiv.org/html/2609.33443v1">HTML</a> ｜ <a href="https://github.com/mindlogic-ai/ContextSpanning">GitHub</a>
-- FLM-Audio：<a href="https://arxiv.org/html/2509.02521v2">HTML</a> ｜ <a href="https://github.com/cofe-ai/flm-audio">GitHub</a> ｜ <a href="https://huggingface.co/CofeAI/FLM-Audio">HF</a>
+<p><strong>Moshi 系</strong><br />
+- Moshi：<a href="https://arxiv.org/abs/2410.00037">abs</a> ｜ <a href="https://arxiv.org/html/2410.00037">HTML</a> ｜ <a href="https://github.com/kyutai-labs/moshi">GitHub</a><br />
+- Hibiki：<a href="https://arxiv.org/html/2502.03382">HTML</a> ｜ <a href="https://github.com/kyutai-labs/hibiki">GitHub</a><br />
+- Unmute / DSM：<a href="https://arxiv.org/html/2509.08753">HTML</a> ｜ <a href="https://github.com/kyutai-labs/delayed-streams-modeling">GitHub</a> ｜ <a href="https://kyutai.org/unmute/">Unmute</a><br />
+- MoshiRAG：<a href="https://arxiv.org/html/2604.12928">HTML</a> ｜ <a href="https://github.com/kyutai-labs/moshi-rag">GitHub</a> ｜ <a href="https://kyutai.org/blog/2026-04-30-moshi-rag">博客</a><br />
+- PersonaPlex：<a href="https://arxiv.org/html/2602.06053v1">HTML</a> ｜ <a href="https://huggingface.co/nvidia/personaplex-7b-v1">HF</a> ｜ <a href="https://github.com/NVIDIA/personaplex">GitHub</a><br />
+- KAME：<a href="https://arxiv.org/html/2510.02327v2">HTML</a> ｜ <a href="https://github.com/SakanaAI/kame">GitHub</a><br />
+- Context Spanning：<a href="https://arxiv.org/html/2609.33443v1">HTML</a> ｜ <a href="https://github.com/mindlogic-ai/ContextSpanning">GitHub</a><br />
+- FLM-Audio：<a href="https://arxiv.org/html/2509.02521v2">HTML</a> ｜ <a href="https://github.com/cofe-ai/flm-audio">GitHub</a> ｜ <a href="https://huggingface.co/CofeAI/FLM-Audio">HF</a><br />
 - Kyutai 论文列表：<a href="https://kyutai.org/papers/">kyutai.org/papers</a></p>
-<p><strong>SALMONN-omni 系</strong>
-- v1：<a href="https://arxiv.org/abs/2411.18138">abs</a> ｜ <a href="https://arxiv.org/html/2411.18138v1">HTML</a>
-- v2：<a href="https://arxiv.org/abs/2505.17060">abs</a> ｜ <a href="https://arxiv.org/html/2505.17060">HTML</a> ｜ <a href="https://neurips.cc/virtual/2025/poster/119430">NeurIPS 2025</a> ｜ <a href="https://github.com/bytedance/SALMONN">GitHub (SALMONN)</a>
+<p><strong>SALMONN-omni 系</strong><br />
+- v1：<a href="https://arxiv.org/abs/2411.18138">abs</a> ｜ <a href="https://arxiv.org/html/2411.18138v1">HTML</a><br />
+- v2：<a href="https://arxiv.org/abs/2505.17060">abs</a> ｜ <a href="https://arxiv.org/html/2505.17060">HTML</a> ｜ <a href="https://neurips.cc/virtual/2025/poster/119430">NeurIPS 2025</a> ｜ <a href="https://github.com/bytedance/SALMONN">GitHub (SALMONN)</a><br />
 - SALMONN-duo：<a href="https://arxiv.org/html/2609.34247v1">HTML</a></p>
-<p><strong>模块化 / 时分交错</strong>
-- Freeze-Omni：<a href="https://arxiv.org/html/2411.00774">HTML</a> ｜ <a href="https://freeze-omni.github.io/">项目页</a>
-- MinMo：<a href="https://arxiv.org/html/2501.06282">HTML</a> ｜ <a href="https://funaudiollm.github.io/minmo">项目页</a>
-- VITA-1.0：<a href="https://arxiv.org/html/2408.05211">HTML</a> ｜ VITA-1.5：<a href="https://arxiv.org/html/2501.01957">HTML</a> ｜ <a href="https://github.com/VITA-MLLM/VITA">GitHub</a> ｜ VITA-Audio：<a href="https://arxiv.org/abs/2505.03739">abs</a>
-- SyncLLM：<a href="https://arxiv.org/html/2409.15594">HTML</a> ｜ <a href="https://syncllm.cs.washington.edu/">项目页</a>
-- OmniFlatten：<a href="https://arxiv.org/html/2410.17799">HTML</a> ｜ <a href="https://omniflatten.github.io/">Demo</a>
-- LSLM：<a href="https://arxiv.org/html/2408.02622">HTML</a>
-- BayLing-Duplex：<a href="https://arxiv.org/html/2606.14528">HTML</a> ｜ <a href="https://github.com/BayLing-Models/BayLing-Duplex">GitHub</a>
-- MiniCPM-o 4.5：<a href="https://arxiv.org/html/2604.27393">HTML</a> ｜ MiniCPM-o 2.6：<a href="https://huggingface.co/openbmb/MiniCPM-o-2_6">HF</a>
-- NemotronLabs VoiceChat：<a href="https://arxiv.org/html/2609.21967v1">HTML</a> ｜ <a href="https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B">HF</a>
-- 前后端工具调用：<a href="https://arxiv.org/html/2609.19334">2609.19334</a>
-- DuplexOmni：<a href="https://arxiv.org/html/2606.09186v1">HTML</a>
+<p><strong>模块化 / 时分交错</strong><br />
+- Freeze-Omni：<a href="https://arxiv.org/html/2411.00774">HTML</a> ｜ <a href="https://freeze-omni.github.io/">项目页</a><br />
+- MinMo：<a href="https://arxiv.org/html/2501.06282">HTML</a> ｜ <a href="https://funaudiollm.github.io/minmo">项目页</a><br />
+- VITA-1.0：<a href="https://arxiv.org/html/2408.05211">HTML</a> ｜ VITA-1.5：<a href="https://arxiv.org/html/2501.01957">HTML</a> ｜ <a href="https://github.com/VITA-MLLM/VITA">GitHub</a> ｜ VITA-Audio：<a href="https://arxiv.org/abs/2505.03739">abs</a><br />
+- SyncLLM：<a href="https://arxiv.org/html/2409.15594">HTML</a> ｜ <a href="https://syncllm.cs.washington.edu/">项目页</a><br />
+- OmniFlatten：<a href="https://arxiv.org/html/2410.17799">HTML</a> ｜ <a href="https://omniflatten.github.io/">Demo</a><br />
+- LSLM：<a href="https://arxiv.org/html/2408.02622">HTML</a><br />
+- BayLing-Duplex：<a href="https://arxiv.org/html/2606.14528">HTML</a> ｜ <a href="https://github.com/BayLing-Models/BayLing-Duplex">GitHub</a><br />
+- MiniCPM-o 4.5：<a href="https://arxiv.org/html/2604.27393">HTML</a> ｜ MiniCPM-o 2.6：<a href="https://huggingface.co/openbmb/MiniCPM-o-2_6">HF</a><br />
+- NemotronLabs VoiceChat：<a href="https://arxiv.org/html/2609.21967v1">HTML</a> ｜ <a href="https://huggingface.co/nvidia/NVIDIA-NemotronLabs-VoiceChat-11B">HF</a><br />
+- 前后端工具调用：<a href="https://arxiv.org/html/2609.19334">2609.19334</a><br />
+- DuplexOmni：<a href="https://arxiv.org/html/2606.09186v1">HTML</a><br />
 - Easy Turn（外挂话轮检测器）：<a href="https://arxiv.org/abs/2509.23938">abs</a> ｜ <a href="https://huggingface.co/ASLP-lab/Easy-Turn">HF</a></p>
-<p><strong>Thinker-Talker / 轮次式</strong>
-- Qwen2.5-Omni：<a href="https://arxiv.org/html/2503.20215">HTML</a> ｜ Qwen3-Omni：<a href="https://arxiv.org/html/2509.17765">HTML</a> ｜ Qwen3.5-Omni：<a href="https://arxiv.org/html/2604.15804v1">HTML</a>
-- GLM-4-Voice：<a href="https://arxiv.org/html/2412.02612">HTML</a> ｜ Step-Audio 2：<a href="https://arxiv.org/html/2507.16632">HTML</a> ｜ Kimi-Audio：<a href="https://arxiv.org/html/2504.18425">HTML</a>
+<p><strong>Thinker-Talker / 轮次式</strong><br />
+- Qwen2.5-Omni：<a href="https://arxiv.org/html/2503.20215">HTML</a> ｜ Qwen3-Omni：<a href="https://arxiv.org/html/2509.17765">HTML</a> ｜ Qwen3.5-Omni：<a href="https://arxiv.org/html/2604.15804v1">HTML</a><br />
+- GLM-4-Voice：<a href="https://arxiv.org/html/2412.02612">HTML</a> ｜ Step-Audio 2：<a href="https://arxiv.org/html/2507.16632">HTML</a> ｜ Kimi-Audio：<a href="https://arxiv.org/html/2504.18425">HTML</a><br />
 - LLaMA-Omni 2：<a href="https://arxiv.org/abs/2505.02625">abs</a> ｜ Baichuan-Audio：<a href="https://arxiv.org/abs/2502.17239">abs</a></p>
-<p><strong>长对话 / 分析类</strong>
-- Why Full-Duplex Speech Models Collapse in Long Conversations：<a href="https://arxiv.org/html/2610.32349v1">HTML</a>
-- How Should LLMs Listen While Speaking?：<a href="https://arxiv.org/html/2605.10199">HTML</a>
-- FLAIR（The Silent Thought）：<a href="https://arxiv.org/html/2603.17837">HTML</a>
-- Listen-Write-Speak：<a href="https://arxiv.org/html/2606.07547">HTML</a>
+<p><strong>长对话 / 分析类</strong><br />
+- Why Full-Duplex Speech Models Collapse in Long Conversations：<a href="https://arxiv.org/html/2610.32349v1">HTML</a><br />
+- How Should LLMs Listen While Speaking?：<a href="https://arxiv.org/html/2605.10199">HTML</a><br />
+- FLAIR（The Silent Thought）：<a href="https://arxiv.org/html/2603.17837">HTML</a><br />
+- Listen-Write-Speak：<a href="https://arxiv.org/html/2606.07547">HTML</a><br />
 - 全双工综述：<a href="https://arxiv.org/html/2606.19453">HTML</a></p>
-<p><strong>商用文档</strong>
-- OpenAI：<a href="https://openai.com/index/introducing-gpt-live">GPT-Live 发布</a> ｜ <a href="https://developers.openai.com/api/docs/guides/live">Live 指南</a> ｜ <a href="https://developers.openai.com/api/docs/guides/live-delegation">委托</a> ｜ <a href="https://developers.openai.com/api/docs/guides/live-conversations#manage-longer-conversations">长对话管理</a> ｜ <a href="https://platform.openai.com/docs/guides/realtime-costs#truncation">Realtime 成本与截断</a> ｜ <a href="https://developers.openai.com/api/docs/models/gpt-realtime">gpt-realtime 模型页</a>
-- Google：<a href="https://ai.google.dev/gemini-api/docs/live-guide#context-window">Live 指南</a> ｜ <a href="https://ai.google.dev/gemini-api/docs/live-session#maximum-session-duration">会话时长</a> ｜ <a href="https://ai.google.dev/api/live#contextwindowcompressionconfig">压缩配置</a> ｜ <a href="https://ai.google.dev/gemini-api/docs/live-tools#async-function-calling">工具与异步函数</a> ｜ <a href="https://ai.google.dev/gemini-api/docs/tokens#multimodal-tokens">音频 token 速率</a>
+<p><strong>商用文档</strong><br />
+- OpenAI：<a href="https://openai.com/index/introducing-gpt-live">GPT-Live 发布</a> ｜ <a href="https://developers.openai.com/api/docs/guides/live">Live 指南</a> ｜ <a href="https://developers.openai.com/api/docs/guides/live-delegation">委托</a> ｜ <a href="https://developers.openai.com/api/docs/guides/live-conversations#manage-longer-conversations">长对话管理</a> ｜ <a href="https://platform.openai.com/docs/guides/realtime-costs#truncation">Realtime 成本与截断</a> ｜ <a href="https://developers.openai.com/api/docs/models/gpt-realtime">gpt-realtime 模型页</a><br />
+- Google：<a href="https://ai.google.dev/gemini-api/docs/live-guide#context-window">Live 指南</a> ｜ <a href="https://ai.google.dev/gemini-api/docs/live-session#maximum-session-duration">会话时长</a> ｜ <a href="https://ai.google.dev/api/live#contextwindowcompressionconfig">压缩配置</a> ｜ <a href="https://ai.google.dev/gemini-api/docs/live-tools#async-function-calling">工具与异步函数</a> ｜ <a href="https://ai.google.dev/gemini-api/docs/tokens#multimodal-tokens">音频 token 速率</a><br />
 - 阿里云：<a href="https://www.alibabacloud.com/help/en/model-studio/realtime#session-duration-and-context-limits">Qwen-Omni-Realtime</a></p>
 
 
@@ -1906,6 +1906,8 @@
         <script src="../../assets/javascripts/hero.js"></script>
       
         <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
       
         <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
       
