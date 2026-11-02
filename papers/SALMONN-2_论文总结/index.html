@@ -1,0 +1,2906 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/papers/SALMONN-2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        <link rel="prev" href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/">
+      
+      
+        <link rel="next" href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>SALMONN-2 - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SALMONN-2
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SALMONN-omni_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-omni
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  音频理解大模型
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  音频理解大模型
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-2
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-2
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、研究背景（§I，§II）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iii_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、方法（§III）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、方法（§III）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ssl-speariii-biv-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 统一 SSL 编码器 SPEAR（§III-B，§IV-C）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-mlfiii-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 多层特征融合（MLF）适配器（§III-C）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-iii-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 时间戳注入（§III-D）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-asr-micliii-e" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 面向上下文 ASR 的多模态上下文学习（MICL）（§III-E）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-iii-f" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 训练目标（§III-F）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iv" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、训练（§IV）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、训练（§IV）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-iv-atable-i" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 数据（§IV-A，Table I）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-iv-btable-ii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 两阶段训练（§IV-B，Table II）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-iv-ctable-iii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 模型配置（§IV-C，Table III）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-micl-iv-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 MICL 训练数据怎么造（§IV-D）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-v-e1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.5 消融实验的训练设定（§V-E1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、推理
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、推理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 推理流程
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 Prompt 格式
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 上下文开销与硬件
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、实验结果（§V）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、实验结果（§V）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-table-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 经典任务（Table V）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-table-vi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 通用音频理解基准（Table VI）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-micl-asrtable-vii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 MICL 上下文 ASR（Table VII）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-table-viii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.4 扩展音频分析任务（Table VIII）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-table-ix" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.5 消融：编码器与融合方式（Table IX）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-table-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.6 消融：时间戳注入（Table X）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#salmonn2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、关键代码（salmonn2 分支）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、关键代码（salmonn2 分支）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-mlf-modeling_salmonnpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.1 MLF 适配器 + 连接器（<code>modeling_salmonn.py</code>）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.2 时间戳注入
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.3 把音频拼进文本序列
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.4 微调
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.5 读代码时发现的问题（静态阅读，没有跑模型）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、是否开源
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、商业是否可用
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十、与我们对话交互研究的关联
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十一、论文中的不一致与可疑之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十二、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、研究背景（§I，§II）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iii_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、方法（§III）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、方法（§III）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-ssl-speariii-biv-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 统一 SSL 编码器 SPEAR（§III-B，§IV-C）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-mlfiii-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 多层特征融合（MLF）适配器（§III-C）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-iii-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 时间戳注入（§III-D）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-asr-micliii-e" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 面向上下文 ASR 的多模态上下文学习（MICL）（§III-E）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-iii-f" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 训练目标（§III-F）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iv" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、训练（§IV）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、训练（§IV）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-iv-atable-i" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 数据（§IV-A，Table I）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-iv-btable-ii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 两阶段训练（§IV-B，Table II）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-iv-ctable-iii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 模型配置（§IV-C，Table III）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-micl-iv-d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 MICL 训练数据怎么造（§IV-D）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-v-e1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.5 消融实验的训练设定（§V-E1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、推理
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、推理">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 推理流程
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 Prompt 格式
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 上下文开销与硬件
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#v" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、实验结果（§V）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、实验结果（§V）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-table-v" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 经典任务（Table V）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-table-vi" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 通用音频理解基准（Table VI）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-micl-asrtable-vii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 MICL 上下文 ASR（Table VII）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64-table-viii" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.4 扩展音频分析任务（Table VIII）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#65-table-ix" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.5 消融：编码器与融合方式（Table IX）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#66-table-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.6 消融：时间戳注入（Table X）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#salmonn2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、关键代码（salmonn2 分支）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、关键代码（salmonn2 分支）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71-mlf-modeling_salmonnpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.1 MLF 适配器 + 连接器（<code>modeling_salmonn.py</code>）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.2 时间戳注入
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.3 把音频拼进文本序列
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#74" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.4 微调
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#75" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.5 读代码时发现的问题（静态阅读，没有跑模型）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、是否开源
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、商业是否可用
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十、与我们对话交互研究的关联
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十一、论文中的不一致与可疑之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十二、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="././" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    音频理解大模型
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="salmonn-2">SALMONN-2：用一个自监督编码器撑起通用音频大模型 —— 论文总结<a class="headerlink" href="#salmonn-2" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>原文</strong>：<a href="https://arxiv.org/abs/2607.17079">SALMONN-2: Advancing General-Purpose Hearing Abilities with Self-Supervised Representations</a>（arXiv:2607.17079v1，eess.AS，2026-07-19，许可 CC BY 4.0，已投 IEEE）<br />
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2607.17079">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2607.17079v1">PDF</a> ｜ <a href="https://arxiv.org/html/2607.17079v1">HTML 全文</a> ｜ <a href="https://github.com/bytedance/SALMONN/tree/salmonn2">代码（salmonn2 分支）</a> ｜ <a href="https://huggingface.co/marcoyang/SALMONN-2-8B">HF 权重 SALMONN-2-8B</a> ｜ <a href="https://huggingface.co/spaces/wsntxxn/SALMONN-2">HF Space Demo</a> ｜ <a href="https://huggingface.co/marcoyang/spear-xlarge-speech-audio-v2">SPEAR 编码器权重</a><br />
+<strong>作者</strong>：Xiaoyu Yang*、Xuenan Xu*、Wenyi Yu、Siyin Wang、Changli Tang、Terumi Chiba、Siyuan Hou、Ziyang Zhang、Wen Wu、Baoxiang Li、Guangzhi Sun、Chao Zhang†、Philip Woodland（*共同一作，†通讯作者）<br />
+<strong>机构</strong>：剑桥大学（Woodland 组）、上海人工智能实验室、清华大学电子系（张超组）；代码发布在字节跳动的 SALMONN 仓库下<br />
+<strong>本文依据</strong>：我读完了 arXiv v1 HTML 全文（正文 I–VI 节、全部 10 张表和参考文献），并把 <a href="https://github.com/bytedance/SALMONN/tree/salmonn2">salmonn2 分支</a> 的代码拉下来逐文件读了一遍（2026-11-02）。Hugging Face 页面今天从我这边一直连接超时，所以<strong>权重的许可证和 30B 版本是否已发布，我没能直接核实</strong>，下文会标明。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一句话概括<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>SALMONN-2 是一个“只听不说”的音频理解大模型：<strong>冻结的自监督编码器 SPEAR（600M，13 层 Zipformer）→ 把 13 层隐状态全部拼起来再压缩的 MLF 适配器 → 每 2 秒插一段文字时间戳 <code>&lt;t seconds&gt;</code> → Qwen3（8B 或 30B-A3B，LoRA 微调）</strong>。只用 18.2k 小时指令数据，在 MMAU-Pro / MMAR / MMSU 上拿到同规模开源模型最好成绩（58.5 / 64.5 / 69.5）。另一个卖点是<strong>多模态上下文学习（MICL）</strong>：给热词同时提供“文字 + 一段发音音频”，做上下文偏置 ASR。作者发现这种能力不会自己冒出来，必须专门构造数据训练。</p>
+<hr />
+<h2 id="iii">二、研究背景（<a href="https://arxiv.org/html/2607.17079v1#S1">§I</a>，<a href="https://arxiv.org/html/2607.17079v1#S2">§II</a>）<a class="headerlink" href="#iii" title="Permanent link">&para;</a></h2>
+<p>作者认为现有音频大模型（ALLM）大多在堆模型规模和指令数据，有三个基础设计没认真研究过：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>现状</th>
+<th>SALMONN-2 的回答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>用什么音频编码器</strong></td>
+<td>主流是有监督编码器（Whisper 系，如 <a href="https://arxiv.org/abs/2407.10759">Qwen2-Audio</a>、<a href="https://arxiv.org/abs/2507.08128">AF3</a>），表示只覆盖标注任务能教到的信息；初代 <a href="https://arxiv.org/abs/2310.13289">SALMONN</a> 用 Whisper + <a href="https://arxiv.org/abs/2212.09058">BEATs</a> 双编码器来补非语音信息</td>
+<td>换成<strong>单个通用自监督编码器</strong> <a href="https://openreview.net/forum?id=vHaaDCLF0M">SPEAR</a>（ICML 2026，同一作者），同时覆盖语音和一般音频</td>
+</tr>
+<tr>
+<td><strong>编码器怎么接 LLM</strong></td>
+<td>线性层、Q-Former 等，基本只用最后一层；同期的 <a href="https://arxiv.org/abs/2606.01802">MOSS-Audio</a> 把多层特征注入 LLM 的多个解码层，改动了 LLM 内部</td>
+<td><strong>MLF 适配器</strong>：在进入 LLM 之前把所有层融合，不改 LLM</td>
+</tr>
+<tr>
+<td><strong>能不能用上下文</strong></td>
+<td>文本 LLM 靠 ICL 适应新领域，ALLM 很少研究多模态 ICL；<a href="https://arxiv.org/abs/2402.01831">Audio Flamingo</a> 做过 few-shot，<a href="https://arxiv.org/abs/2512.23808">MiMo-Audio</a> 研究的是生成侧（如变声）</td>
+<td>在<strong>上下文 ASR</strong> 上研究 MICL：热词列表里每个词附一段发音音频</td>
+</tr>
+</tbody>
+</table>
+<p>SSL 编码器的动机来自一个已知现象（<a href="https://arxiv.org/html/2607.17079v1#bib.bib1">ref 31</a>，SUPERB 的大规模评测）：低层偏声学和音素，中间层偏说话人，高层偏语义。只取最后一层会丢掉副语言和声学细节，这也是后面 MLF 要保留全部层的原因。统一 SSL 编码器方面，作者对比了 <a href="https://arxiv.org/html/2607.17079v1#bib.bib30">USAD</a>（只做双教师特征蒸馏）和 SPEAR（教师蒸馏 + masked token 预测）。</p>
+<hr />
+<h2 id="iii_1">三、方法（<a href="https://arxiv.org/html/2607.17079v1#S3">§III</a>）<a class="headerlink" href="#iii_1" title="Permanent link">&para;</a></h2>
+<p><img alt="图2 SALMONN-2 架构" src="../salmonn2_figs/fig2_architecture.png" /></p>
+<p><em><a href="https://arxiv.org/html/2607.17079v1#S2.F2">Figure 2</a>：SPEAR 输出所有层的隐状态 <span class="arithmatex">\(\mathbf{H}^1\ldots\mathbf{H}^L\)</span>，MLF 适配器融合后做时间戳注入（每段音频 token 后面跟 <code>&lt;2.0 seconds&gt;</code>、<code>&lt;4.0 seconds&gt;</code>……），再和上下文样本、文本指令一起送进 LoRA 微调的 LLM。雪花表示冻结，火焰表示可训练。（图片取自代码仓库 <code>assets/SALMONN2.png</code>，与论文图 2 相同。）</em></p>
+<p>另见 <a href="https://arxiv.org/html/2607.17079v1#S1.F1">Figure 1</a>：SALMONN-2 和其他开源 ALLM 的雷达图对比。</p>
+<h3 id="31-ssl-speariii-biv-c">3.1 统一 SSL 编码器 SPEAR（<a href="https://arxiv.org/html/2607.17079v1#S3.SS2">§III-B</a>，<a href="https://arxiv.org/html/2607.17079v1#S4.SS3">§IV-C</a>）<a class="headerlink" href="#31-ssl-speariii-biv-c" title="Permanent link">&para;</a></h3>
+<p>对输入波形 <span class="arithmatex">\(\mathbf{x}\)</span>，编码器输出所有层的隐状态：</p>
+<div class="arithmatex">\[\mathcal{H}=f_{\mathrm{enc}}(\mathbf{x})=\{\mathbf{H}^{1},\mathbf{H}^{2},\ldots,\mathbf{H}^{L}\},\quad \mathbf{H}^{l}\in\mathbb{R}^{T\times d}\]</div>
+<p>具体用的是 <strong>SPEAR XLarge</strong>：600M 参数，<span class="arithmatex">\(L=13\)</span> 层 <a href="https://arxiv.org/abs/2310.11230">Zipformer</a>，<span class="arithmatex">\(d=1280\)</span>，帧率 50 Hz。从代码看，输入是 16 kHz 音频的 128 维 fbank（100 Hz），经 <code>Conv2dSubsampling</code> 降到 50 Hz；Zipformer 的 7 个 stack 分别是 &frac12;/&frac34;/1/1/1 层（合计 13 层），下采样倍率 &frac12;/4/8/4/2/1，<code>causal=False</code>，也就是<strong>非流式、整段看</strong>。训练全程冻结。</p>
+<h3 id="32-mlfiii-c">3.2 多层特征融合（MLF）适配器（<a href="https://arxiv.org/html/2607.17079v1#S3.SS3">§III-C</a>）<a class="headerlink" href="#32-mlfiii-c" title="Permanent link">&para;</a></h3>
+<p>分四步：</p>
+<ol>
+<li>每层单独做 LayerNorm，再沿特征维拼接：<br />
+   $<span class="arithmatex">\(\widetilde{\mathbf{H}}^{l}=\mathrm{LayerNorm}(\mathbf{H}^{l}),\qquad \mathbf{H}_{\mathrm{cat}}=[\widetilde{\mathbf{H}}^{1};\widetilde{\mathbf{H}}^{2};\cdots;\widetilde{\mathbf{H}}^{L}]\in\mathbb{R}^{T\times Ld}\)</span>$<br />
+   这里 <span class="arithmatex">\(Ld=13\times1280=16640\)</span>。</li>
+<li>用一个可学习矩阵压回 <span class="arithmatex">\(d\)</span> 维：<br />
+   $<span class="arithmatex">\(\mathbf{Z}=\mathbf{H}_{\mathrm{cat}}\mathbf{W}_{d},\quad \mathbf{W}_{d}\in\mathbb{R}^{Ld\times d}\)</span>$</li>
+<li>每 <span class="arithmatex">\(q\)</span> 帧拼成一帧，降低 token 率：<br />
+   $<span class="arithmatex">\(\mathbf{G}_{m}=[\mathbf{Z}_{(m-1)q+1};\ldots;\mathbf{Z}_{mq}],\quad \mathbf{G}_{m}\in\mathbb{R}^{qd}\)</span>$<br />
+   取 <span class="arithmatex">\(q=5\)</span>，50 Hz 降到 <strong>10 Hz</strong>。</li>
+<li>两层 MLP（Linear → ReLU → Linear）投影到 LLM 词向量空间：<br />
+   $<span class="arithmatex">\(\mathbf{A}_{m}=\phi(\mathbf{G}_{m}),\quad \mathbf{A}_{m}\in\mathbb{R}^{d_{\mathrm{LLM}}},\quad M=\lfloor T/q\rfloor\)</span>$</li>
+</ol>
+<p>和“可学习加权和”（SUPERB 式，所有层共用一组标量权重）相比，MLF 在投影之前保留了每一层的信息，所以能学到跨层组合，不同任务可以各取所需。参数量见 <a href="https://arxiv.org/html/2607.17079v1#S4.T3">Table III</a>：8B 版 64M，30B 版 56M。我按代码里的层尺寸算了一遍，两个数都对得上（见第七节）。</p>
+<h3 id="33-iii-d">3.3 时间戳注入（<a href="https://arxiv.org/html/2607.17079v1#S3.SS4">§III-D</a>）<a class="headerlink" href="#33-iii-d" title="Permanent link">&para;</a></h3>
+<p>音频 embedding 本身只带相对顺序，没有绝对时间。参照 <a href="https://arxiv.org/abs/2604.15804">Qwen3.5-Omni</a> 的做法，每隔 <span class="arithmatex">\(k=r\cdot g\)</span> 个音频 token 插入一段<strong>普通文本</strong> <code>&lt;t seconds&gt;</code>，直接用 LLM 词表里已有 token 的 embedding，不新增参数：</p>
+<div class="arithmatex">\[[\mathbf{A}_{1:k},\ \mathbf{E}_{g},\ \mathbf{A}_{k+1:2k},\ \mathbf{E}_{2g},\ \ldots]\]</div>
+<p>其中 <span class="arithmatex">\(r=10\)</span> Hz，<span class="arithmatex">\(g=2\)</span> 秒，所以 <span class="arithmatex">\(k=20\)</span>：<strong>每 20 个音频 token 后面跟一段 <code>&lt;2.0 seconds&gt;</code>、<code>&lt;4.0 seconds&gt;</code>……</strong>。注入后的序列记作 <span class="arithmatex">\(\widehat{\mathbf{A}}\)</span>。这样时间标记和 LLM 词表处在同一语义空间，模型输出时间戳时也用同样的写法。</p>
+<h3 id="34-asr-micliii-e">3.4 面向上下文 ASR 的多模态上下文学习（MICL）（<a href="https://arxiv.org/html/2607.17079v1#S3.SS5">§III-E</a>）<a class="headerlink" href="#34-asr-micliii-e" title="Permanent link">&para;</a></h3>
+<p>传统上下文 ASR 只给文字热词。但外国人名、怪拼写、口音、多音词，光看字形很难对上实际读音。作者把它改写成 MICL：给定待识别语音 <span class="arithmatex">\(\mathbf{x}\)</span> 和偏置列表 <span class="arithmatex">\(\{w_i\}_{i=1}^{N_{\text{biasing}}}\)</span>，构造</p>
+<div class="arithmatex">\[\mathcal{C}=[\mathbf{s}_{w_{1}},w_{1},\ldots,\mathbf{s}_{w_{N_{\text{biasing}}}},w_{N_{\text{biasing}}}]\]</div>
+<p>其中 <span class="arithmatex">\(\mathbf{s}_{w_i}\)</span> 是词 <span class="arithmatex">\(w_i\)</span> 的一段参考发音音频，同样经过 SPEAR + MLF 编码。按论文的说法，参考发音<strong>不插时间戳</strong>（第八节会说到代码里的实际情况和这一点有出入）。训练时混合纯文本偏置和多模态偏置两种样本，并加入干扰词和目标词随机丢弃，防止过度偏置。</p>
+<h3 id="35-iii-f">3.5 训练目标（<a href="https://arxiv.org/html/2607.17079v1#S3.SS6">§III-F</a>）<a class="headerlink" href="#35-iii-f" title="Permanent link">&para;</a></h3>
+<p>所有任务统一为条件生成。条件 <span class="arithmatex">\(\mathcal{P}\)</span> 包括指令、<span class="arithmatex">\(\widehat{\mathbf{A}}\)</span> 和可选上下文 <span class="arithmatex">\(\mathcal{C}\)</span>，目标文本 <span class="arithmatex">\(\mathbf{y}=(y_1,\ldots,y_N)\)</span>：</p>
+<div class="arithmatex">\[\mathcal{L}=-\sum_{n=1}^{N}\log p(y_{n}\mid y_{&lt;n},\mathcal{P})\]</div>
+<p>没有任何辅助损失，SED 和反欺骗的输出也只是结构化 JSON 文本。</p>
+<hr />
+<h2 id="iv">四、训练（<a href="https://arxiv.org/html/2607.17079v1#S4">§IV</a>）<a class="headerlink" href="#iv" title="Permanent link">&para;</a></h2>
+<h3 id="41-iv-atable-i">4.1 数据（<a href="https://arxiv.org/html/2607.17079v1#S4.SS1">§IV-A</a>，<a href="https://arxiv.org/html/2607.17079v1#S4.T1">Table I</a>）<a class="headerlink" href="#41-iv-atable-i" title="Permanent link">&para;</a></h3>
+<p>共 <strong>8.9M 条、18,183 小时</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>任务 / 数据集（小时）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>语音与副语言</td>
+<td>ASR：LibriSpeech 960、<a href="https://arxiv.org/abs/2106.06909">GigaSpeech</a> 1000、CommonVoice 1740；情感 ER：IEMOCAP S1–4 5.2、MSP-Podcast 195；说话人验证 SV：VoxCeleb1 1200；重叠语音识别 OSR：LibriMix 260</td>
+</tr>
+<tr>
+<td>一般音频与音乐</td>
+<td>音频描述 AAC：WavCaps 760、AudioCaps 134、Clotho 25、AudioSet 5000；音乐：MusicCaps 7、MillionSong 400、MusicNet 3</td>
+</tr>
+<tr>
+<td>专项任务与 QA</td>
+<td>上下文 ASR：GigaSpeech 220、<a href="https://arxiv.org/abs/2104.02014">SPGISpeech</a> 196；语音质量评估 SQA：<a href="https://arxiv.org/html/2607.17079v1#bib.bib17">QualiSpeech</a> 136；声音事件检测 SED：AudioSet-strong 329、<a href="https://arxiv.org/html/2607.17079v1#bib.bib20">FineLAP</a> 277、<a href="https://arxiv.org/html/2607.17079v1#bib.bib21">PicoAudio2</a> 172；反欺骗：<a href="https://arxiv.org/abs/2602.04535">HoliAntiSpoof</a> 1130；<strong>通用 QA：内部数据 4034</strong></td>
+</tr>
+</tbody>
+</table>
+<p>SED 数据做成两种形式：QA（某个声音事件有没有出现）和摘要（列出每个事件及其时间段）。SED 和反欺骗的回答统一成 JSON。内部 QA 数据占总时长的 22%，<strong>没有公开</strong>。</p>
+<h3 id="42-iv-btable-ii">4.2 两阶段训练（<a href="https://arxiv.org/html/2607.17079v1#S4.SS2">§IV-B</a>，<a href="https://arxiv.org/html/2607.17079v1#S4.T2">Table II</a>）<a class="headerlink" href="#42-iv-btable-ii" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>数据</th>
+<th>步数</th>
+<th>batch</th>
+<th>学习率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stage 1：对齐</td>
+<td>主要用 ASR + AAC 做表示对齐，加 SED 数据引入时间定位</td>
+<td>40k</td>
+<td>192</td>
+<td>2e-4</td>
+</tr>
+<tr>
+<td>Stage 2：扩展</td>
+<td>加入其余任务的指令数据和音频 QA，提升指令跟随和推理</td>
+<td>50k</td>
+<td>192</td>
+<td>2e-4</td>
+</tr>
+</tbody>
+</table>
+<p>两个阶段都是：<strong>SPEAR 冻结、MLF 全量训练、LLM 用 LoRA</strong>。</p>
+<h3 id="43-iv-ctable-iii">4.3 模型配置（<a href="https://arxiv.org/html/2607.17079v1#S4.SS3">§IV-C</a>，<a href="https://arxiv.org/html/2607.17079v1#S4.T3">Table III</a>）<a class="headerlink" href="#43-iv-ctable-iii" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>LLM</th>
+<th>参数量</th>
+<th>词向量维度</th>
+<th>LoRA rank</th>
+<th>MLF 参数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen3-8B</td>
+<td>8B</td>
+<td>4096</td>
+<td>64</td>
+<td>64M</td>
+</tr>
+<tr>
+<td><a href="https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507">Qwen3-30B-A3B-Instruct-2507</a></td>
+<td>30B（激活 3B）</td>
+<td>2048</td>
+<td>64</td>
+<td>56M</td>
+</tr>
+</tbody>
+</table>
+<p>论文没写 LoRA 挂在哪些模块上。仓库里的微调配置是 <code>q_proj</code>、<code>v_proj</code>，<code>r=64</code>、<code>alpha=32</code>、dropout 0.05。</p>
+<h3 id="44-micl-iv-d">4.4 MICL 训练数据怎么造（<a href="https://arxiv.org/html/2607.17079v1#S4.SS4">§IV-D</a>）<a class="headerlink" href="#44-micl-iv-d" title="Permanent link">&para;</a></h3>
+<p>这部分细节对复现热词功能很有用：</p>
+<ul>
+<li><strong>哪些算上下文词</strong>：在 GigaSpeech / SPGISpeech 训练文本中，词频排在 2 万名以外的词。约 30% 的样本含至少一个上下文词，这些样本平均每条 2.2 个。</li>
+<li><strong>发音音频</strong>：每个上下文词用 <a href="https://arxiv.org/html/2607.17079v1#bib.bib15">OmniVoice</a> TTS 合成 3 条发音，说话人从 200 个 TTS 生成的说话人池里抽，训练时每个词随机选 1 条。</li>
+<li><strong>偏置列表</strong>：全部真实上下文词 + 25–50 个随机干扰词；不含上下文词的样本，列表全是干扰词。</li>
+<li><strong>抗过度偏置</strong>：每个真实上下文词以 0.1 的概率从列表里删掉；整条样本以 0.2 的概率去掉发音音频，退化成纯文本偏置样本。</li>
+<li><strong>测试集</strong>：仿照 LibriSpeech biasing benchmark 的做法，在 GigaSpeech test 上构造，列表长度补到 20 / 50 / 100。37% 的样本含偏置词，平均每条 1.5 个。测试发音换了另一个 TTS 说话人池。指标除 WER 外还有 B-WER（只算偏置词）和 U-WER（只算非偏置词）。</li>
+</ul>
+<h3 id="45-v-e1">4.5 消融实验的训练设定（<a href="https://arxiv.org/html/2607.17079v1#S5.SS5.SSS1">§V-E1</a>）<a class="headerlink" href="#45-v-e1" title="Permanent link">&para;</a></h3>
+<p>消融只用数据子集：去掉 SPGISpeech、MSP-Podcast 和 Table I 的整个“专项任务与 QA”部分，统一训练 30k 步。双编码器基线沿用 SALMONN 的做法，两个编码器的特征沿特征维拼接后再投影。</p>
+<hr />
+<h2 id="_2">五、推理<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>论文正文没有单独的推理章节，下面结合论文和代码整理。</p>
+<h3 id="51">5.1 推理流程<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<ol>
+<li>音频重采样到 16 kHz，转单声道，用 lhotse 算 128 维 fbank（100 Hz）。</li>
+<li>SPEAR 输出 13 层隐状态（50 Hz）→ 逐层 LayerNorm → 拼接 → <code>Linear(16640→1280)</code> → LayerNorm → 每 5 帧拼接 → MLP → <strong>10 Hz 音频 token</strong>。</li>
+<li>每 20 个音频 token 后插入 <code>&lt;t seconds&gt;</code> 文本 token 的 embedding。</li>
+<li>音频占位符 <code>&lt;audio&gt;</code> 在模板里被替换成 Qwen 词表现成的 <code>&lt;|vision_start|&gt;&lt;|vision_end|&gt;</code>，音频 embedding 被拼接在 <code>vision_start</code> 之后。</li>
+<li>Qwen3 自回归解码。仓库示例用贪心解码（<code>do_sample=False</code>），CLI 会从输出里去掉 Qwen3 的 <code>&lt;think&gt;</code> / <code>&lt;/think&gt;</code> 标签。</li>
+</ol>
+<h3 id="52-prompt">5.2 Prompt 格式<a class="headerlink" href="#52-prompt" title="Permanent link">&para;</a></h3>
+<p>普通任务：<code>&lt;audio&gt;Please describe the audio.</code>（不写 <code>&lt;audio&gt;</code> 时，处理器会把所有音频放在 prompt 最前面）。</p>
+<p>MICL 上下文 ASR（仓库 <code>examples/micl_manifest.json</code>）：</p>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"audios"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"assets/micl/main_utterance.wav"</span><span class="p">,</span><span class="w"> </span><span class="s2">"assets/micl/howes.wav"</span><span class="p">,</span><span class="w"> </span><span class="s2">"assets/micl/wszelaki.wav"</span><span class="p">],</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"prompt"</span><span class="p">:</span><span class="w"> </span><span class="s2">"&lt;audio&gt;Recognize the speech and give me the transcription.\nUse the following contextual words and their pronunciations as references while transcribing the speech:\n&lt;biasing_list&gt;\n&lt;audio&gt;howes\n&lt;audio&gt;wszelaki\n&lt;/biasing_list&gt;."</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">}</span>
+</span></code></pre></div>
+<p>音频按从左到右的顺序和占位符一一对应。顺序是：先主音频，再指令，再“发音 + 文字”对。</p>
+<h3 id="53">5.3 上下文开销与硬件<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>token 率</strong>：音频 10 token/s，另外每 2 秒多一段时间戳文本（几个 token）。1 分钟音频大约是 600 个音频 token 加 30 段时间戳。比 Whisper 系常见的 25 Hz 低不少。</li>
+<li><strong>时长上限</strong>：代码只预先 tokenize 了 <code>&lt;0.0 seconds&gt;</code> 到 <code>&lt;120.0 seconds&gt;</code> 共 1201 个时间戳，超过 120 秒后时间戳会一直停在 <code>&lt;120.0 seconds&gt;</code>。论文没写最大音频长度，长音频的时间定位要注意这一点。</li>
+<li><strong>显存</strong>（按参数量估算）：8B 版 bf16 权重约 <span class="arithmatex">\(8.2\text{B}\times2 + 0.6\text{B}\times2\approx 17.6\)</span> GB，A800 很宽裕，12 GB 卡需要把 LLM 量化到 8 bit 或 4 bit。30B-A3B 版 bf16 权重约 61 GB，只能放 A800 80G。</li>
+<li><strong>非流式</strong>：SPEAR 的 <code>causal=False</code>、<code>chunk_size=-1</code>，要拿到整段音频才能编码，不能直接用作流式 / 全双工的前端。</li>
+</ul>
+<hr />
+<h2 id="v">六、实验结果（<a href="https://arxiv.org/html/2607.17079v1#S5">§V</a>）<a class="headerlink" href="#v" title="Permanent link">&para;</a></h2>
+<h3 id="61-table-v">6.1 经典任务（<a href="https://arxiv.org/html/2607.17079v1#S5.T5">Table V</a>）<a class="headerlink" href="#61-table-v" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>LLM</th>
+<th>LS clean/other↓</th>
+<th>Giga↓</th>
+<th>AudioCaps↑</th>
+<th>Clotho↑</th>
+<th>MusicCaps↑</th>
+<th>IEMOCAP↑</th>
+<th>CoVoST2↑</th>
+<th>LibriMix↓</th>
+<th>VoxCeleb1↑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SALMONN</td>
+<td>7B</td>
+<td>2.&frac14;.9</td>
+<td>10.0</td>
+<td>57.6</td>
+<td>44.7</td>
+<td>5.5/21.8</td>
+<td>69.0</td>
+<td>33.1</td>
+<td>23.0</td>
+<td>94.0</td>
+</tr>
+<tr>
+<td>Qwen2.5-Omni</td>
+<td>8B</td>
+<td>1.8/3.4</td>
+<td>23.0</td>
+<td>64.4</td>
+<td>50.2</td>
+<td>5.5/22.5</td>
+<td>63.5</td>
+<td>41.4</td>
+<td>55.3</td>
+<td>62.9</td>
+</tr>
+<tr>
+<td>Kimi-Audio</td>
+<td>8B</td>
+<td><strong>1.4/2.6</strong></td>
+<td>9.1</td>
+<td>52.0</td>
+<td>50.7</td>
+<td>0.0/9.0</td>
+<td><strong>76.2</strong></td>
+<td>0.3*</td>
+<td>44.4</td>
+<td>61.9</td>
+</tr>
+<tr>
+<td>MiMo-Audio</td>
+<td>8B</td>
+<td>3.&#8538;.4</td>
+<td>14.1</td>
+<td>53.6</td>
+<td>44.2</td>
+<td>0.8/15.9</td>
+<td>61.2</td>
+<td>35.8</td>
+<td>57.7</td>
+<td>50.0</td>
+</tr>
+<tr>
+<td>AF-3</td>
+<td>8B</td>
+<td>1.6/3.1</td>
+<td>9.3</td>
+<td>64.0</td>
+<td>54.4</td>
+<td>4.0/19.1</td>
+<td>63.8</td>
+<td>11.9*</td>
+<td>52.5</td>
+<td>50.0</td>
+</tr>
+<tr>
+<td>AF-Next</td>
+<td>9B</td>
+<td>1.5/2.8</td>
+<td>9.2</td>
+<td>61.1</td>
+<td><strong>54.9</strong></td>
+<td>3.1/19.2</td>
+<td>55.0</td>
+<td>1.7*</td>
+<td>67.6</td>
+<td>50.0</td>
+</tr>
+<tr>
+<td>MOSS-Audio</td>
+<td>9B</td>
+<td>2.&#8534;.6</td>
+<td><strong>8.6</strong></td>
+<td>47.4</td>
+<td>44.2</td>
+<td>3.7/19.6</td>
+<td>62.7</td>
+<td>23.9</td>
+<td>45.9</td>
+<td>61.0</td>
+</tr>
+<tr>
+<td><strong>SALMONN-2</strong></td>
+<td>9B</td>
+<td>1.7/3.0</td>
+<td>9.0</td>
+<td>65.0</td>
+<td>53.4</td>
+<td><strong>5.9</strong>/22.0</td>
+<td>71.0</td>
+<td><strong>46.6</strong></td>
+<td><strong>8.8</strong></td>
+<td>93.8</td>
+</tr>
+<tr>
+<td><strong>SALMONN-2</strong></td>
+<td>30B-A3B</td>
+<td>1.6/3.0</td>
+<td>8.9</td>
+<td><strong>65.2</strong></td>
+<td>53.6</td>
+<td>5.6/<strong>23.5</strong></td>
+<td>74.0</td>
+<td>46.4</td>
+<td>9.0</td>
+<td><strong>94.1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>AudioCaps / Clotho 用的是 SBERT 相似度，MusicCaps 是 BLEU4/ROUGE-L，CoVoST2 是英译中 BLEU4。* 表示模型没按指令做翻译，输出了转写。几个观察：</p>
+<ul>
+<li><strong>能力分布均衡</strong>：别的模型常有明显短板，比如 Kimi-Audio 的 LibriSpeech 最好但音乐描述很差；Qwen2.5-Omni、MiMo-Audio 在 GigaSpeech 上 WER 飙升。作者说 MiMo 会把英文转写成中文，Qwen2.5-Omni 有时拒绝转写。</li>
+<li><strong>OSR 和 SV 这类训练里少见的任务</strong>，大多数 ALLM 基本做不了。SALMONN-2 的 LibriMix cpWER 是 8.8，初代 SALMONN 是 23.0。</li>
+<li><strong>30B 在经典任务上几乎没有提升</strong>。作者的解释是这些任务主要依赖感知，不太需要 LLM 的推理能力。</li>
+</ul>
+<h3 id="62-table-vi">6.2 通用音频理解基准（<a href="https://arxiv.org/html/2607.17079v1#S5.T6">Table VI</a>）<a class="headerlink" href="#62-table-vi" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>LLM</th>
+<th>有监督数据（h）</th>
+<th><a href="https://arxiv.org/html/2607.17079v1#bib.bib32">MMAU-Pro</a></th>
+<th><a href="https://arxiv.org/abs/2505.13032">MMAR</a></th>
+<th><a href="https://arxiv.org/html/2607.17079v1#bib.bib34">MMSU</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen2.5-Omni</td>
+<td>8B</td>
+<td>–</td>
+<td>52.2</td>
+<td>56.7</td>
+<td>61.3</td>
+</tr>
+<tr>
+<td>Kimi-Audio</td>
+<td>8B</td>
+<td>&gt;13M</td>
+<td>56.6</td>
+<td>60.8</td>
+<td>54.7</td>
+</tr>
+<tr>
+<td>MiMo-Audio</td>
+<td>8B</td>
+<td>&gt;1M</td>
+<td>53.4</td>
+<td>61.7</td>
+<td>61.9</td>
+</tr>
+<tr>
+<td>AF-3</td>
+<td>8B</td>
+<td>&gt;55k</td>
+<td>51.7</td>
+<td>58.5</td>
+<td>61.4</td>
+</tr>
+<tr>
+<td>AF-Next</td>
+<td>9B</td>
+<td>&gt;500k</td>
+<td>56.3</td>
+<td>59.7</td>
+<td>59.4</td>
+</tr>
+<tr>
+<td>MOSS-Audio</td>
+<td>9B</td>
+<td>&gt;1M</td>
+<td>57.5</td>
+<td>64.4</td>
+<td>66.4</td>
+</tr>
+<tr>
+<td><strong>SALMONN-2</strong></td>
+<td>9B</td>
+<td><strong>18.2k</strong></td>
+<td><strong>58.5</strong></td>
+<td><strong>64.5</strong></td>
+<td><strong>69.5</strong></td>
+</tr>
+<tr>
+<td>SALMONN-2</td>
+<td>30B-A3B</td>
+<td>18.2k</td>
+<td>60.3</td>
+<td>67.6</td>
+<td>72.0</td>
+</tr>
+</tbody>
+</table>
+<p>和最强基线 MOSS-Audio 比，三项分别 +1.0 / +0.1 / +3.1，MMSU 的提升最明显（这个基准偏语音语义和副语言）。<strong>换成 30B 后三项平均 +2.5</strong>，说明这些基准更依赖 LLM 的推理能力。“数据量”一列作者也承认口径不统一，只能大致参考。</p>
+<h3 id="63-micl-asrtable-vii">6.3 MICL 上下文 ASR（<a href="https://arxiv.org/html/2607.17079v1#S5.T7">Table VII</a>）<a class="headerlink" href="#63-micl-asrtable-vii" title="Permanent link">&para;</a></h3>
+<p>每格是 WER / B-WER / U-WER（%），GigaSpeech：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>MICL 训练</th>
+<th>偏置方式</th>
+<th>无偏置</th>
+<th>列表长 20</th>
+<th>列表长 50</th>
+<th>列表长 100</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AF-3</td>
+<td>✗</td>
+<td>文本</td>
+<td>9.3/15.8/9.3</td>
+<td>18.0/19.0/17.9</td>
+<td>17.9/19.7/17.7</td>
+<td>19.8/21.0/19.7</td>
+</tr>
+<tr>
+<td>MOSS-Audio</td>
+<td>✗</td>
+<td>文本</td>
+<td>8.6/15.2/8.4</td>
+<td>8.7/9.&#8539;.6</td>
+<td>8.9/9.6/8.8</td>
+<td>9.3/10.2/9.3</td>
+</tr>
+<tr>
+<td>MOSS-Audio</td>
+<td>✗</td>
+<td>MICL</td>
+<td>同上</td>
+<td>26.5/26.0/26.6</td>
+<td>53.9/31.8/54.6</td>
+<td>65.5/36.9/66.4</td>
+</tr>
+<tr>
+<td>SALMONN-2</td>
+<td>✗</td>
+<td>文本</td>
+<td>9.1/15.5/9.0</td>
+<td>9.1/12.2/9.0</td>
+<td>9.2/14.1/9.0</td>
+<td>9.2/15.6/8.8</td>
+</tr>
+<tr>
+<td>SALMONN-2</td>
+<td>✗</td>
+<td>MICL</td>
+<td>同上</td>
+<td>25.7/26.0/25.5</td>
+<td>47.7/29.7/50.2</td>
+<td>57.3/33.5/58.1</td>
+</tr>
+<tr>
+<td>SALMONN-2</td>
+<td>✓</td>
+<td>文本</td>
+<td>9.0/15.4/8.9</td>
+<td>8.3/7.&#8541;.3</td>
+<td>8.5/7.9/8.4</td>
+<td>8.&#8542;.8/8.6</td>
+</tr>
+<tr>
+<td><strong>SALMONN-2</strong></td>
+<td>✓</td>
+<td><strong>MICL</strong></td>
+<td>同上</td>
+<td><strong>8.2/6.8/8.3</strong></td>
+<td><strong>8.4/7.2/8.4</strong></td>
+<td><strong>8.&#8541;.0/8.5</strong></td>
+</tr>
+</tbody>
+</table>
+<p>结论：</p>
+<ul>
+<li><strong>MICL 不会自己冒出来</strong>：没经过 MICL 训练的模型（包括 SALMONN-2 自己的对照版本），一旦在上下文里塞进多段发音音频，WER 就崩到 25–65%，而且 U-WER 也跟着崩，说明模型被多段音频搞乱了，不只是热词没认出来。</li>
+<li>经过 MICL 训练后，偏置词错误率 B-WER 从 15.4 降到 6.8（列表长 20），<strong>降幅超过一半</strong>，U-WER 基本不变。</li>
+<li>相比纯文本偏置，加了发音音频的 B-WER 再降 0.7–0.8 个点，列表变长时也更稳。</li>
+</ul>
+<h3 id="64-table-viii">6.4 扩展音频分析任务（<a href="https://arxiv.org/html/2607.17079v1#S5.T8">Table VIII</a>）<a class="headerlink" href="#64-table-viii" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>DESED SED（mIoU）</th>
+<th>反欺骗 PartialEdit（mIoU）</th>
+<th>QualiSpeech（PCC）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/2604.13023">SpotSound</a>-Q（专用）</td>
+<td>61.1</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>HoliAntiSpoof（专用）</td>
+<td>–</td>
+<td>71.58</td>
+<td>–</td>
+</tr>
+<tr>
+<td>QualiSpeech 微调的 SALMONN（专用）</td>
+<td>–</td>
+<td>–</td>
+<td>0.660</td>
+</tr>
+<tr>
+<td><strong>SALMONN-2</strong></td>
+<td><strong>70.15</strong></td>
+<td><strong>73.65</strong></td>
+<td><strong>0.661</strong></td>
+</tr>
+<tr>
+<td>MiMo-Audio</td>
+<td>27.65</td>
+<td>14.27</td>
+<td>0.358</td>
+</tr>
+<tr>
+<td>MOSS-Audio</td>
+<td>48.14</td>
+<td>19.14</td>
+<td>0.402</td>
+</tr>
+</tbody>
+</table>
+<p>作为通用模型，SALMONN-2 追平或超过了各项专用模型。这里的专用基线（HoliAntiSpoof、QualiSpeech）和 SALMONN-2 作者团队有重叠，用的也是相同的训练集，所以这更像是“把自家专用模型并进通用模型后性能没掉”，不是和外部模型的公平比较。</p>
+<h3 id="65-table-ix">6.5 消融：编码器与融合方式（<a href="https://arxiv.org/html/2607.17079v1#S5.T9">Table IX</a>）<a class="headerlink" href="#65-table-ix" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>编码器配置</th>
+<th>AudioCaps↑</th>
+<th>MusicCaps↑</th>
+<th>LS ASR↓</th>
+<th>Giga↓</th>
+<th>CoVoST2↑</th>
+<th>LS PR↓</th>
+<th>LibriMix↓</th>
+<th>IEMOCAP↑</th>
+<th>VoxCeleb1↑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Whisper + BEATs（双编码器）</td>
+<td><strong>68.3</strong></td>
+<td>5.9/22.7</td>
+<td>2.&frac14;.9</td>
+<td><strong>9.6</strong></td>
+<td>43.4</td>
+<td>3.1</td>
+<td>14.8</td>
+<td>69.1</td>
+<td>93.2</td>
+</tr>
+<tr>
+<td>WavLM + Dasheng（双编码器）</td>
+<td>59.5</td>
+<td>4.9/21.8</td>
+<td>2.&frac34;.3</td>
+<td>11.2</td>
+<td>39.5</td>
+<td>3.5</td>
+<td>43.2</td>
+<td>56.3</td>
+<td>81.0</td>
+</tr>
+<tr>
+<td>Qwen2.5-Omni 编码器</td>
+<td>63.6</td>
+<td>5.4/21.8</td>
+<td>2.6/6.2</td>
+<td>11.7</td>
+<td>39.5</td>
+<td>9.0</td>
+<td>47.2</td>
+<td>63.1</td>
+<td>88.6</td>
+</tr>
+<tr>
+<td>AF-Whisper</td>
+<td>67.2</td>
+<td><strong>10.2/28.8</strong></td>
+<td>2.0/4.2</td>
+<td>12.5</td>
+<td>44.8</td>
+<td>3.4</td>
+<td>25.8</td>
+<td><strong>73.0</strong></td>
+<td>86.9</td>
+</tr>
+<tr>
+<td>SPEAR 最后一层</td>
+<td>65.6</td>
+<td>5.5/22.4</td>
+<td>1.7/3.3</td>
+<td><strong>9.6</strong></td>
+<td><strong>45.9</strong></td>
+<td>2.9</td>
+<td>10.0</td>
+<td>69.8</td>
+<td>91.9</td>
+</tr>
+<tr>
+<td>SPEAR 加权和</td>
+<td>65.7</td>
+<td>5.6/22.6</td>
+<td>1.8/3.3</td>
+<td>9.8</td>
+<td>45.8</td>
+<td>2.8</td>
+<td>12.0</td>
+<td>69.9</td>
+<td>93.2</td>
+</tr>
+<tr>
+<td><strong>SPEAR + MLF</strong></td>
+<td>68.1</td>
+<td>5.8/22.6</td>
+<td><strong>1.6/3.2</strong></td>
+<td><strong>9.6</strong></td>
+<td><strong>45.9</strong></td>
+<td><strong>2.7</strong></td>
+<td><strong>9.7</strong></td>
+<td>70.5</td>
+<td><strong>94.7</strong></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>单个 SPEAR 和 Whisper + BEATs 双编码器<strong>大体持平</strong>，ASR、音素识别（PR）、OSR 更好，AudioCaps 和 MusicCaps 略差。</li>
+<li>有监督单编码器的能力分布更偏科：AF-Whisper 的音乐和情感最强，但 GigaSpeech、OSR、SV 明显偏弱。</li>
+<li>加权和只带来部分提升，LibriMix 反而变差（10.0 → 12.0）；MLF 在大多数任务上最好。作者的解释是加权和对所有任务只学一组层权重。</li>
+</ul>
+<h3 id="66-table-x">6.6 消融：时间戳注入（<a href="https://arxiv.org/html/2607.17079v1#S5.T10">Table X</a>）<a class="headerlink" href="#66-table-x" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>SED</th>
+<th>MMAU-Pro</th>
+<th>MMAR</th>
+<th>MMSU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SALMONN-2</td>
+<td>70.15</td>
+<td>58.5</td>
+<td>64.5</td>
+<td>69.5</td>
+</tr>
+<tr>
+<td>去掉时间戳</td>
+<td>68.74</td>
+<td>58.2</td>
+<td>64.3</td>
+<td>69.3</td>
+</tr>
+</tbody>
+</table>
+<p>SED 提升 1.4 个点；三个通用基准只差 0.2–0.3，基本在噪声范围内。</p>
+<hr />
+<h2 id="salmonn2">七、关键代码（<a href="https://github.com/bytedance/SALMONN/tree/salmonn2">salmonn2 分支</a>）<a class="headerlink" href="#salmonn2" title="Permanent link">&para;</a></h2>
+<p>仓库很精简，核心模型文件 <code>salmonn/modeling_salmonn.py</code> 只有 223 行，加上 <code>salmonn/spear/</code>（从 icefall 改来的 Zipformer）、训练用的 dataset/collator 和 3 个脚本。README 的注释里写明<strong>不包含</strong>数据集、数据生成流水线、评测脚本和打分代码。</p>
+<h3 id="71-mlf-modeling_salmonnpy">7.1 MLF 适配器 + 连接器（<code>modeling_salmonn.py</code>）<a class="headerlink" href="#71-mlf-modeling_salmonnpy" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># __init__</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">encoder_dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_encoder</span><span class="o">.</span><span class="n">encoder_dim</span>                     <span class="c1"># 1280</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="bp">self</span><span class="o">.</span><span class="n">ln_audio</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">LayerNorm</span><span class="p">(</span><span class="n">encoder_dim</span><span class="p">)</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="k">if</span> <span class="n">config</span><span class="o">.</span><span class="n">concatenate_encoder_layers</span><span class="p">:</span>                             <span class="c1"># MLF 开关</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">concat_proj</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">audio_encoder</span><span class="o">.</span><span class="n">num_encoder_layers</span> <span class="o">*</span> <span class="n">encoder_dim</span><span class="p">,</span> <span class="n">encoder_dim</span><span class="p">)</span>  <span class="c1"># 16640 -&gt; 1280</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="bp">self</span><span class="o">.</span><span class="n">connector</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">encoder_dim</span> <span class="o">*</span> <span class="n">config</span><span class="o">.</span><span class="n">connector_segment_size</span><span class="p">,</span> <span class="n">config</span><span class="o">.</span><span class="n">connector_hidden_size</span><span class="p">),</span>  <span class="c1"># 6400 -&gt; 4096</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">(),</span>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">connector_hidden_size</span><span class="p">,</span> <span class="n">qwen_config</span><span class="o">.</span><span class="n">hidden_size</span><span class="p">),</span>                       <span class="c1"># 4096 -&gt; d_LLM</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">)</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># encode_audio</span>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="n">encoded</span><span class="p">,</span> <span class="n">lengths</span><span class="p">,</span> <span class="n">middle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">audio_encoder</span><span class="o">.</span><span class="n">forward_encoder</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">feature_lengths</span><span class="p">)</span>  <span class="c1"># middle: 13 层隐状态</span>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">concat_proj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>    <span class="n">middle</span> <span class="o">=</span> <span class="p">[</span><span class="n">F</span><span class="o">.</span><span class="n">layer_norm</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">permute</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">middle</span><span class="p">]</span>   <span class="c1"># 式(2)，无仿射参数</span>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>    <span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concat_proj</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">middle</span><span class="p">,</span> <span class="n">dim</span><span class="o">=-</span><span class="mi">1</span><span class="p">))</span>                            <span class="c1"># 式(3)(4)</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ln_audio</span><span class="p">(</span><span class="n">encoded</span><span class="p">)</span>                                                     <span class="c1"># 论文没提的额外 LayerNorm</span>
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a><span class="n">segment</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">connector_segment_size</span>                                         <span class="c1"># q = 5</span>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a><span class="n">encoded</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">pad</span><span class="p">(</span><span class="n">encoded</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="o">-</span><span class="n">encoded</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span> <span class="o">%</span> <span class="n">segment</span><span class="p">))</span>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="n">encoded</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">connector</span><span class="p">(</span><span class="n">encoded</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">encoded</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">encoded</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">segment</span><span class="p">))</span>  <span class="c1"># 式(5)(6)</span>
+</span></code></pre></div>
+<p>参数量核对：<span class="arithmatex">\(16640\times1280+1280\approx21.30\)</span>M，<span class="arithmatex">\(6400\times4096+4096\approx26.22\)</span>M，<span class="arithmatex">\(4096\times4096+4096\approx16.78\)</span>M，合计 <strong>64.3M</strong>，和 Table III 的 64M 一致。30B 版最后一层换成 <span class="arithmatex">\(4096\times2048+2048\approx8.39\)</span>M，合计 <strong>55.9M</strong>，和 56M 一致。这说明 30B 版 MLP 的中间维度仍是 4096，不是论文说的“投影到 LLM 词向量维度（2048）”。</p>
+<h3 id="72">7.2 时间戳注入<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">register_nl_timestamp_tokenizer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokenizer</span><span class="p">):</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="c1"># 预先把 &lt;0.0 seconds&gt; ... &lt;120.0 seconds&gt; 全部 tokenize</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">nl_timestamp_token_ids_list</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="n">tokenizer</span><span class="p">(</span><span class="sa">f</span><span class="s2">"&lt;</span><span class="si">{</span><span class="n">i</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mf">0.1</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> seconds&gt;"</span><span class="p">,</span> <span class="n">add_special_tokens</span><span class="o">=</span><span class="kc">False</span><span class="p">)[</span><span class="s2">"input_ids"</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1201</span><span class="p">)]</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="k">def</span><span class="w"> </span><span class="nf">inject_nl_timestamps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">audio_embeds</span><span class="p">,</span> <span class="n">audio_lengths</span><span class="p">):</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>    <span class="n">k</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">temporal_granularity</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_frame_rate</span><span class="p">)</span>   <span class="c1"># 2.0 s * 10 Hz = 20</span>
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>    <span class="o">...</span>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">blocks</span><span class="p">):</span>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>        <span class="n">timestamp</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">temporal_granularity</span>          <span class="c1"># 2.0, 4.0, ...</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="n">token_index</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">timestamp</span> <span class="o">/</span> <span class="mf">0.1</span><span class="p">),</span> <span class="mi">1200</span><span class="p">))</span>             <span class="c1"># 超过 120 s 后封顶</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="n">value</span> <span class="o">=</span> <span class="n">embeddings</span><span class="p">(</span><span class="n">token_ids</span><span class="p">)</span>                                       <span class="c1"># 直接用 LLM 词表 embedding</span>
+</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="c1"># 每块 [k 个音频 token] 后面接 [时间戳 token]</span>
+</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">((</span><span class="n">block</span><span class="p">,</span> <span class="n">stamp</span><span class="p">),</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">pieces</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">audio_lengths</span> <span class="o">+</span> <span class="n">cumulative</span><span class="p">[</span><span class="n">valid_blocks</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+</span></code></pre></div>
+<h3 id="73">7.3 把音频拼进文本序列<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># collator：&lt;audio&gt; 替换为 Qwen 已有的视觉占位 token</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">text</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">"&lt;audio&gt;"</span><span class="p">,</span> <span class="s2">"&lt;|vision_start|&gt;&lt;|vision_end|&gt;"</span><span class="p">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># prepare_multimodal_inputs：在每个 vision_start 后面插入对应音频的 embedding</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">starts</span> <span class="o">=</span> <span class="p">(</span><span class="n">input_ids</span><span class="p">[</span><span class="n">row</span><span class="p">]</span> <span class="o">==</span> <span class="n">vision_start_id</span><span class="p">)</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">as_tuple</span><span class="o">=</span><span class="kc">True</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="k">for</span> <span class="n">position</span> <span class="ow">in</span> <span class="n">starts</span><span class="p">:</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token_embeds</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">previous</span> <span class="p">:</span> <span class="n">position</span> <span class="o">+</span> <span class="mi">1</span><span class="p">])</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">pieces</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">audio_embeds</span><span class="p">[</span><span class="n">cursor</span><span class="p">,</span> <span class="p">:</span><span class="n">length</span><span class="p">])</span>        <span class="c1"># 音频位置的 label 填 -100</span>
+</span></code></pre></div>
+<p>训练时 prompt 部分的 label 也全部置为 -100，只对 assistant 回复计算损失，对应式 (9)。</p>
+<h3 id="74">7.4 微调<a class="headerlink" href="#74" title="Permanent link">&para;</a></h3>
+<p><code>scripts/train.py</code> 从已发布的权重出发，给 Qwen3 加一个新的 LoRA（<code>configs/finetune.json</code>：<code>q_proj/v_proj</code>、<code>r=64</code>、<code>alpha=32</code>），SPEAR 冻结，<code>ln_audio + concat_proj + connector</code> 默认可训练（<code>freeze_connector: true</code> 时只训 LoRA）。底层用 HF <code>Trainer</code>，可选 DeepSpeed ZeRO-2。默认超参是 lr 2e-4、weight decay 0.1、warmup 400、40k 步、每卡 4 × 梯度累积 8。</p>
+<h3 id="75">7.5 读代码时发现的问题（静态阅读，没有跑模型）<a class="headerlink" href="#75" title="Permanent link">&para;</a></h3>
+<p>我把 <code>inject_nl_timestamps</code> 的索引逻辑用纯 Python 单独复刻了一遍（没有 import 仓库代码），确认了下面这个现象：<strong>当音频 token 数不是 <span class="arithmatex">\(k=20\)</span> 的整数倍时，最后一个不完整块的时间戳会被截掉，换进来的是同等数量的 padding 帧 embedding</strong>。例如 47 个音频 token：输出里只有 <code>&lt;2.0 seconds&gt;</code>、<code>&lt;4.0 seconds&gt;</code>，结尾是 2 个 padding 帧，而不是 <code>&lt;6.0 seconds&gt;</code>。短于 2 秒的音频（比如 MICL 的发音片段）一个时间戳都没有，尾部却带了几个 padding 帧。原因是返回的长度 <code>audio_lengths + cumulative[...]</code> 是在拼好的序列上从头截取，而最后一块的时间戳排在 padding 帧后面。如果原始训练也用的这份代码，训练和推理行为一致，影响应该不大，但这和论文式 (7) 的描述不完全一致。</p>
+<hr />
+<h2 id="_3">八、是否开源<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>状态</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>推理代码</td>
+<td>✅ 开源</td>
+<td><a href="https://github.com/bytedance/SALMONN/tree/salmonn2">salmonn2 分支</a>：<code>infer.py</code>、<code>infer_batch.py</code>，HF <code>trust_remote_code</code> 加载</td>
+</tr>
+<tr>
+<td>微调代码</td>
+<td>✅ 开源</td>
+<td><code>train.py</code> + LoRA 配置 + DeepSpeed ZeRO-2 配置</td>
+</tr>
+<tr>
+<td>8B 权重</td>
+<td>✅ 已发布</td>
+<td><a href="https://huggingface.co/marcoyang/SALMONN-2-8B">marcoyang/SALMONN-2-8B</a>（权重里已包含 SPEAR）</td>
+</tr>
+<tr>
+<td>30B-A3B 权重</td>
+<td>❓ 未确认</td>
+<td>README 只给了 8B 链接；搜索结果里有一个 <a href="https://huggingface.co/collections/tsinghua-ee/salmonn-2">tsinghua-ee/salmonn-2 合集</a>，HF 连接超时，没能打开看</td>
+</tr>
+<tr>
+<td>SPEAR 编码器</td>
+<td>✅ 单独发布</td>
+<td><a href="https://huggingface.co/marcoyang/spear-xlarge-speech-audio-v2">marcoyang/spear-xlarge-speech-audio-v2</a></td>
+</tr>
+<tr>
+<td>训练数据流水线、MICL 数据构造脚本、评测与打分代码</td>
+<td>❌ 不在仓库里</td>
+<td>README 注释明确排除；MICL 只给了 1 个示例 manifest 和 3 段 wav</td>
+</tr>
+<tr>
+<td>内部 QA 数据（4034 h）</td>
+<td>❌ 未公开</td>
+<td>Table I 标注为 in-house</td>
+</tr>
+<tr>
+<td>Demo</td>
+<td>✅</td>
+<td><a href="https://huggingface.co/spaces/wsntxxn/SALMONN-2">HF Space</a></td>
+</tr>
+</tbody>
+</table>
+<p>所以能复现推理和在自己的数据上微调，<strong>不能完整复现论文的训练</strong>：缺 22% 的内部 QA 数据，也缺数据构造和评测代码。</p>
+<hr />
+<h2 id="_4">九、商业是否可用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>我不是律师，以下只是整理出的事实，供你自己判断；正式商用前请让法务核实各项许可证原文。</p>
+</blockquote>
+<ul>
+<li><strong>代码</strong>：仓库 <code>LICENSE</code> 是 <strong>Apache-2.0</strong>（我读了文件确认），SPEAR 的 Zipformer 源码头部也是 Apache-2.0（源自小米 icefall）。代码本身允许商用。</li>
+<li><strong>LLM 底座</strong>：Qwen3-8B 和 Qwen3-30B-A3B-Instruct-2507 按我的了解是 Apache-2.0。</li>
+<li><strong>SALMONN-2 权重和 SPEAR 权重</strong>：HF 模型卡上写的许可证我<strong>今天没能打开核实</strong>。需要你自己看 <a href="https://huggingface.co/marcoyang/SALMONN-2-8B">模型页</a> 右侧的 License 字段。有个第三方中文站（<a href="https://www.aipuzi.cn/ai-news/salmonn-2.html">AI铺子</a>）说“可以商用，遵守仓库 LICENSE”，但它只是转述，不能当依据。</li>
+<li><strong>训练数据带来的风险</strong>（这是最需要注意的部分）：权重是在一批许可证各不相同的数据上训出来的。按我的了解，其中好几个数据集<strong>本身仅限非商业或学术研究使用</strong>，或需要单独签协议，比如 WavCaps、IEMOCAP、MSP-Podcast、SPGISpeech、GigaSpeech（需签使用协议），而 AudioSet、VoxCeleb、MusicCaps 来自 YouTube 片段。各数据集的具体条款我没有逐一核对。“用受限数据训练出的权重能不能商用”在法律上还没有定论，大公司通常会让法务单独评估。</li>
+<li><strong>实际建议</strong>：</li>
+<li>先确认 HF 权重本身的许可证。</li>
+<li>如果是 Apache-2.0 / MIT 这类宽松许可，内部研究和原型不用担心；对外商业发布前，让法务评估训练数据的问题。</li>
+<li>风险最低的做法是<strong>只用代码</strong>，在自己有权使用的数据上重新训 MLF 和 LoRA（SPEAR 权重的许可证同样要先确认）。</li>
+</ul>
+<hr />
+<h2 id="_5">十、与我们对话交互研究的关联<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>它不是对话模型，但可以当“耳朵”</strong>。SALMONN-2 只做音频到文本的理解，不生成语音，SPEAR 也是非流式的（<code>causal=False</code>）。它不能直接替代 <a href="../SALMONN-omni_论文总结/">SALMONN-omni</a> 或 Moshi 式全双工模型里的流式编码器。可借鉴的是设计结论：<strong>一个 SSL 编码器 + 全层融合</strong>，就能同时拿到语义、说话人、情绪和环境声。全双工模型需要感知用户情绪、背景音或第二说话人时，这条路线比“Whisper + BEATs 双编码器”更省事。同组的 <a href="../ELLSA2_论文总结/">ELLSA 2</a> 等后续工作是否会换成 SPEAR 前端，值得关注。</li>
+<li><strong>上下文开销（你之前关心的上下文膨胀问题）</strong>：10 Hz 的音频 token 率加上每 2 秒一段时间戳，1 分钟音频约 600 多个 token，比常见的 25 Hz 方案少约 60%。全双工模型要把多轮历史音频留在上下文里时，“每 5 帧拼成 1 帧再 MLP 投影”是一个简单有效的压缩手段，消融显示语音任务基本不掉点。可以和 <a href="../../notes/全双工语音模型对比_上下文与工具调用/">横向对比笔记</a> 里各模型的 token 率放在一起比较。</li>
+<li><strong>MICL 对对话很实用</strong>：对话中的人名、产品名、专有名词，可以“文字 + 发音音频”的形式放进上下文，相当于在对话里实时注入用户的个性化词表。但这篇论文说明了两点：（a）这种能力必须专门训练，否则多段音频反而把识别搞崩；（b）训练时要加干扰词、目标词随机丢弃、去掉音频退化成纯文本这些手段，防止过度偏置。如果我们在全双工模型里做“工具调用返回的实体回填”或“通讯录热词”，这套数据构造方法可以直接拿来用。</li>
+<li><strong>文字时间戳</strong>：不新增参数，直接用 <code>&lt;t seconds&gt;</code> 文本 token 做时间定位，SED 提升了 1.4 mIoU。对话场景里，如果要让模型知道“用户 3 秒前开始说话”“这段笑声在哪里”，或者给数字人驱动层提供时间对齐，这是最省事的做法。要注意代码里时间戳封顶在 120 秒。</li>
+<li><strong>副语言能力和数字人的关系</strong>：情感识别 IEMOCAP 71–74%、语音质量评估、说话人验证都可以作为对话系统的感知信号，比如用户情绪可以输入到 Audio2Face 表情层，决定回应时的表情风格。</li>
+</ol>
+<hr />
+<h2 id="_6">十一、论文中的不一致与可疑之处<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>“9B”的口径</strong>：Table V / VI 的 “LLM Size” 列写 SALMONN-2 是 9B，但 Table III 写的 LLM 是 Qwen3-8B，HF 仓库名也是 SALMONN-2-8B。9B 应该是 LLM + SPEAR（0.6B）+ MLF 的总参数量，却放在了 “LLM Size” 列下。和别的模型比时口径不统一（比如 AF-3 标的是 8B）。</li>
+<li><strong>“优于多编码器”说法偏强</strong>：贡献列表说 SPEAR + MLF “outperforming multi-encoder designs”，但消融正文用的是 “comparable”。Table IX 里 Whisper + BEATs 在 AudioCaps（68.3 vs 68.1）和 MusicCaps 上仍然更好，AF-Whisper 的情感识别（73.0 vs 70.5）也更好。</li>
+<li><strong>排名表述</strong>：正文说 9B 版 IEMOCAP “second-highest”、MusicCaps ROUGE-L “second-best”，但表格里排第二（下划线）的是自家 30B 版，9B 实际排第三；只有排除 30B 时这个说法才成立。</li>
+<li><strong>时间戳消融的提升被夸大</strong>：通用基准只差 0.2–0.3 个点，没有方差或多次运行，正文却说 “consistently improves”。MMAR 比 MOSS-Audio 只高 0.1，也被列为 “best”。</li>
+<li><strong>论文与代码不一致：参考发音的时间戳</strong>。论文说参考发音音频不插时间戳，代码的 <code>encode_audio</code> 却对 batch 里所有音频统一调用 <code>inject_nl_timestamps</code>。2 秒以内的片段刚好因为第 7.5 节的截断问题没有时间戳，但尾部多了几个 padding 帧；超过 2 秒的发音会被插入时间戳。</li>
+<li><strong>论文与代码不一致：最后一块的时间戳被截掉</strong>（见 7.5）。</li>
+<li><strong>MLP 中间维度</strong>：论文说第一层线性“投影到 LLM 词向量维度”，代码里用的是 <code>connector_hidden_size</code>（4096）。30B 版的 56M 参数只有在中间维度 4096 时才算得出来，说明 30B 版并没有投影到 2048。另外，<code>concat_proj</code> 之后还有一个 <code>ln_audio</code> LayerNorm，公式里没写。</li>
+<li><strong>输入顺序三处说法不一</strong>：§III-E 说输入是“指令、上下文 <span class="arithmatex">\(\mathcal{C}\)</span>、查询音频 <span class="arithmatex">\(\mathbf{x}\)</span>”；图 2 画的是“音频 → 上下文样本 → 指令”；代码示例是“主音频 → 指令 → 发音 + 文字列表”。式 (8) 写的是“发音在前、文字在后”，示例 prompt 也是这个顺序。</li>
+<li><strong>符号冲突</strong>：<span class="arithmatex">\(L\)</span> 既表示编码器层数（13），又在 Table VII 里表示偏置列表长度（20/50/100）。</li>
+<li><strong>“数据高效”需要打折看</strong>：18.2k 小时只统计了指令微调数据，不含 SPEAR 自监督预训练用的大量无标注音频，其中还有 4034 小时内部数据。Table VI 的“数据”列各家口径不一（作者在表注里也承认了）。</li>
+<li><strong>长上下文泛化的证据偏弱</strong>：引言说只用短上下文训练也能“泛化到更长的多模态上下文”，但训练列表本来就有 25–50 个干扰词加真实词，测试最长 100，只外推了约 2 倍。</li>
+<li><strong>基线公平性</strong>：其他模型的分数有的取自原论文，有的用作者“启发式优化的 prompt”重测（Table V 表注）；扩展任务里的专用基线和本文作者团队重叠，训练数据也相同。</li>
+<li><strong>小瑕疵</strong>：<code>configs/finetune.json</code> 里的默认模型名是 <code>marcoyang/salmonn-2-8b-test</code>，和发布的 <code>marcoyang/SALMONN-2-8B</code> 不一致；README 的 arXiv 徽章写的是 “26xx”。</li>
+</ol>
+<hr />
+<h2 id="_7">十二、链接汇总<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p><strong>本文</strong></p>
+<ul>
+<li>论文：<a href="https://arxiv.org/abs/2607.17079">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2607.17079v1">PDF</a> ｜ <a href="https://arxiv.org/html/2607.17079v1">HTML</a> ｜ <a href="https://doi.org/10.48550/arXiv.2607.17079">DOI</a></li>
+<li>章节：<a href="https://arxiv.org/html/2607.17079v1#S1">§I 引言</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S2">§II 相关工作</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S3">§III 方法</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S3.SS3">§III-C MLF</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S3.SS4">§III-D 时间戳</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S3.SS5">§III-E MICL</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S4">§IV 实验设置</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S4.SS4">§IV-D MICL 数据</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5">§V 结果</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5.SS5">§V-E 消融</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S6">§VI 结论</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#bib">参考文献</a></li>
+<li>图表：<a href="https://arxiv.org/html/2607.17079v1#S1.F1">Fig.1</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S2.F2">Fig.2</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S4.T1">Table I 数据</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S4.T2">Table II 训练</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S4.T3">Table III 配置</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S4.T4">Table IV 评测</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5.T5">Table V</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5.T6">Table VI</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5.T7">Table VII</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5.T8">Table VIII</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5.T9">Table IX</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#S5.T10">Table X</a></li>
+<li>代码与模型：<a href="https://github.com/bytedance/SALMONN/tree/salmonn2">GitHub salmonn2 分支</a> ｜ <a href="https://huggingface.co/marcoyang/SALMONN-2-8B">SALMONN-2-8B</a> ｜ <a href="https://huggingface.co/marcoyang/spear-xlarge-speech-audio-v2">SPEAR XLarge</a> ｜ <a href="https://huggingface.co/spaces/wsntxxn/SALMONN-2">HF Space</a> ｜ <a href="https://huggingface.co/collections/tsinghua-ee/salmonn-2">tsinghua-ee 合集</a></li>
+</ul>
+<p><strong>关键引用</strong></p>
+<ul>
+<li>编码器：<a href="https://openreview.net/forum?id=vHaaDCLF0M">SPEAR（OpenReview）</a> ｜ <a href="https://arxiv.org/abs/2310.11230">Zipformer</a> ｜ <a href="https://arxiv.org/abs/2110.13900">WavLM</a> ｜ <a href="https://arxiv.org/abs/2106.07447">HuBERT</a> ｜ <a href="https://arxiv.org/abs/2212.09058">BEATs</a> ｜ <a href="https://arxiv.org/abs/2207.06405">AudioMAE</a> ｜ <a href="https://arxiv.org/abs/2306.00107">MERT</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#bib.bib30">USAD（文中 ref 1）</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#bib.bib1">SSL 分层评测（ref 31）</a></li>
+<li>对比的 ALLM：<a href="https://arxiv.org/abs/2310.13289">SALMONN</a> ｜ <a href="https://arxiv.org/abs/2311.07919">Qwen-Audio</a> ｜ <a href="https://arxiv.org/abs/2407.10759">Qwen2-Audio</a> ｜ <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni</a> ｜ <a href="https://arxiv.org/abs/2604.15804">Qwen3.5-Omni</a> ｜ <a href="https://arxiv.org/abs/2504.18425">Kimi-Audio</a> ｜ <a href="https://arxiv.org/abs/2512.23808">MiMo-Audio</a> ｜ <a href="https://arxiv.org/abs/2402.01831">Audio Flamingo</a> ｜ <a href="https://arxiv.org/abs/2507.08128">AF3</a> ｜ <a href="https://arxiv.org/abs/2604.10905">AF-Next</a> ｜ <a href="https://arxiv.org/abs/2606.01802">MOSS-Audio</a> ｜ <a href="https://arxiv.org/abs/2508.03983">MidashengLM</a> ｜ <a href="https://arxiv.org/abs/2604.25719">Step-Audio-R1.5</a></li>
+<li>时间定位：<a href="https://arxiv.org/abs/2604.13023">SpotSound</a> ｜ <a href="https://arxiv.org/abs/2604.13715">Audio-Side Time Prompt</a></li>
+<li>基准与数据：<a href="https://arxiv.org/html/2607.17079v1#bib.bib32">MMAU-Pro（ref 15）</a> ｜ <a href="https://arxiv.org/abs/2505.13032">MMAR</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#bib.bib34">MMSU（ref 26）</a> ｜ <a href="https://arxiv.org/abs/2106.06909">GigaSpeech</a> ｜ <a href="https://arxiv.org/abs/2104.02014">SPGISpeech</a> ｜ <a href="https://arxiv.org/abs/2602.04535">HoliAntiSpoof</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#bib.bib17">QualiSpeech（ref 27）</a> ｜ <a href="https://arxiv.org/html/2607.17079v1#bib.bib15">OmniVoice（ref 39）</a> ｜ <a href="https://arxiv.org/abs/1908.10084">Sentence-BERT</a></li>
+</ul>
+<p><strong>本站相关笔记</strong></p>
+<ul>
+<li><a href="../SALMONN-omni_论文总结/">SALMONN-omni</a> ｜ <a href="../ELLSA2_论文总结/">ELLSA 2</a> ｜ <a href="../../notes/全双工语音模型对比_上下文与工具调用/">全双工模型横向对比：上下文与工具调用</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 横向对比：上下文与工具调用">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                横向对比：上下文与工具调用
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--next" aria-label="下一页: FaceFormer">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                FaceFormer
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/hero.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

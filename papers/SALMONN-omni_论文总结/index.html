@@ -1,0 +1,2153 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/papers/SALMONN-omni_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>SALMONN-omni - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              SALMONN-omni
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-omni
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-omni
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1，§2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、方法（§3）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、方法（§3）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-mamba-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 Mamba 流式语音编码器（§3.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 流式语音合成器（§3.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-33" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 全双工策略（§3.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-41" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 时间同步与延迟（§4.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-34" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 三阶段训练（§3.4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-a1table-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、训练数据（§4.2，附录 A.1，Table 7）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、实验结果（§5）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、实验结果（§5）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-vs-51table-2-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 隐式 vs 显式思考（§5.1，Table 2，阶段 1 结果）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-52table-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 对话能力（§5.2，Table 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-53" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 双工行为（§5.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 附录里值得看的结果
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、评测设计的局限
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、与我们对话交互研究的关联
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、论文中的不一致与可疑之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  音频理解大模型
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  音频理解大模型
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SALMONN-2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1，§2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、方法（§3）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、方法（§3）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-mamba-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 Mamba 流式语音编码器（§3.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 流式语音合成器（§3.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-33" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 全双工策略（§3.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-41" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 时间同步与延迟（§4.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-34" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.5 三阶段训练（§3.4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-a1table-7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、训练数据（§4.2，附录 A.1，Table 7）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、实验结果（§5）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、实验结果（§5）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-vs-51table-2-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 隐式 vs 显式思考（§5.1，Table 2，阶段 1 结果）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-52table-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 对话能力（§5.2，Table 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-53" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 双工行为（§5.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 附录里值得看的结果
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、评测设计的局限
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、与我们对话交互研究的关联
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、论文中的不一致与可疑之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="././" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    全双工语音对话
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="salmonn-omni-codec-llm">SALMONN-omni：不往词表里塞 codec 的单模型全双工语音 LLM —— 论文总结<a class="headerlink" href="#salmonn-omni-codec-llm" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>原文</strong>：<a href="https://arxiv.org/html/2505.17060v1">SALMONN-omni: A Standalone Speech LLM without Codec Injection for Full-duplex Conversation</a>（arXiv:2505.17060v1，cs.CL，2025-05-17，许可 CC BY-SA 4.0；正式发表于 <a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/233aee920dab065709145371b5900b8f-Abstract-Conference.html">NeurIPS 2025</a>）<br />
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2505.17060">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2505.17060">PDF</a> ｜ <a href="https://arxiv.org/html/2505.17060v1">HTML 全文</a> ｜ <a href="https://proceedings.neurips.cc/paper_files/paper/2025/file/233aee920dab065709145371b5900b8f-Paper-Conference.pdf">NeurIPS 正式版 PDF</a> ｜ <a href="https://openreview.net/forum?id=AsRB5nmlOD">OpenReview</a><br />
+<strong>作者</strong>：Wenyi Yu*、Siyin Wang*、Xiaoyu Yang、Xianzhao Chen、Xiaohai Tian、Jun Zhang、Guangzhi Sun、Lu Lu、Yuxuan Wang、Chao Zhang†（*共同一作，†通讯作者）<br />
+<strong>机构</strong>：清华大学电子系（张超组）、字节跳动、剑桥大学<br />
+<strong>开源</strong>：论文指向 <a href="https://github.com/bytedance/SALMONN">GitHub: bytedance/SALMONN</a>，但我今天（2026-11-02）看了仓库首页和分支列表，<strong>没有 SALMONN-omni 的独立分支或权重</strong>，只有 demo 说明。基于它做的后续工作 <a href="https://github.com/bytedance/SALMONN/tree/ELLSA">ELLSA</a> 和 <a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">ELLSA 2</a> 有代码。<br />
+<strong>本文依据</strong>：我读完了 arXiv v1 HTML 的正文和全部附录（A–G）。NeurIPS 正式版可能修正了下文第八节列出的一些笔误，我没有逐条核对。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一句话概括<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>把<strong>流式语音编码器 → 一个 LLM → 流式语音合成器</strong>用隐向量（而非 codec token）串起来，按 80 ms 一个时间块，把“环境声音流”“自己说话的回声流”和 LLM 的文本 token <strong>交错成一条序列</strong>，再让 LLM 自己输出 <code>&lt;think&gt;</code> / <code>&lt;shift&gt;</code> 两个特殊 token 来决定“继续听”还是“开口 / 闭嘴”。一个 LLM 实例同时完成听和说，不需要外挂 VAD、打断判别器或第二个 LLM。训练分三阶段，最后用 DPO 纠正“太容易被打断”的偏差。在“模型自己判断何时开口”的设定下，它在 4 个口语问答 / 对话基准上平均比 Moshi、Freeze-Omni 高 35.9%（相对值）。</p>
+<hr />
+<h2 id="12">二、要解决的问题（<a href="https://arxiv.org/html/2505.17060v1#S1">§1</a>，<a href="https://arxiv.org/html/2505.17060v1#S2">§2</a>）<a class="headerlink" href="#12" title="Permanent link">&para;</a></h2>
+<p>作者把现有全双工方案分成三类，各有毛病：</p>
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>代表</th>
+<th>作者指出的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>把 codec token 塞进 LLM 词表</strong></td>
+<td><a href="https://arxiv.org/abs/2410.00037">Moshi</a>、<a href="https://arxiv.org/abs/2409.15594">SyncLLM</a>、<a href="https://arxiv.org/abs/2410.17799">OmniFlatten</a></td>
+<td>需要海量语音-文本数据弥合模态差距；文本知识会灾难性遗忘；是否说话完全靠 codec 流隐式决定，话轮时机常常不准（引 <a href="https://arxiv.org/abs/2503.01174">Talking Turns</a>）</td>
+</tr>
+<tr>
+<td><strong>级联 + 外部 VAD / 对话控制器</strong></td>
+<td><a href="https://arxiv.org/abs/2504.18425">Kimi-Audio</a>、<a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni</a></td>
+<td>模块间误差累积；本质还是半双工</td>
+</tr>
+<tr>
+<td><strong>“model-as-a-server”：两个 LLM 进程，一个听一个说</strong></td>
+<td><a href="https://arxiv.org/abs/2501.01957">VITA-1.5</a>、<a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a>、<a href="https://arxiv.org/abs/2501.06282">MinMo</a></td>
+<td>不改坏 LLM，但一个 LLM 实例只能听或说，需要两份进程，算力和显存开销大</td>
+</tr>
+</tbody>
+</table>
+<p>作者据此给出一个分类（<a href="https://arxiv.org/html/2505.17060v1#S2.T1">Table 1</a>）：</p>
+<table>
+<thead>
+<tr>
+<th>半双工（轮次式）</th>
+<th>全双工 · 单模型（standalone）</th>
+<th>全双工 · 非单模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/2412.02612">GLM-4-Voice</a>、Qwen2.5-Omni、<a href="https://openbmb.notion.site/185ede1b7a558042b5d5e45e6b237da9">MiniCPM-o</a>、<a href="https://arxiv.org/abs/2502.17239">Baichuan-Audio</a></td>
+<td><a href="https://arxiv.org/abs/2203.16502">dGSLM</a>、Moshi、<strong>SALMONN-omni</strong></td>
+<td>Freeze-Omni、VITA、MinMo</td>
+</tr>
+</tbody>
+</table>
+<p>SALMONN-omni 想占据的位置是：<strong>不注入 codec，同时是单模型全双工</strong>。</p>
+<hr />
+<h2 id="3">三、方法（<a href="https://arxiv.org/html/2505.17060v1#S3">§3</a>）<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>作者列了实现全双工必须解决的四件事：流式输入输出、同时处理环境声音和自己的声音、对齐时间、处理话轮动态。下面按模块展开。</p>
+<p><img alt="图1 SALMONN-omni 架构" src="../salmonn_omni_figs/fig1_architecture.png" /></p>
+<p><em><a href="https://arxiv.org/html/2505.17060v1#S3.F1">Figure 1</a>：两条输入流（红：环境流，蓝：助手流）都经过同一个流式编码器，和文本 hidden（黄）交错送入 LLM；说话状态下，合成器读 LLM 输出的 hidden 生成语音。注意环境流（红底）里也包含了助手自己的声音（黑色波形），即回声。</em></p>
+<h3 id="31-mamba-31">3.1 Mamba 流式语音编码器（<a href="https://arxiv.org/html/2505.17060v1#S3.SS1">§3.1</a>）<a class="headerlink" href="#31-mamba-31" title="Permanent link">&para;</a></h3>
+<p>按 <a href="https://arxiv.org/abs/2409.17010">MT2KD</a> 的思路，用非流式的 <a href="https://arxiv.org/abs/2212.04356">Whisper-large-v3</a> 当老师，蒸馏出一个流式编码器：</p>
+<ul>
+<li>100 Hz 的 log-Mel 特征经两层卷积降到 50 Hz，再把相邻两帧拼接成 25 Hz，送进 32 层 <a href="https://arxiv.org/abs/2312.00752">Mamba</a> block（隐层维度 2048）（<a href="https://arxiv.org/html/2505.17060v1#S4.SS1">§4.1</a>）。</li>
+<li>老师侧的 Whisper 输出同样从 50 Hz 拼接成 25 Hz，加一个线性层对齐维度后，用 L1 损失匹配：<span class="arithmatex">\(\mathcal{L}_{\text{enc}} = \lVert W h^{\text{Mamba}}_t - h^{\text{Whisper}}_t \rVert_1\)</span>。</li>
+<li>在 <a href="https://arxiv.org/abs/2309.08105">LibriHeavy</a> 和 <a href="https://arxiv.org/abs/2106.06909">GigaSpeech</a> 上预训练 300k 步，batch 512（<a href="https://arxiv.org/html/2505.17060v1#A1.SS2">附录 A.2</a>）。</li>
+</ul>
+<p>选 Mamba 而不是因果 Transformer，作者给的理由是“在长对话上下文中泛化更好”，但正文没有做对比实验。</p>
+<h3 id="32-32">3.2 流式语音合成器（<a href="https://arxiv.org/html/2505.17060v1#S3.SS2">§3.2</a>）<a class="headerlink" href="#32-32" title="Permanent link">&para;</a></h3>
+<p>在 <a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a>-0.5B 上微调，沿用它的“每 <span class="arithmatex">\(N\)</span> 个文本 token 交错生成 <span class="arithmatex">\(M\)</span> 个语音 token”的流式策略。区别是把合成器原本的<strong>文本输入换成 LLM 的隐状态</strong>（经过几层线性变换对齐），所以文本和语音之间是可微的 embedding 接口，不是离散文本。</p>
+<p>用 LLM 的哪一层隐状态喂给合成器？<a href="https://arxiv.org/html/2505.17060v1#A5">附录 E</a>（<a href="https://arxiv.org/html/2505.17060v1#A5.T12">Table 12</a>）比较了第 0、8、16、24 层和最后一层，最后选了<strong>第 24 层</strong>（Llama-3-8B 共 32 层）。作者的解释是：浅层的语音质量差，最后一层会让语音和文本表示耦合过紧，损伤 LLM 的语言能力。</p>
+<h3 id="33-33">3.3 全双工策略（<a href="https://arxiv.org/html/2505.17060v1#S3.SS3">§3.3</a>）<a class="headerlink" href="#33-33" title="Permanent link">&para;</a></h3>
+<p><strong>（1）多流交错成单流。</strong> 对话被拆成两条流：</p>
+<ul>
+<li><strong>环境流</strong>：所有传进来的声音，包括用户语音、背景噪声、第三人说话，以及<strong>自己说话的回声</strong>；</li>
+<li><strong>助手流</strong>：模型自己此前生成的语音。</li>
+</ul>
+<p>对话按固定时长切成时间块。每个块里，LLM 先读环境流的 embedding，再读助手流的 embedding（作者称为 dual-channel input），然后生成本块的文本输出。三者交错成一条自回归序列，所以一个 LLM 实例就能边听边说。</p>
+<p><strong>（2）“思考”策略：让 LLM 自己决定状态切换。</strong> 每个时间块都要决定是否切换“听 / 说”状态。作者比较了两种做法：</p>
+<p><img alt="图2 隐式与显式思考" src="../salmonn_omni_figs/fig2_thinking.png" /></p>
+<p><em><a href="https://arxiv.org/html/2505.17060v1#S3.F2">Figure 2</a>：(a) 隐式：每块预测 <code>&lt;listen&gt;</code> 或 <code>&lt;speak&gt;</code>，但这些 token <strong>不回填</strong>到输入；(b) 显式：<code>&lt;think&gt;</code> / <code>&lt;shift&gt;</code> 作为普通 token 写进序列并回填。</em></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>隐式思考（Implicit）</th>
+<th>显式思考（Explicit，最终采用）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特殊 token</td>
+<td><code>&lt;listen&gt;</code>、<code>&lt;speak&gt;</code></td>
+<td><code>&lt;think&gt;</code>、<code>&lt;shift&gt;</code></td>
+</tr>
+<tr>
+<td>是否回填到输入</td>
+<td>否；只有在说话时才回填文本 embedding</td>
+<td>是，和普通文本一样自回归</td>
+</tr>
+<tr>
+<td>听的时候输出什么</td>
+<td><code>&lt;listen&gt;</code></td>
+<td>每块输出 <code>&lt;think&gt;</code></td>
+</tr>
+<tr>
+<td>说完文本、等语音播完时</td>
+<td>—</td>
+<td>继续输出 <code>&lt;think&gt;</code>（文本比语音快得多，需要占位等待）</td>
+</tr>
+<tr>
+<td>状态切换</td>
+<td>输出 <code>&lt;speak&gt;</code> / <code>&lt;listen&gt;</code></td>
+<td>输出 <code>&lt;shift&gt;</code>（听→说、说→听都用它）</td>
+</tr>
+</tbody>
+</table>
+<p>作者的口号是 <strong>“your LLM is secretly a full-duplex predictor”</strong>（借用 <a href="https://arxiv.org/abs/2305.18290">DPO 论文</a>标题的句式）：不需要单独的双工预测器，把状态切换当作生成普通 token 就行。</p>
+<p>需要说明的是，这里的“思考”<strong>只是话轮状态控制的占位 token，不是推理内容</strong>。<a href="https://arxiv.org/html/2505.17060v1#A3">附录 C</a> 试过在听的时候让模型输出流式 ASR 或“内心独白”作为思考内容，结果反而更差（见 5.4 节）。</p>
+<h3 id="34-41">3.4 时间同步与延迟（<a href="https://arxiv.org/html/2505.17060v1#S4.SS1">§4.1</a>）<a class="headerlink" href="#34-41" title="Permanent link">&para;</a></h3>
+<ul>
+<li>时间块 <span class="arithmatex">\(\Delta = 80\)</span> ms：每听 80 ms 音频，LLM 输出 1 个文本 token。</li>
+<li>LLM 每攒够 4 个 token，合成器生成 12 个语音 token，对应 480 ms 语音（CosyVoice 2 的语音 token 是 25 Hz，<span class="arithmatex">\(12 / 25 = 0.48\)</span> s）。</li>
+<li>因此从决定开口到第一段音频输出，有固定的 <span class="arithmatex">\(4 \times 80 = 320\)</span> ms 延迟。这还没算合成器本身的计算时间，也没算“用户说完 → 模型输出 <code>&lt;shift&gt;</code>”的判断延迟；论文没有报告端到端实测延迟。</li>
+</ul>
+<h3 id="35-34">3.5 三阶段训练（<a href="https://arxiv.org/html/2505.17060v1#S3.SS4">§3.4</a>）<a class="headerlink" href="#35-34" title="Permanent link">&para;</a></h3>
+<p><img alt="图3 三阶段训练" src="../salmonn_omni_figs/fig3_training.png" /></p>
+<p><em><a href="https://arxiv.org/html/2505.17060v1#S3.F3">Figure 3</a>：火焰为可训练，雪花为冻结。</em></p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>训练什么</th>
+<th>冻结什么</th>
+<th>输入</th>
+<th>任务 / 损失</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1. 接编码器</strong></td>
+<td>编码器适配器（MLP）+ LLM 的 LoRA</td>
+<td>Mamba 编码器、LLM</td>
+<td>只有环境流</td>
+<td>ASR + 问答，文本 CE</td>
+</tr>
+<tr>
+<td><strong>2. 接合成器</strong></td>
+<td>编码器适配器、LoRA、合成器适配器、合成器</td>
+<td>Mamba 编码器、LLM</td>
+<td>环境流 + 助手流</td>
+<td>ASR、问答、多轮对话（含打断和附和样本），文本 CE + 语音 CE</td>
+</tr>
+<tr>
+<td><strong>3. RL</strong></td>
+<td>同阶段 2</td>
+<td>同阶段 2</td>
+<td>同阶段 2</td>
+<td>打断和附和任务用 DPO；其余任务保留一部分 SFT 数据</td>
+</tr>
+</tbody>
+</table>
+<p>LLM 骨干是 <a href="https://arxiv.org/abs/2407.21783">Llama-3-8B-Instruct</a>，<a href="https://arxiv.org/abs/2106.09685">LoRA</a> rank 32、缩放因子 1.0。阶段 1、2 各训 50k 和 30k 步，batch 128，32 张 A100（<a href="https://arxiv.org/html/2505.17060v1#A1.SS2">附录 A.2</a>）。</p>
+<p>阶段 3 用的是标准 <a href="https://arxiv.org/abs/2305.18290">DPO</a> 目标：</p>
+<div class="arithmatex">\[
+\mathcal{L}_{\text{DPO}} = -\,\mathbb{E}_{(x,y_w,y_l)}\left[\log \sigma\!\left(\beta \log \frac{\pi_\theta(y_w \mid x)}{\pi_{\text{ref}}(y_w \mid x)} - \beta \log \frac{\pi_\theta(y_l \mid x)}{\pi_{\text{ref}}(y_l \mid x)}\right)\right]
+\]</div>
+<p>但论文<strong>没有交代偏好对 <span class="arithmatex">\((y_w, y_l)\)</span> 是怎么构造的</strong>，也没给 <span class="arithmatex">\(\beta\)</span>。按任务性质推测，<span class="arithmatex">\(y_w\)</span> 应该是“该停时输出 <code>&lt;shift&gt;</code>、不该停时继续说”的序列，<span class="arithmatex">\(y_l\)</span> 则相反；这一点是我的推测，论文里没有写。</p>
+<hr />
+<h2 id="42-a1table-7">四、训练数据（<a href="https://arxiv.org/html/2505.17060v1#S4.SS2">§4.2</a>，<a href="https://arxiv.org/html/2505.17060v1#A1.SS1">附录 A.1</a>，<a href="https://arxiv.org/html/2505.17060v1#A1.T7">Table 7</a>）<a class="headerlink" href="#42-a1table-7" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>数据集</th>
+<th>样本数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ASR</td>
+<td><a href="https://www.openslr.org/12">LibriSpeech</a> / <a href="https://arxiv.org/abs/2106.06909">GigaSpeech</a>-M</td>
+<td>281k / 200k</td>
+</tr>
+<tr>
+<td>问答</td>
+<td><a href="https://github.com/tatsu-lab/stanford_alpaca">Alpaca-52k</a>、<a href="https://aclanthology.org/D13-1160/">Web Questions</a>、<a href="https://arxiv.org/abs/1705.03551">TriviaQA</a>、<a href="https://arxiv.org/abs/1606.05250">SQuAD</a>、<a href="https://aclanthology.org/Q19-1026/">Natural Questions</a>、VoiceAssistant-400K（来自 <a href="https://arxiv.org/abs/2408.16725">Mini-Omni</a>）、UltraChat（来自 <a href="https://arxiv.org/abs/2412.15649">SLAM-Omni</a>）</td>
+<td>共约 730k</td>
+</tr>
+<tr>
+<td>多轮对话</td>
+<td>以 TriviaQA / NQ 的主题，用 Llama-3-8B-Instruct 生成对话</td>
+<td>25k + 56k</td>
+</tr>
+</tbody>
+</table>
+<p>几个要点：</p>
+<ul>
+<li><strong>几乎全是合成语音</strong>：除 VoiceAssistant-400K 和 UltraChat 的问题音频外，问题和回答都由 CosyVoice2-0.5B 合成；回答文本由 Llama-3-8B-Instruct 生成（提示词见 <a href="https://arxiv.org/html/2505.17060v1#A2">附录 B</a>）。</li>
+<li><strong>打断数据分两类</strong>：<ul>
+<li>与上下文无关的打断：让 GPT-4o 生成 10 句直接打断语（如 “Please stop talking right now.”）；</li>
+<li>与上下文相关的打断：让 Llama-3 生成“与当前对话强相关的问题”（应当打断）和“完全无关的问题”（干扰项，不应打断）（提示词见 <a href="https://arxiv.org/html/2505.17060v1#A2.SS3">附录 B.3</a>）。</li>
+</ul>
+</li>
+<li><strong>附和（backchannel）</strong>：只用了 7 个常见词或短语（如 “Uh-huh.”）。</li>
+<li>训练中考虑了多说话人打断，即第三人说话的情况。</li>
+</ul>
+<hr />
+<h2 id="5">五、实验结果（<a href="https://arxiv.org/html/2505.17060v1#S5">§5</a>）<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>评测集：<a href="https://arxiv.org/abs/2305.15255">Llama Questions</a>、Web Questions（用火山引擎商用 TTS 转成语音）、TriviaQA（取 <a href="https://arxiv.org/abs/2502.17239">OpenAudioBench</a> 的 1000 条子集）、AlpacaEval（来自 <a href="https://arxiv.org/abs/2410.17196">VoiceBench</a>）。前三个用准确率；AlpacaEval 用 GPT-4.1 打 1–5 分（提示词见 <a href="https://arxiv.org/html/2505.17060v1#A2.SS4">附录 B.4</a>）。S2T 评文本回答，S2S 先用 Whisper-large-v3 转写语音回答再评。</p>
+<p>两种评测设定：</p>
+<ul>
+<li><strong>predicted turn-taking</strong>：模型自己决定何时开口，只有全双工模型能做；</li>
+<li><strong>oracle turn-taking</strong>：强制在问题结束时开口，可以和半双工模型比较（Moshi 无法强制开口，所以不参加）。</li>
+</ul>
+<h3 id="51-vs-51table-2-1">5.1 隐式 vs 显式思考（<a href="https://arxiv.org/html/2505.17060v1#S5.SS1">§5.1</a>，<a href="https://arxiv.org/html/2505.17060v1#S5.T2">Table 2</a>，阶段 1 结果）<a class="headerlink" href="#51-vs-51table-2-1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>策略</th>
+<th>Llama Q. succ / S2T</th>
+<th>Web Q. succ / S2T</th>
+<th>TriviaQA succ / S2T</th>
+<th>AlpacaEval succ / S2T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>隐式</td>
+<td>97.3 / 76.3</td>
+<td>99.9 / 50.8</td>
+<td><strong>95.8</strong> / 62.0</td>
+<td>67.3 / 3.73</td>
+</tr>
+<tr>
+<td>显式</td>
+<td><strong>100.0 / 82.0</strong></td>
+<td>99.9 / <strong>52.4</strong></td>
+<td>92.3 / <strong>67.5</strong></td>
+<td><strong>68.3 / 4.48</strong></td>
+</tr>
+</tbody>
+</table>
+<p>显式在回答质量上全面占优，话轮成功率在 TriviaQA 上反而低一些。作者给出的解释是：显式把状态 token 回填进序列，更符合自回归模型的训练方式。</p>
+<p>一个有价值的附带发现：阶段 1（只有环境流）在 AlpacaEval 上的话轮成功率只有约 70%；阶段 2 加入<strong>助手流</strong>后升到约 90%。<strong>模型“听到自己在说什么”，对判断何时停、何时接话很关键。</strong></p>
+<h3 id="52-52table-3">5.2 对话能力（<a href="https://arxiv.org/html/2505.17060v1#S5.SS2">§5.2</a>，<a href="https://arxiv.org/html/2505.17060v1#S5.T3">Table 3</a>）<a class="headerlink" href="#52-52table-3" title="Permanent link">&para;</a></h3>
+<p><strong>predicted turn-taking（自己判断何时开口）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Llama Q. S2T / S2S</th>
+<th>Web Q. S2T / S2S</th>
+<th>TriviaQA S2T / S2S</th>
+<th>AlpacaEval S2T / S2S</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Moshi</td>
+<td>60.8 / 54.5</td>
+<td>23.4 / 22.1</td>
+<td>25.6 / 16.7</td>
+<td>1.84 / 1.76</td>
+</tr>
+<tr>
+<td>Freeze-Omni</td>
+<td>74.2 / 56.2</td>
+<td>40.8 / 27.9</td>
+<td>45.1 / 28.5</td>
+<td>3.90 / 2.46</td>
+</tr>
+<tr>
+<td><strong>SALMONN-omni</strong></td>
+<td><strong>79.3 / 73.6</strong></td>
+<td><strong>49.7 / 43.7</strong></td>
+<td><strong>63.6 / 56.0</strong></td>
+<td><strong>4.01 / 3.22</strong></td>
+</tr>
+</tbody>
+</table>
+<p>“平均相对提升 35.9%”是拿 SALMONN-omni 和 Freeze-Omni 在这 8 个指标上逐项算相对提升再取平均。我复算的结果是 35.94%，与论文一致；但单项从 +2.8%（AlpacaEval S2T）到 +96.5%（TriviaQA S2S）不等，见第八节。</p>
+<p><strong>oracle turn-taking（强制开口，和半双工模型比）：</strong></p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Llama Q.</th>
+<th>Web Q.</th>
+<th>TriviaQA</th>
+<th>AlpacaEval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GLM-4-Voice</td>
+<td>75.0 / 65.7</td>
+<td>38.5 / 37.0</td>
+<td>50.8 / 47.5</td>
+<td>3.82 / <strong>3.58</strong></td>
+</tr>
+<tr>
+<td>Qwen2.5-Omni</td>
+<td>78.7 / <strong>75.7</strong></td>
+<td>41.9 / 39.6</td>
+<td>55.5 / 52.2</td>
+<td>3.04 / 2.61</td>
+</tr>
+<tr>
+<td>VITA-1.5</td>
+<td>77.3 / 56.0</td>
+<td>43.9 / 31.0</td>
+<td>54.8 / 41.3</td>
+<td>3.92 / 1.94</td>
+</tr>
+<tr>
+<td>MiniCPM-o</td>
+<td>76.3 / 70.0</td>
+<td>47.1 / 42.7</td>
+<td>65.4 / 56.0</td>
+<td>3.99 / 3.44</td>
+</tr>
+<tr>
+<td>Kimi-Audio</td>
+<td>79.7 / 68.3</td>
+<td>44.0 / 37.3</td>
+<td>63.6 / 51.2</td>
+<td>3.92 / 2.95</td>
+</tr>
+<tr>
+<td>Baichuan-Audio</td>
+<td>76.0 / 74.0</td>
+<td>43.1 / 40.7</td>
+<td>56.9 / 53.0</td>
+<td>3.76 / 3.32</td>
+</tr>
+<tr>
+<td>Freeze-Omni</td>
+<td>77.0 / 61.0</td>
+<td>42.3 / 29.1</td>
+<td>53.5 / 36.5</td>
+<td>3.71 / 2.42</td>
+</tr>
+<tr>
+<td><strong>SALMONN-omni</strong></td>
+<td><strong>80.0</strong> / 75.0</td>
+<td><strong>50.5 / 45.4</strong></td>
+<td><strong>66.0 / 58.8</strong></td>
+<td><strong>4.05</strong> / 3.33</td>
+</tr>
+</tbody>
+</table>
+<p>S2T 四项全部第一；S2S 在 Web Q. 和 TriviaQA 上第一，Llama Q. 输给 Qwen2.5-Omni，AlpacaEval 输给 GLM-4-Voice 和 MiniCPM-o。考虑到 Kimi-Audio 用了约 1300 万小时音频，而 SALMONN-omni 的训练数据只有百万条量级、且大部分是合成语音，这个结果相当有说服力。不过 Llama-3-8B 的文本底子本身就比部分对手强，“数据效率”的对比并不是完全公平的。</p>
+<h3 id="53-53">5.3 双工行为（<a href="https://arxiv.org/html/2505.17060v1#S5.SS3">§5.3</a>）<a class="headerlink" href="#53-53" title="Permanent link">&para;</a></h3>
+<p><strong>话轮转换成功率</strong>（<a href="https://arxiv.org/html/2505.17060v1#S5.T4">Table 4</a>）：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>Llama Q.</th>
+<th>Web Q.</th>
+<th>TriviaQA</th>
+<th>AlpacaEval</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Moshi</td>
+<td>85.0</td>
+<td>76.0</td>
+<td>37.1</td>
+<td>83.4</td>
+</tr>
+<tr>
+<td>Freeze-Omni</td>
+<td>99.7</td>
+<td>99.8</td>
+<td>72.0</td>
+<td>87.9</td>
+</tr>
+<tr>
+<td><strong>SALMONN-omni</strong></td>
+<td>99.7</td>
+<td>99.6</td>
+<td><strong>92.8</strong></td>
+<td><strong>92.0</strong></td>
+</tr>
+</tbody>
+</table>
+<p>差距主要在 TriviaQA 和 AlpacaEval 这类问题短、语速快的数据上：Moshi 只有 37.1%，Freeze-Omni 72.0%，SALMONN-omni 92.8%。</p>
+<p><strong>与上下文无关的打断 vs 附和，带回声</strong>（<a href="https://arxiv.org/html/2505.17060v1#S5.T5">Table 5</a>）。“echo factor ×n” 表示模型能听到 n 倍音量的自身回声：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>回声</th>
+<th>P</th>
+<th>R</th>
+<th>F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Moshi</td>
+<td>×1.0</td>
+<td>0.84</td>
+<td>0.77</td>
+<td>0.80</td>
+</tr>
+<tr>
+<td>Freeze-Omni</td>
+<td>×0.0</td>
+<td>0.64</td>
+<td>0.72</td>
+<td>0.68</td>
+</tr>
+<tr>
+<td>Freeze-Omni</td>
+<td>×0.1</td>
+<td>0.19</td>
+<td>0.86</td>
+<td>0.31</td>
+</tr>
+<tr>
+<td>Freeze-Omni</td>
+<td>×1.0</td>
+<td>0.10</td>
+<td>0.69</td>
+<td>0.17</td>
+</tr>
+<tr>
+<td><strong>SALMONN-omni</strong></td>
+<td>×1.0</td>
+<td><strong>0.84</strong></td>
+<td><strong>0.92</strong></td>
+<td><strong>0.88</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Freeze-Omni 依赖外部 VAD，只要有一点回声（×0.1），精确率就从 0.64 掉到 0.19，几乎听到什么都当成打断。SALMONN-omni 和 Moshi 都把自己的声音当作输入的一部分建模，因此对回声鲁棒。这是“单模型全双工”最直接的实际收益。</p>
+<p><strong>DPO 的效果</strong>（<a href="https://arxiv.org/html/2505.17060v1#S5.T6">Table 6</a>，<a href="https://arxiv.org/html/2505.17060v1#S5.F4">Figure 4</a>，<a href="https://arxiv.org/html/2505.17060v1#A4">附录 D</a>）：</p>
+<table>
+<thead>
+<tr>
+<th>阶段（batch 256）</th>
+<th>无关打断 P / R / F1</th>
+<th>相关打断 P / R / F1</th>
+<th>总 F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SFT（阶段 2）</td>
+<td>0.68 / 0.93 / 0.79</td>
+<td>0.88 / 0.99 / 0.93</td>
+<td>0.86</td>
+</tr>
+<tr>
+<td>DPO 10 步</td>
+<td>0.88 / <strong>0.07</strong> / 0.13</td>
+<td>0.95 / 0.21 / 0.34</td>
+<td>0.24</td>
+</tr>
+<tr>
+<td>DPO 40 步</td>
+<td>0.84 / 0.92 / 0.88</td>
+<td>0.89 / 0.98 / 0.93</td>
+<td><strong>0.90</strong></td>
+</tr>
+</tbody>
+</table>
+<p><img alt="图4 DPO 训练曲线" src="../salmonn_omni_figs/fig4_dpo.png" /></p>
+<p><em><a href="https://arxiv.org/html/2505.17060v1#S5.F4">Figure 4</a>：三种 batch size 下 DPO 的总 F1 随步数的变化，虚线为 SFT 基线。</em></p>
+<p>SFT 模型的问题是<strong>太容易被打断</strong>：无关打断场景下精确率只有 0.68，比如把附和语当成打断。DPO 刚开始时模型矫枉过正，几乎不让打断（召回率 0.07）；到 30–40 步时恢复，并超过 SFT。整个 DPO 只训了 40 步，最终增益主要集中在“无关打断”的精确率（0.68 → 0.84）上，“相关打断”几乎不变。</p>
+<h3 id="54">5.4 附录里值得看的结果<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>更丰富的“思考”内容反而有害</strong>（<a href="https://arxiv.org/html/2505.17060v1#A3">附录 C</a>，<a href="https://arxiv.org/html/2505.17060v1#A3.T8">Table 8</a>）：在小数据（LibriSpeech + Alpaca）上比较了 5 种策略。让模型在听的时候输出流式 ASR 或由 LLM 生成的“内心独白”（Implicit-ASR / Explicit-ASR），test-clean 的 WER 从 2.40 升到 3.48–5.09。作者的解释是：听状态的输出越多样，“听”和“说”两种工作模式就越难区分，说话时会出现混乱生成；另外推理时错误的思考内容会通过误差传播影响回答。</li>
+<li><strong>情感语音</strong>（<a href="https://arxiv.org/html/2505.17060v1#A6">附录 F</a>，<a href="https://arxiv.org/html/2505.17060v1#A6.T13">Table 13</a>）：让 LLM 先输出一个情感标签，合成器按 instruct-TTS 风格生成。用 gpt-4o-audio 打情感强度分，得 3.49，为所有模型中最高。但作者承认情感有时会用错。</li>
+<li><strong>案例</strong>（<a href="https://arxiv.org/html/2505.17060v1#A7">附录 G</a>）：问答、开放对话、上下文相关打断、附和各一例。</li>
+</ul>
+<p><img alt="图7 上下文相关打断" src="../salmonn_omni_figs/fig7_barge_in.png" /></p>
+<p><em><a href="https://arxiv.org/html/2505.17060v1#A7.F7">Figure 7</a>：用户在模型说话时追问一个相关问题，模型停止说话。</em></p>
+<p><img alt="图8 附和" src="../salmonn_omni_figs/fig8_backchannel.png" /></p>
+<p><em><a href="https://arxiv.org/html/2505.17060v1#A7.F8">Figure 8</a>：用户插入附和语，模型继续说。</em></p>
+<hr />
+<h2 id="_2">六、评测设计的局限<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>全部是合成语音</strong>：训练数据由 CosyVoice2 合成，Web Q. 测试集由火山 TTS 合成，打断和附和测试集看起来也是构造出来的。在真人自然语音、口音、真实房间回声下的表现未知。</li>
+<li><strong>打断测试集很小</strong>：每个设定只有 200 条（100 正例 + 100 负例），F1 差 0.02–0.04 时的统计意义有限。</li>
+<li><strong>负例设计有盲区</strong>：上下文相关设定中，负例是“第三人说的无关问题”和“静音”，<strong>没有“用户本人说的无关话”</strong>。所以无法判断模型是按语义相关性决策，还是部分依赖说话人身份。</li>
+<li><strong>附和只有 7 种说法</strong>，训练和测试用的句子虽然不同，但覆盖面很窄。</li>
+<li><strong>话轮成功率的判定标准没有给出</strong>，比如开口早多少、晚多少算失败。</li>
+<li><strong>没有长对话评测</strong>：所有评测都是单轮或短多轮，论文完全没有讨论上下文长度、截断或 KV 管理（见第七节第 1 条）。</li>
+</ul>
+<hr />
+<h2 id="_3">七、与我们对话交互研究的关联<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><strong>1. 上下文消耗：去掉 codec 并不省上下文，反而更费。</strong> 按论文给出的参数推算（假设编码器适配器不再降采样，且没有额外的块边界 token；论文没写这两点）：</p>
+<div class="arithmatex">\[
+\underbrace{2}_{\text{环境流 }25\text{ Hz}\times 80\text{ ms}} + \underbrace{2}_{\text{助手流}} + \underbrace{1}_{\text{文本 token}} = 5 \ \text{个位置 / 块}
+\quad\Rightarrow\quad \frac{5}{0.08\,\text{s}} = 62.5 \ \text{位置/秒}
+\]</div>
+<p>即每分钟约 3750 个位置。Llama-3-8B-Instruct 的原生上下文是 8192，所以<strong>大约 2.2 分钟就会占满</strong>（<span class="arithmatex">\(8192 / 62.5 \approx 131\)</span> s）。相比之下，Moshi 把多路 token 相加进同一位置，只有 12.5 位置/秒，3000 步约 4 分钟。这和我们在<a href="../../notes/全双工语音模型对比_上下文与工具调用/">横向对比笔记</a>里的结论一致：<strong>上下文膨胀的根源是“每帧都占位置”和“自己说的话也回灌”，与是否用 codec 关系不大。</strong></p>
+<p>而 5.1 节的结果说明，回灌助手流恰恰是话轮成功率从约 70% 升到约 90% 的原因，回声鲁棒性（Table 5）也依赖它。<strong>“听到自己”和“上下文成本”在这个架构里是直接冲突的。</strong> 后续的 <a href="https://arxiv.org/html/2609.34247v1#S3.SS1.SSS1">SALMONN-duo</a> 就选择去掉 echo 流来缩短序列。如果我们沿用这条路线，可以考虑几种折中：助手流只保留更低帧率的摘要 embedding；或者只在说话状态下保留助手流（听的时候助手流是静音，基本是浪费）；或者对历史块做压缩，只保留文本。</p>
+<p><strong>2. “思考 token”不能当推理用。</strong> 名字叫 thinking，实际是 <code>&lt;think&gt;</code> 占位加 <code>&lt;shift&gt;</code> 切换，没有任何推理内容。附录 C 的负面结果对我们关心的“边听边想 / 边听边调工具”有直接参考价值：<strong>在同一条序列的“听”槽位里塞进有内容的输出（ASR、内心独白），会破坏说话质量。<strong>这从侧面支持把“想”和“调工具”放到</strong>另一个进程或后端</strong>去做，也就是 SALMONN-duo、MoshiRAG、GPT-Live 等收敛到的“快慢双系统 + 异步委托”方案，而不是让前端的单序列同时承担。</p>
+<p><strong>3. 工具调用：论文完全没有涉及。</strong> 不过它的接口天然适合扩展：状态切换已经是普通 token，加一个 <code>&lt;call&gt;</code> 之类的 token 在形式上是自然的。真正的问题是工具返回结果放在哪里：塞回 80 ms 时间线会进一步挤占本来就紧张的上下文。</p>
+<p><strong>4. 单模型的好处是真实存在的。</strong> Table 5 中 Freeze-Omni 在有回声时 F1 从 0.68 掉到 0.17，说明“外挂 VAD + 两个 LLM”的方案在真实扬声器场景（尤其是机器人、免提设备）里很脆弱。如果我们的落地形态是机器人头（参见 <a href="../Moshi-Face_论文总结/">Moshi-Face</a>、<a href="../ELLSA2_论文总结/">ELLSA 2</a>），<strong>模型能区分自己的回声</strong>这个能力比基准分数更重要。</p>
+<p><strong>5. 和 Easy Turn 的对照。</strong> <a href="../Easy-Turn_论文总结/">Easy Turn</a> 是“外挂轮次检测器、主模型半双工”的代表，SALMONN-omni 是“主模型自己预测轮次”的代表。前者模块化、可单独迭代，但看不到对话上下文；后者能做上下文相关打断（判断追问是否和自己正在说的内容相关），代价是轮次能力和主模型绑定，改一次就要重训。</p>
+<p><strong>6. DPO 修正双工行为的思路可以借鉴。</strong> SFT 模型偏向“容易被打断”，这很可能是训练数据中打断正例偏多导致的。用偏好学习来调整“该不该停”的阈值，比改数据配比更直接。不过论文没公开偏好对的构造方法，复现时需要自己设计。</p>
+<p><strong>7. 它是 ELLSA / ELLSA 2 的底座。</strong> 我们已经读过的 <a href="../ELLSA2_论文总结/">ELLSA 2</a> 完全沿用了本文的 80 ms 时间块和“文本先于语音”的 thinker-talker 时序，再外挂手势和表情生成器。读懂本文就能理解 ELLSA 2 主干的时序设计。</p>
+<hr />
+<h2 id="_4">八、论文中的不一致与可疑之处<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>“at least 30%” 的说法不准确。</strong> 摘要和贡献点都说相对提升“at least 30%”，但正文的 35.9% 是 8 个指标的<strong>平均</strong>相对提升。逐项看，Llama Q. S2T 只提升 6.9%（79.3 vs 74.2），AlpacaEval S2T 只提升 2.8%（4.01 vs 3.90）。“至少 30%”只对平均值成立，对单项不成立。</li>
+<li><strong>“consistently outperforms” 有夸大。</strong> §5.1 说显式思考“始终优于”隐式，但 <a href="https://arxiv.org/html/2505.17060v1#S5.T2">Table 2</a> 中 TriviaQA 的话轮成功率是隐式更高（95.8 vs 92.3）。</li>
+<li><strong>学习率笔误。</strong> <a href="https://arxiv.org/html/2505.17060v1#A1.SS2">附录 A.2</a> 写的是 <span class="arithmatex">\(4\times10^{5}\)</span> 和 <span class="arithmatex">\(3\times10^{5}\)</span>，显然应为 <span class="arithmatex">\(4\times10^{-5}\)</span> 和 <span class="arithmatex">\(3\times10^{-5}\)</span>（第三阶段写的是 <span class="arithmatex">\(1\times10^{6}\)</span>，同理应为 <span class="arithmatex">\(10^{-6}\)</span>）。</li>
+<li><strong><a href="https://arxiv.org/html/2505.17060v1#A4.T11">Table 11</a> 有一行数字算不对。</strong> batch 512、DPO 20 步那一行，上下文相关设定写的是 P=0.98、R=0.96、F1=0.55；但 <span class="arithmatex">\(2 \times 0.98 \times 0.96 / (0.98 + 0.96) \approx 0.97\)</span>。很可能是召回率写错了（R≈0.38 时 F1≈0.55，与 <a href="https://arxiv.org/html/2505.17060v1#S5.F4">Figure 4</a> 中该点总 F1 约 0.58 的走势吻合）。</li>
+<li><strong>Table 5 没说明 SALMONN-omni 用的是 DPO 后的模型。</strong> 它的 0.84 / 0.92 / 0.88 与 Table 6 中“DPO 40 步”的无关打断结果完全一致，而 SFT 模型在同一设定下只有 0.79。拿 RL 后的模型和 Moshi、Freeze-Omni 比，应该在表注里写明。</li>
+<li><strong>阶段 2 的描述自相矛盾。</strong> <a href="https://arxiv.org/html/2505.17060v1#S3.SS4">§3.4</a> 说阶段 2“the whole model is trained in an end-to-end manner”，紧接着又说编码器和 LLM 骨干都冻结。准确的说法应该是“梯度端到端贯通，但只训练适配器、LoRA 和合成器”。</li>
+<li><strong>“全双工 SOTA” 的对比面很窄。</strong> predicted turn-taking 设定只比了 Moshi 和 Freeze-Omni 两个模型，没有同期的 <a href="https://arxiv.org/abs/2410.17799">OmniFlatten</a>、<a href="https://arxiv.org/abs/2409.15594">SyncLLM</a>、MinMo 等（可能是因为它们没有开源权重，但论文没有说明）。</li>
+<li><strong>阶段 2 后文本能力有所下降，但正文没讨论。</strong> 阶段 1 显式策略的 S2T（Table 2：Llama Q. 82.0，AlpacaEval 4.48）高于最终模型（Table 3：79.3，4.01），说明接入合成器和助手流后，文本回答质量有所损失。</li>
+<li><strong>附录 E 选第 24 层的依据比较弱。</strong> <a href="https://arxiv.org/html/2505.17060v1#A5.T12">Table 12</a> 中第 16 层的 S2S 在 Web Q.（44.8 vs 43.7）和 TriviaQA（56.6 vs 56.0）上都优于第 24 层，各层之间的 S2T 差异也在 1 个点左右。所谓“最后一层 S2T 最差”是成立的，但差距很小。</li>
+<li><strong>小笔误</strong>：<a href="https://arxiv.org/html/2505.17060v1#A2.SS2">附录 B.2</a> 的标题与 B.1 重复（都写着 “spoken QA response”），实际内容是多轮对话生成的提示词；§5.2 标题里的 “capailities” 拼错。</li>
+</ol>
+<hr />
+<h2 id="_5">九、链接汇总<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><strong>本文</strong>：<a href="https://arxiv.org/abs/2505.17060">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2505.17060">PDF</a> ｜ <a href="https://arxiv.org/html/2505.17060v1">HTML</a> ｜ <a href="https://proceedings.neurips.cc/paper_files/paper/2025/hash/233aee920dab065709145371b5900b8f-Abstract-Conference.html">NeurIPS 2025 摘要</a> ｜ <a href="https://proceedings.neurips.cc/paper_files/paper/2025/file/233aee920dab065709145371b5900b8f-Paper-Conference.pdf">NeurIPS PDF</a> ｜ <a href="https://neurips.cc/virtual/2025/poster/119430">NeurIPS 海报页</a> ｜ <a href="https://openreview.net/forum?id=AsRB5nmlOD">OpenReview</a> ｜ <a href="https://github.com/bytedance/SALMONN">GitHub: bytedance/SALMONN</a></p>
+<p><strong>章节</strong>：<a href="https://arxiv.org/html/2505.17060v1#S1">§1 引言</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S2">§2 相关工作</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S3">§3 方法</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S3.SS1">§3.1 Mamba 编码器</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S3.SS2">§3.2 合成器</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S3.SS3">§3.3 全双工策略</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S3.SS4">§3.4 训练</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S4.SS1">§4.1 模型规格</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S4.SS2">§4.2 训练任务</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S4.SS3">§4.3 评测</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.SS1">§5.1 思考策略对比</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.SS2">§5.2 对话能力</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.SS3">§5.3 双工行为</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S6">§6 结论</a></p>
+<p><strong>附录</strong>：<a href="https://arxiv.org/html/2505.17060v1#A1">A 训练细节</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A2">B 提示词</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A3">C 其它思考策略</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A4">D DPO 详细结果</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A5">E 嵌入层选择</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A6">F 情感语音</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A7">G 案例</a></p>
+<p><strong>图表</strong>：<a href="https://arxiv.org/html/2505.17060v1#S3.F1">Fig 1 架构</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S3.F2">Fig 2 思考策略</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S3.F3">Fig 3 三阶段训练</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.F4">Fig 4 DPO 曲线</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A7.F5">Fig 5–8 案例</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S2.T1">Table 1 分类</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.T2">Table 2</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.T3">Table 3</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.T4">Table 4</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.T5">Table 5</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#S5.T6">Table 6</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A1.T7">Table 7</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A3.T8">Table 8</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A4.T9">Table 9–11</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A5.T12">Table 12</a> ｜ <a href="https://arxiv.org/html/2505.17060v1#A6.T13">Table 13</a></p>
+<p><strong>SALMONN-omni 系列</strong>：<a href="https://arxiv.org/abs/2411.18138">v1 技术报告 (2411.18138)</a> ｜ <a href="https://arxiv.org/html/2609.34247v1">SALMONN-duo (2609.34247)</a> ｜ <a href="https://github.com/bytedance/SALMONN/tree/ELLSA">ELLSA 代码</a> ｜ <a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">ELLSA 2 代码</a> ｜ <a href="https://arxiv.org/abs/2310.13289">SALMONN (ICLR 2024)</a></p>
+<p><strong>对比的语音对话模型</strong>：<a href="https://arxiv.org/abs/2410.00037">Moshi</a> ｜ <a href="https://arxiv.org/abs/2409.15594">SyncLLM</a> ｜ <a href="https://arxiv.org/abs/2410.17799">OmniFlatten</a> ｜ <a href="https://arxiv.org/abs/2203.16502">dGSLM</a> ｜ <a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a> ｜ <a href="https://arxiv.org/abs/2501.01957">VITA-1.5</a> ｜ <a href="https://arxiv.org/abs/2501.06282">MinMo</a> ｜ <a href="https://arxiv.org/abs/2412.02612">GLM-4-Voice</a> ｜ <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni</a> ｜ <a href="https://arxiv.org/abs/2504.18425">Kimi-Audio</a> ｜ <a href="https://arxiv.org/abs/2502.17239">Baichuan-Audio</a> ｜ <a href="https://openbmb.notion.site/185ede1b7a558042b5d5e45e6b237da9">MiniCPM-o 2.6</a> ｜ <a href="https://arxiv.org/abs/2408.16725">Mini-Omni</a> ｜ <a href="https://arxiv.org/abs/2412.15649">SLAM-Omni</a> ｜ <a href="https://arxiv.org/abs/2503.01174">Talking Turns 基准</a></p>
+<p><strong>模型组件与方法</strong>：<a href="https://arxiv.org/abs/2407.21783">Llama 3</a> ｜ <a href="https://arxiv.org/abs/2212.04356">Whisper</a> ｜ <a href="https://arxiv.org/abs/2409.17010">MT2KD</a> ｜ <a href="https://arxiv.org/abs/2312.00752">Mamba</a> ｜ <a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a> ｜ <a href="https://arxiv.org/abs/2106.09685">LoRA</a> ｜ <a href="https://arxiv.org/abs/2305.18290">DPO</a> ｜ <a href="https://arxiv.org/abs/1707.06347">PPO</a></p>
+<p><strong>数据与评测</strong>：<a href="https://www.openslr.org/12">LibriSpeech</a> ｜ <a href="https://arxiv.org/abs/2106.06909">GigaSpeech</a> ｜ <a href="https://arxiv.org/abs/2309.08105">LibriHeavy</a> ｜ <a href="https://github.com/tatsu-lab/stanford_alpaca">Stanford Alpaca</a> ｜ <a href="https://aclanthology.org/D13-1160/">Web Questions</a> ｜ <a href="https://arxiv.org/abs/1705.03551">TriviaQA</a> ｜ <a href="https://arxiv.org/abs/1606.05250">SQuAD</a> ｜ <a href="https://aclanthology.org/Q19-1026/">Natural Questions</a> ｜ <a href="https://arxiv.org/abs/2305.15255">Llama Questions / Spectron</a> ｜ <a href="https://arxiv.org/abs/2410.17196">VoiceBench</a> ｜ <a href="https://arxiv.org/abs/2502.17239">OpenAudioBench（Baichuan-Audio）</a></p>
+<p><strong>本库相关笔记</strong>：<a href="../../notes/全双工语音模型对比_上下文与工具调用/">全双工语音模型对比：上下文与工具调用</a> ｜ <a href="../ELLSA2_论文总结/">ELLSA 2 论文总结</a> ｜ <a href="../Easy-Turn_论文总结/">Easy Turn 论文总结</a> ｜ <a href="../Moshi-Face_论文总结/">Moshi-Face 论文总结</a> ｜ <a href="../DuplexJev_论文总结/">DuplexJev 论文总结</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="上一页: 首页">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                首页
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--next" aria-label="下一页: Moshi-Face">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                Moshi-Face
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/hero.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
