@@ -1,0 +1,2914 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/papers/MiniCPM-o-4.5_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        <link rel="prev" href="../ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+        <link rel="next" href="../../notes/ELLSA2_%E4%B8%8A%E5%8D%8A%E8%BA%AB%E6%9C%BA%E5%99%A8%E4%BA%BA_%E5%B7%AE%E8%B7%9D%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0%E8%B7%AF%E7%BA%BF/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>MiniCPM-o 4.5 - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MiniCPM-o 4.5
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SALMONN-omni_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-omni
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  MiniCPM-o 4.5
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  MiniCPM-o 4.5
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1figure-2figure-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1，Figure 2、Figure 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2figure-4-a-table-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、端到端全模态架构（§2，Figure 4，附录 A / Table 13）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、端到端全模态架构（§2，Figure 4，附录 A &#x2f; Table 13）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-table-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 组件与参数（Table 13）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#omni-flow3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、Omni-Flow：统一的流式框架（§3）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、Omni-Flow：统一的流式框架（§3）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 三条时间对齐的流（§3.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 统一序列化（§3.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-33table-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 设计权衡与消融（§3.3，Table 1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tail34figure-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、TAIL：时间对齐的交错语音生成（§3.4，Figure 5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、数据（§4）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、数据（§4）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-41" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 语音数据（§4.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-42" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 视觉-语言数据（§4.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-43" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 全模态全双工数据（§4.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、训练（§5）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、训练（§5）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.1 强化学习的三个部分
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-66table-9figure-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.2 长度奖励消融（§6.6，Table 9，Figure 6）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、实验结果（§6）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、实验结果（§6）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-62table-2-instructtable-3-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.1 视觉-语言（§6.2，Table 2 Instruct、Table 3 Thinking）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-63table-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.2 语音理解（§6.3，Table 4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-table-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.3 语音生成（Table 5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-64table-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.4 文本能力（§6.4，Table 6）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-65" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.5 全模态与全双工（§6.5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、推理效率（§7）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十、作者承认的局限（§8）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十一、我发现的不一致与存疑点
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十二、与我们对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十三、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/ELLSA2_%E4%B8%8A%E5%8D%8A%E8%BA%AB%E6%9C%BA%E5%99%A8%E4%BA%BA_%E5%B7%AE%E8%B7%9D%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0%E8%B7%AF%E7%BA%BF/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2 → 上半身机器人：差距与复现
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  音频理解大模型
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  音频理解大模型
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../SALMONN-2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Learning2Listen_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Learning to Listen（听者建模）
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1figure-2figure-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1，Figure 2、Figure 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2figure-4-a-table-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、端到端全模态架构（§2，Figure 4，附录 A / Table 13）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、端到端全模态架构（§2，Figure 4，附录 A &#x2f; Table 13）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31-table-13" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 组件与参数（Table 13）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#omni-flow3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、Omni-Flow：统一的流式框架（§3）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、Omni-Flow：统一的流式框架（§3）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 三条时间对齐的流（§3.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 统一序列化（§3.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-33table-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 设计权衡与消融（§3.3，Table 1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tail34figure-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、TAIL：时间对齐的交错语音生成（§3.4，Figure 5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、数据（§4）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、数据（§4）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-41" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 语音数据（§4.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-42" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 视觉-语言数据（§4.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-43" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 全模态全双工数据（§4.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、训练（§5）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、训练（§5）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.1 强化学习的三个部分
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72-66table-9figure-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7.2 长度奖励消融（§6.6，Table 9，Figure 6）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、实验结果（§6）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、实验结果（§6）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81-62table-2-instructtable-3-thinking" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.1 视觉-语言（§6.2，Table 2 Instruct、Table 3 Thinking）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82-63table-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.2 语音理解（§6.3，Table 4）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#83-table-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.3 语音生成（Table 5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#84-64table-6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.4 文本能力（§6.4，Table 6）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#85-65" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8.5 全模态与全双工（§6.5）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、推理效率（§7）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十、作者承认的局限（§8）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十一、我发现的不一致与存疑点
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十二、与我们对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        十三、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../SALMONN-omni_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    全双工语音对话
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="minicpm-o-45">MiniCPM-o 4.5：实时全双工全模态交互 —— 论文总结<a class="headerlink" href="#minicpm-o-45" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>原文</strong>：<a href="https://arxiv.org/html/2604.27393v1">MiniCPM-o 4.5: Towards Real-Time Full-Duplex Omni-Modal Interaction</a>（arXiv:2604.27393v1，cs.CL，2026-04-30，正文 15 页 + 附录）<br />
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2604.27393v1">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2604.27393v1">PDF</a> ｜ <a href="https://arxiv.org/html/2604.27393v1">HTML 全文</a> ｜ <a href="https://arxiv.org/src/2604.27393v1">TeX 源码</a> ｜ <a href="https://doi.org/10.48550/arXiv.2604.27393">DOI</a> ｜ <a href="https://huggingface.co/papers/2604.27393">HF Papers 页</a><br />
+<strong>作者</strong>：Junbo Cui、Bokai Xu、Chongyi Wang、Tianyu Yu 等 35 人；通讯作者 Maosong Sun*、Zhiyuan Liu*、Yuan Yao*<br />
+<strong>机构</strong>：MiniCPM-o Team, OpenBMB（清华大学 NLP 实验室 + 面壁智能）<br />
+<strong>开源</strong>：<a href="https://huggingface.co/openbmb/MiniCPM-o-4_5">HF 权重 openbmb/MiniCPM-o-4_5</a>（Apache-2.0）｜ <a href="https://github.com/OpenBMB/MiniCPM-o">GitHub OpenBMB/MiniCPM-o</a> ｜ <a href="https://github.com/OpenSQZ/MiniCPM-V-CookBook">Cookbook</a> ｜ <a href="https://github.com/OpenBMB/minicpm-o-4_5-pytorch-simple-demo">PyTorch 全双工 Web Demo</a> ｜ <a href="https://minicpmo45.modelbest.cn/">在线 Demo</a> ｜ <a href="https://openbmb.github.io/minicpm-o-4_5-omni/">全双工 Casebook</a> ｜ <a href="https://openbmb.github.io/minicpm-o-4_5/">语音 Casebook</a><br />
+<strong>时间线</strong>：模型权重 2026-02 已发布（模型卡 News 写 2026.02.06 开源了本地实时 Web Demo），技术报告晚了约 3 个月才挂上 arXiv。所以这篇报告更像“对已发布模型的事后说明”，很多工程细节（数据量、超参）没有给。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一句话概括<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>把 <a href="https://arxiv.org/abs/2509.18154">MiniCPM-V 4.5</a> 的视觉能力、Whisper-Medium 音频编码器、Qwen3-8B 主干、一个 0.3B 的语音 token 解码器和 CosyVoice2 式流匹配声码器<strong>端到端连成一个 9.34B 模型</strong>，再用 <strong>Omni-Flow</strong>（按 1 秒切片的时分复用）把“视觉流、环境音频流、输出流”排到同一条时间轴上：每秒先读新进来的画面和声音，再决定“这一秒说不说、说什么”。说话时用 <strong>TAIL</strong>（时间对齐交错）控制每秒生成多少文本，让语音播放不落后于模型的最新状态。结果是：一个 9B 模型能边看、边听、边说，还能主动开口（提醒、实况解说），INT4 量化后 11 GB 显存可跑；视觉能力接近 Gemini 2.5 Flash，全模态理解和语音合成超过 Qwen3-Omni-30B-A3B。</p>
+<hr />
+<h2 id="1figure-2figure-3">二、要解决的问题（<a href="https://arxiv.org/html/2604.27393v1#S1">§1</a>，<a href="https://arxiv.org/html/2604.27393v1#S0.F2">Figure 2</a>、<a href="https://arxiv.org/html/2604.27393v1#S1.F3">Figure 3</a>）<a class="headerlink" href="#1figure-2figure-3" title="Permanent link">&para;</a></h2>
+<p><img alt="Figure 2 交互范式演进" src="../minicpm_o45_figs/model_trends_v2.png" /></p>
+<p><em><a href="https://arxiv.org/html/2604.27393v1#S0.F2">Figure 2</a>：作者眼中的交互范式演进：纯文本 → 多模态理解 → 全模态实时流（GPT-4o、Gemini Live、Qwen3-Omni）→ 全双工（MiniCPM-o 4.5）。</em></p>
+<p>作者认为，现在多模态大模型的瓶颈已经不是“支持多少模态”或“延迟多低”，而是<strong>交互范式本身</strong>，具体有两个问题：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>含义</th>
+<th>后果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>感知与回应交替进行（Blocked I/O）</strong></td>
+<td>模型要么在听/看，要么在说，二者轮流</td>
+<td>说话途中看到的新画面、听到的新声音无法用来及时调整正在说的内容</td>
+</tr>
+<tr>
+<td><strong>被动响应（Passive）</strong></td>
+<td>只有用户显式提问才会开口</td>
+<td>不能根据场景变化主动提醒、主动解说</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Figure 3 从轮次交互到全双工" src="../minicpm_o45_figs/Teaser-v7.png" /></p>
+<p><em><a href="https://arxiv.org/html/2604.27393v1#S1.F3">Figure 3</a>：左边是传统流式：模型先感知、再说话，看球赛时只能说出“红衣球员在带球……”，等它说完，射门已经发生了。右边是 MiniCPM-o 4.5：边说边看，能在射门那一刻插一句“哦！他射门了！”。</em></p>
+<p>作者给出的解决方向：(1) 感知和回应在 <strong>token 级别</strong>持续耦合，听、看、说、写并行；(2) 行为由上下文驱动，模型自己决定什么时候开口。</p>
+<p>贡献声明（<a href="https://arxiv.org/html/2604.27393v1#S1">§1</a> 末尾）：第一个全双工全模态 LLM（9B，边缘设备 12 GB 以内可跑）；视觉逼近 Gemini 2.5 Flash，全模态与语音合成超过 Qwen3-Omni-30B-A3B；提出 Omni-Flow 框架。同时仍保留传统轮次模式，可以在全双工和轮次之间切换（模型卡里对应 <code>model.as_duplex()</code> / <code>as_simplex()</code>）。</p>
+<hr />
+<h2 id="2figure-4-a-table-13">三、端到端全模态架构（<a href="https://arxiv.org/html/2604.27393v1#S2">§2</a>，<a href="https://arxiv.org/html/2604.27393v1#S2.F4">Figure 4</a>，<a href="https://arxiv.org/html/2604.27393v1#A1">附录 A / Table 13</a>）<a class="headerlink" href="#2figure-4-a-table-13" title="Permanent link">&para;</a></h2>
+<p><img alt="Figure 4 MiniCPM-o 4.5 架构" src="../minicpm_o45_figs/fig4_architecture.png" /></p>
+<p><em><a href="https://arxiv.org/html/2604.27393v1#S2.F4">Figure 4</a>：底部是视频流和音频流，按秒切块后经编码器变成视觉嵌入 V 和音频嵌入 A，送入全双工 LLM。LLM 每秒先输出一个控制 token（<code>sl</code> = 静默 / <code>sp</code> = 说话），说话时再输出文本 token。每个文本 token 的隐状态 h 与 token 本身合并后送进交错式语音 token 解码器，再由流式流匹配解码器根据系统提示里的参考音频合成波形。</em></p>
+<h3 id="31-table-13">3.1 组件与参数（<a href="https://arxiv.org/html/2604.27393v1#A1.T13">Table 13</a>）<a class="headerlink" href="#31-table-13" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>具体模型</th>
+<th>参数量</th>
+<th>关键配置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>视觉编码器</td>
+<td>SigLIP ViT（<a href="https://arxiv.org/abs/2303.15343">SigLIP</a>）</td>
+<td>417.8M</td>
+<td>27 层，隐藏维 1152，patch 14×14</td>
+</tr>
+<tr>
+<td>视觉重采样器</td>
+<td>Perceiver 式 resampler（沿用 <a href="https://arxiv.org/abs/2408.01800">MiniCPM-V</a>）</td>
+<td>88.9M</td>
+<td>64 个查询 token，维度 4096</td>
+</tr>
+<tr>
+<td>音频编码器</td>
+<td><a href="https://arxiv.org/abs/2212.04356">Whisper</a> Medium encoder，按块流式（<a href="https://arxiv.org/abs/2102.01547">WeNet</a> 式 chunk）</td>
+<td>307.2M</td>
+<td>24 层，80 维 Mel，输出 50 帧/秒</td>
+</tr>
+<tr>
+<td>音频投影器</td>
+<td>两层 MLP + ReLU</td>
+<td>21.0M</td>
+<td>1024→4096→4096，<strong>5× 时间压缩 → 10 token/秒</strong></td>
+</tr>
+<tr>
+<td>LLM 主干</td>
+<td><a href="https://arxiv.org/abs/2505.09388">Qwen3-8B</a></td>
+<td>8,189.2M</td>
+<td>36 层，GQA（32 头 / 8 KV 头），<strong>上下文 40,960</strong></td>
+</tr>
+<tr>
+<td>主干→语音解码器投影</td>
+<td>两层 MLP + ReLU</td>
+<td>10.5M</td>
+<td>4096→768→768</td>
+</tr>
+<tr>
+<td>语音 token 解码器</td>
+<td>Llama 结构小模型</td>
+<td>116.8M（文本嵌入）+ 188.8M（Transformer）</td>
+<td>20 层，隐藏维 768，上下文 4096</td>
+</tr>
+<tr>
+<td>语音 token</td>
+<td><a href="https://arxiv.org/abs/2407.05407">CosyVoice</a> 的 S3 token</td>
+<td>—</td>
+<td>单码本，6,562 个码，<strong>25 token/秒</strong></td>
+</tr>
+<tr>
+<td>声码器</td>
+<td>流式流匹配解码器（<a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a> 式）</td>
+<td>未计入</td>
+<td>根据系统提示里的参考音频决定音色</td>
+</tr>
+</tbody>
+</table>
+<p>可学习参数合计 <strong>9.34B</strong>（我按 Table 13 逐项相加得 9,340.2M，与原文一致）。流匹配声码器不在这个数里。</p>
+<p>各部分的设计要点：</p>
+<ul>
+<li><strong>视觉</strong>（<a href="https://arxiv.org/html/2604.27393v1#S2">§2</a> “Visual Encoding”）：用 <a href="https://arxiv.org/abs/2403.11703">LLaVA-UHD</a> 的切片策略处理任意长宽比高分辨率图，每个切片先编码成 1024 个 token，再压缩成 64 个，压缩比 16×（常见做法是 4×）。<strong>全双工模式下最大分辨率只有 448×448</strong>，也就是每帧只有 1 个切片、64 个 token；其他模式最高 2240×2240。</li>
+<li><strong>音频</strong>：Whisper 编码器输出 50 帧/秒，MLP 投影器再压缩 5 倍，最终 <strong>10 token/秒</strong>进入 LLM。</li>
+<li><strong>文本解码</strong>：LLM 只生成文本，全双工时每秒只需解码 3–4 步（大致是人的语速）。作者特意和“让主干直接生成语音 token（约 25 个/秒）”的做法（如 <a href="https://arxiv.org/abs/2507.16632">Step-Audio 2</a>、<a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni</a>）对比：那样做效率低，语言能力也容易退化（引 <a href="https://arxiv.org/abs/2505.17496">Analyzing mitigation strategies for catastrophic forgetting</a>）。</li>
+<li><strong>语音 token 生成</strong>：每个文本 token 送进语音解码器时，会把它在 LLM 里的<strong>隐状态</strong>（经 MLP 变换）加到 token 嵌入上。作者的解释是：韵律、语气这类决策已经由 LLM 隐状态编码好了，小解码器只需要专心做“发音建模”。</li>
+<li><strong>音色</strong>：系统提示是“多模态”的，可以同时包含文本和一段参考音频，声码器按参考音频克隆音色。这就是模型卡里说的 voice cloning / role play。</li>
+</ul>
+<p>整体数据流（我根据 <a href="https://arxiv.org/html/2604.27393v1#S2">§2</a>–<a href="https://arxiv.org/html/2604.27393v1#S3">§3</a> 和 Figure 4 整理）：</p>
+<pre class="mermaid"><code>flowchart LR
+    V[摄像头 1 帧/秒&lt;br/&gt;≤448×448] --&gt; SIG[SigLIP + Resampler&lt;br/&gt;64 token/帧]
+    A[麦克风音频] --&gt; WH[Whisper-M 流式块&lt;br/&gt;50 帧/秒] --&gt; PJ[MLP 5× 压缩&lt;br/&gt;10 token/秒]
+    SYS[多模态系统提示&lt;br/&gt;文本 + 参考音频] --&gt; LLM
+    SIG --&gt; LLM[Qwen3-8B 主干&lt;br/&gt;每 1 s 一组：V ; A ; 输出]
+    PJ --&gt; LLM
+    LLM --&gt;|控制 token sl / sp| CTRL{这一秒说不说}
+    CTRL --&gt;|sp：文本 token + 隐状态 h| STD[语音 token 解码器 0.3B&lt;br/&gt;TAIL 交错，S3 25 token/秒]
+    STD --&gt; FM[流式流匹配声码器]
+    SYS -.参考音频.-&gt; FM
+    FM --&gt; OUT[输出语音 24 kHz]</code></pre>
+<p>注意：<strong>模型自己说出的语音不会回灌进 LLM</strong>。输出流里只有文本 token（和控制 token），所以 LLM 历史开销很小；但如果机器人扬声器的声音被麦克风收进来，它会作为“环境音频”再进入模型，论文没有讨论回声问题（见第十节）。</p>
+<hr />
+<h2 id="omni-flow3">四、Omni-Flow：统一的流式框架（<a href="https://arxiv.org/html/2604.27393v1#S3">§3</a>）<a class="headerlink" href="#omni-flow3" title="Permanent link">&para;</a></h2>
+<p>核心思想借自通信里的<strong>时分复用</strong>（TDM）：把连续的交互切成长度为 <span class="arithmatex">\(t\)</span> 的时间窗，每个窗口里先“吃进”新信号，再产生下一段输出。<span class="arithmatex">\(t\)</span> 足够小，感知和回应在时间上就足够紧密，近似全双工。</p>
+<h3 id="41-31">4.1 三条时间对齐的流（<a href="https://arxiv.org/html/2604.27393v1#S3.SS1">§3.1</a>）<a class="headerlink" href="#41-31" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>流</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>env-visual</strong></td>
+<td>环境的实时视觉观测</td>
+</tr>
+<tr>
+<td><strong>env-audio</strong></td>
+<td>环境声学场景，<strong>用户语音也在这里面</strong></td>
+</tr>
+<tr>
+<td><strong>out-stream</strong></td>
+<td>助手的文本和语音输出</td>
+</tr>
+</tbody>
+</table>
+<p>这一抽象的关键在于：<strong>用户请求不再是特权的“user 角色”</strong>，而只是环境音频里的一部分；模型的输出也不再需要用户请求来触发。模型处在一个一直开着的多模态环境里，自己决定“说什么”以及“要不要说、什么时候说”。</p>
+<h3 id="42-32">4.2 统一序列化（<a href="https://arxiv.org/html/2604.27393v1#S3.SS2">§3.2</a>）<a class="headerlink" href="#42-32" title="Permanent link">&para;</a></h3>
+<p>第 <span class="arithmatex">\(k\)</span> 个时间块里，视觉 token 为 <span class="arithmatex">\(v_k\)</span>，音频 token 为 <span class="arithmatex">\(a_k\)</span>，输出 token 为 <span class="arithmatex">\(o_k\)</span>（不该说话时，<span class="arithmatex">\(o_k\)</span> 只有一个特殊的 <code>[listen]</code> token）。把它们组成一组：</p>
+<div class="arithmatex">\[g_k = [\,v_k\,;\,a_k\,;\,o_k\,]\]</div>
+<p>再把所有组依次拼接成一条序列，交给普通的因果语言模型：</p>
+<div class="arithmatex">\[S = g_1 \,\Vert\, g_2 \,\Vert\, \cdots \,\Vert\, g_K\]</div>
+<p>每个块内<strong>先感知、后输出</strong>，所以每个输出都以最新观测为条件。由于模型每个窗口都要决定输出与否，<strong>主动行为自然出现，也不再依赖外部 VAD</strong>（作者引了 <a href="https://github.com/snakers4/silero-vad">Silero VAD</a> 作为被替代的对象）。模型卡的描述是：LLM “以 1 Hz 的频率决定说还是不说”。</p>
+<h3 id="43-33table-1">4.3 设计权衡与消融（<a href="https://arxiv.org/html/2604.27393v1#S3.SS3">§3.3</a>，<a href="https://arxiv.org/html/2604.27393v1#S3.T1">Table 1</a>）<a class="headerlink" href="#43-33table-1" title="Permanent link">&para;</a></h3>
+<p>作者在三个维度上做了消融：</p>
+<ul>
+<li><strong>时间粒度</strong>：块长 1.0 s / 0.2 s / 0.1 s；</li>
+<li><strong>边界显式性</strong>：相邻组之间要不要插特殊分隔 token；</li>
+<li><strong>控制方式</strong>：<strong>LS</strong>（Listen-Speak）= 先预测一个二元的 listen/speak 控制 token，再生成内容；<strong>LT</strong>（Listen-Text）= 在同一个输出空间里直接预测 <code>[listen]</code> 或普通文本 token。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>块长</th>
+<th>边界</th>
+<th>控制</th>
+<th>AdvBench</th>
+<th>AlpacaEval</th>
+<th>IFEval</th>
+<th>SDQA</th>
+<th>MMLU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.0 s</td>
+<td>显式</td>
+<td>LS</td>
+<td><strong>0.98</strong></td>
+<td>3.56</td>
+<td><strong>0.29</strong></td>
+<td><strong>0.36</strong></td>
+<td><strong>0.65</strong></td>
+</tr>
+<tr>
+<td>1.0 s</td>
+<td>显式</td>
+<td>LT</td>
+<td>0.92</td>
+<td><strong>3.60</strong></td>
+<td>0.24</td>
+<td>0.35</td>
+<td>0.56</td>
+</tr>
+<tr>
+<td>1.0 s</td>
+<td>隐式</td>
+<td>LT</td>
+<td>0.96</td>
+<td>3.31</td>
+<td>0.22</td>
+<td>0.28</td>
+<td>0.45</td>
+</tr>
+<tr>
+<td>0.2 s</td>
+<td>显式</td>
+<td>LS</td>
+<td>0.81</td>
+<td>1.22</td>
+<td>0.10</td>
+<td>0.09</td>
+<td>0.45</td>
+</tr>
+<tr>
+<td>0.1 s</td>
+<td>显式</td>
+<td>LS</td>
+<td>0.67</td>
+<td>2.40</td>
+<td>0.10</td>
+<td>0.13</td>
+<td>0.32</td>
+</tr>
+</tbody>
+</table>
+<p>作者的三个结论：</p>
+<ol>
+<li><strong>块长决定“延迟—容量”的权衡</strong>：块越短，反应越及时，但每个块里用来做决策和生成的建模预算越少；太短时模型拿不到足够信息做稳定决策，性能大幅下降。<strong>1.0 s 是最好的折中</strong>。</li>
+<li><strong>显式边界一直有益</strong>：把“新观测”和“新输出”的分界明确标出来，能减轻模型负担。</li>
+<li><strong>控制和内容分开更稳</strong>：LS 优于 LT，说明“要不要说”和“说什么”应该解耦，混在一步预测里更难学。</li>
+</ol>
+<p>我的读法：这张表的指标看起来是 <a href="https://arxiv.org/abs/2410.17196">VoiceBench</a> 的子集（VoiceBench 正好包含 AlpacaEval、IFEval、SD-QA、MMSU、AdvBench），即<strong>语音问答质量</strong>，而不是全双工行为本身（轮次切换、打断、延迟）。表里的 “MMLU” 很可能是 VoiceBench 的 MMSU【推断】。论文没说明评测协议，也没有报任何延迟数字，所以“1.0 s 最佳”是在<strong>问答质量</strong>意义下的最佳，并没有衡量块长缩短带来的响应速度收益。</p>
+<hr />
+<h2 id="tail34figure-5">五、TAIL：时间对齐的交错语音生成（<a href="https://arxiv.org/html/2604.27393v1#S3.SS4">§3.4</a>，<a href="https://arxiv.org/html/2604.27393v1#S3.F5">Figure 5</a>）<a class="headerlink" href="#tail34figure-5" title="Permanent link">&para;</a></h2>
+<p><img alt="Figure 5 三种流式语音生成策略" src="../minicpm_o45_figs/fig5_tail.png" /></p>
+<p><em><a href="https://arxiv.org/html/2604.27393v1#S3.F5">Figure 5</a>：(a) 不交错：先生成一长段文本再合成，文本远远领先于播放；(b) 固定比例交错：每 N 个文本 token 配 M 个语音 token；&copy; TAIL：每个 1 秒块里生成的文本量是自适应的，使它念出来大约正好占这一秒；块末尾的“超前 token”（look-ahead）推迟到下一块再发声。</em></p>
+<p><strong>问题</strong>：生成文本的时间和播放语音的时间不匹配。如果一个 <span class="arithmatex">\(m\)</span> 秒窗口里生成的文本要念远远超过 <span class="arithmatex">\(m\)</span> 秒，语音就会越来越落后于模型的状态，用户此刻听到的是模型很早以前“想好”的内容。每个文本 token 的发音时长还不固定、依赖上下文。在全双工场景下，(a)、(b) 两种做法都会让模型继续念已经过时的内容。</p>
+<p><strong>TAIL 的做法</strong>：不是让每个块独立对齐，而是看<strong>整个交互累计的播放进度</strong>。第 <span class="arithmatex">\(k\)</span> 块生成的文本量要使念完之后语音流接近当前时间边界 <span class="arithmatex">\(kt\)</span>；如果前面已经有点拖延，这一块就少生成几个文本 token，让语音追上。用我的话写成式子（论文没有写公式）：设第 <span class="arithmatex">\(j\)</span> 块的文本念出来时长为 <span class="arithmatex">\(d_j\)</span>，TAIL 让</p>
+<div class="arithmatex">\[\sum_{j=1}^{k} d_j \;\approx\; k\,t\]</div>
+<p><strong>监督信号怎么造</strong>：从全双工训练数据里取出每个文本 token 的起止时间，起始时间落在 <span class="arithmatex">\([(k-1)t,\ kt)\)</span> 的 token 连同对应的语音 token 分到第 <span class="arithmatex">\(k\)</span> 块。这样模型学到的是一种<strong>依赖历史的交错模式</strong>：每块文本 token 数随累计播放对齐情况变化。</p>
+<p><strong>有界超前（Look-Ahead）</strong>：发音有时依赖后文，比如英文 “the” 在 “the apple” 和 “the car” 里读音不同。所以第 <span class="arithmatex">\(k\)</span> 块最后几个文本 token 的语音推迟到第 <span class="arithmatex">\(k+1\)</span> 块再生成，给发音和韵律提供局部上下文，同时不让文本跑得太远。</p>
+<p><strong>代价</strong>（<a href="https://arxiv.org/html/2604.27393v1#S6.T10">Table 10</a>，SeedTTS 测试集）：</p>
+<table>
+<thead>
+<tr>
+<th>交错模式</th>
+<th>ZH CER↓</th>
+<th>ZH SIM-o↑</th>
+<th>EN WER↓</th>
+<th>EN SIM-o↑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不交错</td>
+<td>1.44</td>
+<td>74.1</td>
+<td>2.70</td>
+<td>64.9</td>
+</tr>
+<tr>
+<td>固定文本比例</td>
+<td><strong>0.86</strong></td>
+<td><strong>74.5</strong></td>
+<td><strong>2.38</strong></td>
+<td>64.9</td>
+</tr>
+<tr>
+<td>动态文本（TAIL）</td>
+<td>1.04</td>
+<td>74.1</td>
+<td>3.93</td>
+<td><strong>65.1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>固定比例交错的准确率最好；TAIL 牺牲了一些识别准确率，<strong>英文 WER 从 2.38 升到 3.93（相对 +65%）</strong>。作者认为这是“流式交互 vs 语音质量”的实用折中。注意：<a href="https://arxiv.org/html/2604.27393v1#S6.T5">Table 5</a> 里 MiniCPM-o 4.5 的语音合成主结果（0.86 / 74.5 / 2.38 / 64.9）<strong>和“固定文本比例”这一行完全相同</strong>，也就是说主表报的是非全双工模式的数字（见第十一节）。</p>
+<hr />
+<h2 id="4">六、数据（<a href="https://arxiv.org/html/2604.27393v1#S4">§4</a>）<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>论文只描述了数据来源和处理流程，<strong>没有给任何数据量</strong>（小时数、样本数、配比）。</p>
+<h3 id="61-41">6.1 语音数据（<a href="https://arxiv.org/html/2604.27393v1#S4.SS1">§4.1</a>）<a class="headerlink" href="#61-41" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>大规模自然语音</strong>：数百万小时无标注语音，经一条由多个开源组件组成的流水线处理（引了 <a href="https://arxiv.org/abs/2206.08317">Paraformer</a>、<a href="https://arxiv.org/abs/2212.04356">Whisper</a>、说话人日志、波形域的语音分离/增强等，原文 <a href="https://arxiv.org/html/2604.27393v1#S4.SS1">§4.1</a> 引了 [19–23] 但只写“多个开源组件”），产出零样本 TTS、ASR、多轮多说话人对话的训练集。</li>
+<li><strong>口语对话数据</strong>：先用文本 LLM 从多样的种子问题生成口语化、指令跟随的对话；其中一部分<strong>请专业配音演员在录音棚重新录制</strong>，要求“对话式演绎而不是照稿念”，在保持统一音色的前提下变化情绪、语速和重音。覆盖指令式 TTS、问答和多轮自然对话。</li>
+</ul>
+<h3 id="62-42">6.2 视觉-语言数据（<a href="https://arxiv.org/html/2604.27393v1#S4.SS2">§4.2</a>）<a class="headerlink" href="#62-42" title="Permanent link">&para;</a></h3>
+<p>在 MiniCPM-V 4.5 的数据体系上扩量提质：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>改进点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>知识与对齐</td>
+<td>更新 <a href="https://arxiv.org/abs/2310.20550">CapsFusion</a> 流水线里的生成模型，改进图文相关性过滤</td>
+</tr>
+<tr>
+<td>复杂文档与 OCR</td>
+<td>沿用 MiniCPM-V 4.5 的“文档知识 + OCR 统一学习”，新增<strong>相关性感知掩码</strong>：优先遮住与图表相关的文字区域，迫使模型看图而不是靠上下文文字猜</td>
+</tr>
+<tr>
+<td>真实场景</td>
+<td>更自然多样的问法；把简短直答样本改写成思维链式的详细解释；用奖励模型过滤</td>
+</tr>
+<tr>
+<td>稠密视频感知</td>
+<td>自建稠密视频描述数据，描述时间事件、人物动作和场景转换</td>
+</tr>
+<tr>
+<td>纯文本</td>
+<td>来自 <a href="https://arxiv.org/abs/2506.07900">MiniCPM 4.1</a> 后训练数据，用于保住语言能力</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-43">6.3 全模态全双工数据（<a href="https://arxiv.org/html/2604.27393v1#S4.SS3">§4.3</a>）<a class="headerlink" href="#63-43" title="Permanent link">&para;</a></h3>
+<p>每个样本都包含完整的视觉输入、音频输入、输出文本和输出语音，<strong>每条信息都带时间戳</strong>。</p>
+<ul>
+<li><strong>大规模网络音视频</strong>：过滤掉单人独白为主、音画关联弱的片段；再做 OCR 字幕去除（<a href="https://arxiv.org/search/?query=PaddleOCR+3.0+technical+report&amp;searchtype=title">PaddleOCR 3.0</a>）、说话人头像检测（沿用 <a href="https://arxiv.org/abs/2504.16030">LiveCC</a> 的做法），并基于 ASR 转写过滤，去掉会诱导“走捷径”的、信息量低的或噪声大的片段。</li>
+<li><strong>全双工任务数据</strong>：人工构造多种场景并标注指令跟随数据，支撑“连续场景描述”“主动提醒”等能力。</li>
+</ul>
+<hr />
+<h2 id="5">七、训练（<a href="https://arxiv.org/html/2604.27393v1#S5">§5</a>）<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<p>从 <strong>MiniCPM-V 4.5 的预训练检查点</strong>出发，分四个阶段逐步把语音“平滑”地接入：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>可训练部分</th>
+<th>数据</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/html/2604.27393v1#S5.SS1">5.1 语音预训练</a></td>
+<td><strong>只训新加模块</strong>（音频投影器、LLM→语音投影器、语音解码器）；Whisper 和 MiniCPM-V 主体冻结</td>
+<td>语音</td>
+<td>把 Whisper 特征对齐到 LLM 空间；让语音解码器学会把 LLM 隐状态转成语义和韵律都对的语音 token</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/2604.27393v1#S5.SS2">5.2 联合预训练</a></td>
+<td><strong>全部解冻</strong></td>
+<td>视觉-语言 + 语音 + 全模态的均衡混合，含主动交互和全双工数据</td>
+<td>统一的跨模态表示；获得实时全模态交互能力。为稳定训练，<strong>不同模态组合分配到不同数据并行 rank</strong>，保证每一步的数据配比固定</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/2604.27393v1#S5.SS3">5.3 联合 SFT</a></td>
+<td>全部</td>
+<td>先大规模指令微调，再用高质量人工标注数据精调</td>
+<td>激活全模态能力、强化指令跟随。全模态数据做了<strong>分辨率与帧率增广</strong>：每帧最大 0.2–0.4 百万像素，帧率在 1–5 FPS 均匀采样，方便推理时做质量/效率折中</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/2604.27393v1#S5.SS4">5.4 强化学习</a></td>
+<td>全部</td>
+<td>—</td>
+<td>提升推理、减少幻觉（见下）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="71">7.1 强化学习的三个部分<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong><a href="https://arxiv.org/abs/2402.03300">GRPO</a></strong> 提升推理和指令跟随。奖励是答案正确性加上格式等辅助奖励；正确性用“规则校验 + 高效判别模型（<a href="https://arxiv.org/abs/2508.03686">CompassVerifier</a>）”组合判定，以提高对正确回答的召回。另有一个通用奖励模型用来提升回答质量、<strong>抑制中英混杂</strong>。</li>
+<li>
+<p><strong>平滑长度奖励</strong>（<a href="https://arxiv.org/html/2604.27393v1#S5.E1">式 (1)</a>），改自 <a href="https://arxiv.org/abs/2501.12599">Kimi-K1.5</a>：</p>
+<div class="arithmatex">\[
+r_{\mathrm{len}}(i)=\begin{cases}s_i, &amp; r_i=1,\\ \min(0,\,s_i), &amp; r_i=0,\end{cases}
+\qquad
+s_i=\left(0.5-\frac{\ell_i-\ell_{\min}}{\ell_{\max}-\ell_{\min}}\right)\times\min\!\left(1,\ \frac{\ell_{\max}-\ell_{\min}}{\tau}\right)
+\]</div>
+<p>其中 <span class="arithmatex">\(r_i\)</span> 表示第 <span class="arithmatex">\(i\)</span> 个回答是否正确，<span class="arithmatex">\(\ell_i,\ \ell_{\min},\ \ell_{\max}\)</span> 是同一个 prompt 下各回答的长度及其最小、最大值。括号里那项就是 Kimi-K1.5 的原式：最短的回答得 <span class="arithmatex">\(+0.5\)</span>，最长的得 <span class="arithmatex">\(-0.5\)</span>；<span class="arithmatex">\(\min(0,s_i)\)</span> 保证<strong>短而错的回答不会被奖励</strong>。作者新加的是后面的缩放因子 <span class="arithmatex">\(\min\!\left(1,\ (\ell_{\max}-\ell_{\min})/\tau\right)\)</span>：同组回答长度差距小于 <span class="arithmatex">\(\tau\)</span> 时按比例缩小长度奖励，避免为几个 token 的差距大动干戈。<span class="arithmatex">\(\tau\)</span> 的取值论文没给。另外，<strong>前 480 步不加长度奖励</strong>，以加快收敛。<br />
+3. <strong><a href="https://arxiv.org/abs/2405.17220">RLAIF-V</a></strong> 降低视觉幻觉。作者发现，从图文数据上学到的抗幻觉能力能迁移到全模态全双工场景，流式下的幻觉也减少了。</p>
+</li>
+</ol>
+<h3 id="72-66table-9figure-6">7.2 长度奖励消融（<a href="https://arxiv.org/html/2604.27393v1#S6.SS6">§6.6</a>，<a href="https://arxiv.org/html/2604.27393v1#S6.T9">Table 9</a>，<a href="https://arxiv.org/html/2604.27393v1#S6.F6">Figure 6</a>）<a class="headerlink" href="#72-66table-9figure-6" title="Permanent link">&para;</a></h3>
+<p>在一次轻量 RL 实验上，对 MMBench、MathVista、MMMU、AI2D、OCRBench、HallusionBench、MMStar 求平均：</p>
+<table>
+<thead>
+<tr>
+<th>长度奖励</th>
+<th>平均分（Thinking）</th>
+<th>平均分（Instruct）</th>
+<th>长度缩减（Thinking）</th>
+<th>长度缩减（Instruct）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>不加</td>
+<td>73.5</td>
+<td>70.9</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td>Kimi K1.5 式</td>
+<td>73.0</td>
+<td>70.1</td>
+<td><strong>50.7%</strong></td>
+<td>20.2%</td>
+</tr>
+<tr>
+<td>本文</td>
+<td><strong>74.3</strong></td>
+<td><strong>70.9</strong></td>
+<td>35.3%</td>
+<td>20.5%</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Figure 6 不同长度奖励下的训练集准确率" src="../minicpm_o45_figs/fig6_length_reward.png" /></p>
+<p><em><a href="https://arxiv.org/html/2604.27393v1#S6.F6">Figure 6</a>：K1.5 式长度奖励（橙）在后期出现明显放缓甚至下降，说明过激的长度惩罚与正确性奖励冲突；本文方法（深蓝）基本贴着“不加长度奖励”（浅绿）的曲线走。</em></p>
+<p>结论：K1.5 式在 Thinking 模式下砍掉一半长度，但平均分掉了 0.5；本文砍掉 35%，平均分反而升了 0.8。</p>
+<hr />
+<h2 id="6">八、实验结果（<a href="https://arxiv.org/html/2604.27393v1#S6">§6</a>）<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<p><img alt="Figure 1 能力雷达图" src="../minicpm_o45_figs/radar_minicpmo4.5.png" /></p>
+<p><em><a href="https://arxiv.org/html/2604.27393v1#S0.F1">Figure 1</a>：各类能力的总览雷达图。</em></p>
+<p>评测分四组（<a href="https://arxiv.org/html/2604.27393v1#S6.SS1">§6.1</a>）：视觉-语言、语音理解与生成、文本、全模态与流式交互。</p>
+<h3 id="81-62table-2-instructtable-3-thinking">8.1 视觉-语言（<a href="https://arxiv.org/html/2604.27393v1#S6.SS2">§6.2</a>，<a href="https://arxiv.org/html/2604.27393v1#S6.T2">Table 2</a> Instruct、<a href="https://arxiv.org/html/2604.27393v1#S6.T3">Table 3</a> Thinking）<a class="headerlink" href="#81-62table-2-instructtable-3-thinking" title="Permanent link">&para;</a></h3>
+<p>Instruct 模式下的代表性数字（加粗为该行最好）：</p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>Gemini 2.5 Flash</th>
+<th>InternVL3.5-8B</th>
+<th>Qwen3-VL-8B</th>
+<th>Qwen3-Omni-30B-A3B</th>
+<th><strong>MiniCPM-o 4.5（9B）</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://github.com/open-compass/opencompass">OpenCompass</a> 平均</td>
+<td><strong>78.5</strong></td>
+<td>75.8</td>
+<td>76.5</td>
+<td>75.7</td>
+<td>77.6</td>
+</tr>
+<tr>
+<td>MMBench EN v1.1</td>
+<td>86.6</td>
+<td>79.5</td>
+<td>84.5</td>
+<td>84.9</td>
+<td><strong>87.6</strong></td>
+</tr>
+<tr>
+<td>MathVista</td>
+<td>75.3</td>
+<td>78.4</td>
+<td>77.2</td>
+<td>75.9</td>
+<td><strong>80.1</strong></td>
+</tr>
+<tr>
+<td>MMMU</td>
+<td><strong>76.3</strong></td>
+<td>73.4</td>
+<td>69.6</td>
+<td>69.1</td>
+<td>67.6</td>
+</tr>
+<tr>
+<td>OCRBench</td>
+<td>864</td>
+<td>840</td>
+<td><strong>896</strong></td>
+<td>880</td>
+<td>876</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2412.07626">OmniDocBench</a> EN ↓</td>
+<td>0.214</td>
+<td>0.322</td>
+<td>0.255</td>
+<td>0.216</td>
+<td><strong>0.109</strong></td>
+</tr>
+<tr>
+<td>OmniDocBench CN ↓</td>
+<td>0.290</td>
+<td>0.416</td>
+<td>0.319</td>
+<td>0.363</td>
+<td><strong>0.162</strong></td>
+</tr>
+<tr>
+<td>HallusionBench</td>
+<td>59.1</td>
+<td>54.5</td>
+<td>61.1</td>
+<td>59.7</td>
+<td><strong>63.2</strong></td>
+</tr>
+<tr>
+<td>MMHal 幻觉率 ↓</td>
+<td><strong>23.9</strong></td>
+<td>34.7</td>
+<td>29.9</td>
+<td>31.6</td>
+<td>24.3</td>
+</tr>
+<tr>
+<td>Mantis-Eval</td>
+<td>72.8</td>
+<td>70.5</td>
+<td>74.2</td>
+<td>78.3</td>
+<td><strong>79.7</strong></td>
+</tr>
+<tr>
+<td>MUIRBench</td>
+<td><strong>74.5</strong></td>
+<td>55.8</td>
+<td>64.4</td>
+<td>61.9</td>
+<td>72.0</td>
+</tr>
+<tr>
+<td>Video-MME（无字幕）</td>
+<td><strong>75.6</strong></td>
+<td>66.0</td>
+<td>71.4</td>
+<td>70.5</td>
+<td>70.4</td>
+</tr>
+<tr>
+<td>LVBench</td>
+<td><strong>62.2</strong></td>
+<td>–</td>
+<td>58.0</td>
+<td>50.2</td>
+<td>50.9</td>
+</tr>
+</tbody>
+</table>
+<p>要点：文档解析（OmniDocBench）大幅领先，中英文编辑距离约为 Qwen3-Omni 的一半；多图理解在 Mantis-Eval、<a href="https://arxiv.org/abs/2505.23764">MMSI-Bench</a> 上第一；幻觉控制接近 Gemini 2.5 Flash。弱项是<strong>知识密集型推理（MMMU 67.6，同组最低）和长视频（LVBench 50.9）</strong>。Thinking 模式下 OpenCompass 78.2，MMMU 70.2，仍是同组最低。</p>
+<h3 id="82-63table-4">8.2 语音理解（<a href="https://arxiv.org/html/2604.27393v1#S6.SS3">§6.3</a>，<a href="https://arxiv.org/html/2604.27393v1#S6.T4">Table 4</a>）<a class="headerlink" href="#82-63table-4" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>基准</th>
+<th>Kimi-Audio（9B）</th>
+<th>Qwen3-Omni（30B-A3B）</th>
+<th>MiniCPM-o 4.5（9B）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文 ASR（CER↓）</td>
+<td>AISHELL-1 / AISHELL-2</td>
+<td><strong>0.6</strong> / 2.6</td>
+<td><strong>0.6</strong> / <strong>2.3</strong></td>
+<td>0.9 / 2.5</td>
+</tr>
+<tr>
+<td></td>
+<td>WenetSpeech net / meeting</td>
+<td>6.3 / <strong>5.4</strong></td>
+<td><strong>4.7</strong> / 5.9</td>
+<td>5.9 / 5.7</td>
+</tr>
+<tr>
+<td>英文 ASR（WER↓）</td>
+<td>LibriSpeech clean / other</td>
+<td>1.3 / <strong>2.4</strong></td>
+<td><strong>1.2</strong> / 2.5</td>
+<td>1.4 / 2.8</td>
+</tr>
+<tr>
+<td></td>
+<td>GigaSpeech / VoxPopuli</td>
+<td>9.4 / 8.0</td>
+<td>8.7 / 6.4</td>
+<td><strong>8.5</strong> / <strong>6.2</strong></td>
+</tr>
+<tr>
+<td>语音翻译</td>
+<td>CoVoST 2 en→zh / zh→en</td>
+<td>36.6 / 18.3</td>
+<td>46.6 / <strong>29.4</strong></td>
+<td><strong>49.9</strong> / 26.4</td>
+</tr>
+<tr>
+<td>音频理解</td>
+<td>MMAU / MELD</td>
+<td>68.4 / 59.1</td>
+<td><strong>77.5</strong> / 56.8</td>
+<td>76.9 / <strong>60.2</strong></td>
+</tr>
+<tr>
+<td>语音问答</td>
+<td>VoiceBench AlpacaEval（1–5）</td>
+<td>4.46</td>
+<td>4.74</td>
+<td><strong>4.81</strong></td>
+</tr>
+<tr>
+<td></td>
+<td>Speech TriviaQA / Web Q.</td>
+<td>41.9 / 46.4</td>
+<td>62.9 / <strong>74.9</strong></td>
+<td><strong>75.5</strong> / 70.2</td>
+</tr>
+<tr>
+<td></td>
+<td>Speech CMMLU</td>
+<td><strong>67.0</strong></td>
+<td>47.8</td>
+<td>59.2</td>
+</tr>
+</tbody>
+</table>
+<p>ASR 接近第一梯队但不是最好；优势在语义类任务（翻译、情绪识别 MELD、语音指令跟随、知识问答）。作者自己承认 Speech Web Questions 和中文语音知识问答（Speech CMMLU）仍是短板。</p>
+<h3 id="83-table-5">8.3 语音生成（<a href="https://arxiv.org/html/2604.27393v1#S6.T5">Table 5</a>）<a class="headerlink" href="#83-table-5" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>SeedTTS ZH CER↓ / SIM-o</th>
+<th>SeedTTS EN WER↓ / SIM-o</th>
+<th>LongTTS EN WER↓</th>
+<th>LongTTS ZH CER↓</th>
+<th>Expresso</th>
+<th>ESD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/2412.10117">CosyVoice2</a></td>
+<td>1.45 / <strong>74.8</strong></td>
+<td>2.57 / <strong>65.2</strong></td>
+<td>14.80</td>
+<td><strong>5.27</strong></td>
+<td>17.9</td>
+<td>53.4</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2509.17765">Qwen3-Omni</a></td>
+<td>1.41 / N/A</td>
+<td>3.39 / N/A</td>
+<td>17.33</td>
+<td>18.99</td>
+<td>N/A</td>
+<td>N/A</td>
+</tr>
+<tr>
+<td>MiniCPM-o 4.5</td>
+<td><strong>0.86</strong> / 74.5</td>
+<td><strong>2.38</strong> / 64.9</td>
+<td><strong>3.37</strong></td>
+<td>6.58</td>
+<td><strong>29.8</strong></td>
+<td><strong>82.1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>（<a href="https://arxiv.org/abs/2406.02430">SeedTTS 测试集</a>、<a href="https://arxiv.org/abs/2509.25131">LongTTS（出自 MGM-Omni）</a>、<a href="https://arxiv.org/abs/2308.05725">Expresso</a>、<a href="https://arxiv.org/search/?query=Emotional+voice+conversion+ESD+dataset&amp;searchtype=title">ESD</a>；Expresso/ESD 两列用中性参考音频评测情绪/风格控制。）</p>
+<p>要点：中英文清晰度最好；<strong>长文本英文 WER 3.37，远低于 CosyVoice2 的 14.80</strong>；情绪/风格控制明显强于 CosyVoice2。音色相似度（SIM-o）与 CosyVoice2 基本持平。前面提到，这里的数字对应“固定文本比例交错”模式，不是全双工下的 TAIL 模式。</p>
+<h3 id="84-64table-6">8.4 文本能力（<a href="https://arxiv.org/html/2604.27393v1#S6.SS4">§6.4</a>，<a href="https://arxiv.org/html/2604.27393v1#S6.T6">Table 6</a>）<a class="headerlink" href="#84-64table-6" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>IFEval-PLS</th>
+<th>BBH</th>
+<th>CMMLU</th>
+<th>MMLU</th>
+<th>HumanEval</th>
+<th>MBPP</th>
+<th>MATH500</th>
+<th>GSM8K</th>
+<th>平均</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen3-8B（原文写作 “Qwen3-8B-Instruct”）</td>
+<td>83.0</td>
+<td>69.4</td>
+<td>78.7</td>
+<td><strong>81.7</strong></td>
+<td>86.6</td>
+<td>75.9</td>
+<td><strong>84.0</strong></td>
+<td>93.4</td>
+<td>81.6</td>
+</tr>
+<tr>
+<td>MiniCPM-o 4.5</td>
+<td><strong>84.7</strong></td>
+<td><strong>81.1</strong></td>
+<td><strong>79.6</strong></td>
+<td>77.0</td>
+<td>86.6</td>
+<td><strong>76.7</strong></td>
+<td>77.0</td>
+<td><strong>94.5</strong></td>
+<td><strong>82.1</strong></td>
+</tr>
+</tbody>
+</table>
+<p>平均分略高于主干，BBH 涨了 11.7 分；但 <strong>MMLU 掉 4.7、MATH500 掉 7.0</strong>。作者把它总结为“在复杂推理、数学、代码、指令跟随上超过主干”，其中“数学”这一项与 MATH500 的下降并不相符（见第十一节）。</p>
+<h3 id="85-65">8.5 全模态与全双工（<a href="https://arxiv.org/html/2604.27393v1#S6.SS5">§6.5</a>）<a class="headerlink" href="#85-65" title="Permanent link">&para;</a></h3>
+<p><strong>全模态理解（单工）</strong>，<a href="https://arxiv.org/html/2604.27393v1#S6.T7">Table 7</a>：</p>
+<table>
+<thead>
+<tr>
+<th>基准</th>
+<th>Gemini 2.5 Flash</th>
+<th>Qwen3-Omni-30B-A3B</th>
+<th>MiniCPM-o 4.5</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/2505.17862">Daily-Omni</a></td>
+<td>79.3</td>
+<td>70.7</td>
+<td><strong>80.2</strong></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2502.04326">WorldSense</a></td>
+<td>52.6</td>
+<td>54.0</td>
+<td><strong>55.7</strong></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2505.21374">Video-Holmes</a></td>
+<td>51.3</td>
+<td>50.4</td>
+<td><strong>64.3</strong></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2512.12772">JointAVBench</a></td>
+<td>55.6</td>
+<td>53.1</td>
+<td><strong>60.0</strong></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2503.19951">AVUT-Human</a></td>
+<td>65.4</td>
+<td>74.2</td>
+<td><strong>78.6</strong></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2601.13836">FutureOmni</a></td>
+<td>55.6</td>
+<td><strong>62.1</strong></td>
+<td>56.1</td>
+</tr>
+<tr>
+<td>Video-MME-Short（带音频）</td>
+<td><strong>85.5</strong></td>
+<td>81.3</td>
+<td>84.7</td>
+</tr>
+</tbody>
+</table>
+<p>7 项里 5 项第一。</p>
+<p><strong>全双工</strong>，<a href="https://arxiv.org/html/2604.27393v1#S6.T8">Table 8</a>：因为缺少实时全模态全双工的基准，只在<strong>没有音频</strong>的 LiveSports-3K-CC（实况解说，对 GPT-4o 的胜率）上测了：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>LiveCC（8B）</th>
+<th>StreamingVLM（8B）</th>
+<th>MiniCPM-o 4.5（9B）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LiveSports-3K-CC 胜率</td>
+<td>41.5</td>
+<td>45.6</td>
+<td><strong>54.4</strong></td>
+</tr>
+</tbody>
+</table>
+<p>比 <a href="https://arxiv.org/abs/2504.16030">LiveCC</a> 高 12.9，比 <a href="https://arxiv.org/search/?query=StreamingVLM&amp;searchtype=title">StreamingVLM</a> 高 8.8。<strong>带语音的全双工交互（轮次切换、打断、附和、响应延迟）没有任何定量评测</strong>，只给了 Demo 网站的定性演示。</p>
+<hr />
+<h2 id="7">九、推理效率（<a href="https://arxiv.org/html/2604.27393v1#S7">§7</a>）<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p><strong>vLLM 下对比 Qwen3-Omni</strong>（单卡 RTX 4090，<a href="https://arxiv.org/html/2604.27393v1#S7.T11">Table 11</a>；首 token 延迟用 64 帧视觉输入测，吞吐和显存用纯文本任务测）：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>精度</th>
+<th>吞吐（token/s）↑</th>
+<th>首 token 延迟（s）↓</th>
+<th>显存（GB）↓</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Qwen3-Omni-30B-A3B</td>
+<td>BF16</td>
+<td>OOM</td>
+<td>OOM</td>
+<td>OOM</td>
+</tr>
+<tr>
+<td>MiniCPM-o 4.5</td>
+<td>BF16</td>
+<td>154.3</td>
+<td>0.59</td>
+<td>19</td>
+</tr>
+<tr>
+<td>Qwen3-Omni-30B-A3B</td>
+<td>INT4</td>
+<td>147.8</td>
+<td>0.98</td>
+<td>20</td>
+</tr>
+<tr>
+<td>MiniCPM-o 4.5</td>
+<td>INT4</td>
+<td><strong>212.3</strong></td>
+<td><strong>0.58</strong></td>
+<td><strong>11</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>自研 llama.cpp-omni</strong>（基于 <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a>，针对全双工流式范式定制，支持 macOS / Windows / Linux），<a href="https://arxiv.org/html/2604.27393v1#S7.T12">Table 12</a>，指标是实时率 RTF（越低越好，&lt; 1 才能实时）：</p>
+<table>
+<thead>
+<tr>
+<th>框架</th>
+<th>精度</th>
+<th>RTX 4090 RTF / 显存</th>
+<th>DGX Spark RTF / 内存</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PyTorch</td>
+<td>BF16</td>
+<td>OOM</td>
+<td>2.43 / 26 GB</td>
+</tr>
+<tr>
+<td>PyTorch</td>
+<td>INT4</td>
+<td>1.26 / 14 GB</td>
+<td>1.27 / 14 GB</td>
+</tr>
+<tr>
+<td>llama.cpp-omni</td>
+<td>FP16</td>
+<td>0.27 / 19 GB</td>
+<td>0.46 / 19 GB</td>
+</tr>
+<tr>
+<td>llama.cpp-omni</td>
+<td>INT4</td>
+<td><strong>0.21 / 11 GB</strong></td>
+<td><strong>0.20 / 11 GB</strong></td>
+</tr>
+</tbody>
+</table>
+<p>要点：<strong>PyTorch 实现在 4090 上跑全双工是不实时的</strong>（INT4 的 RTF 也有 1.26），要实时必须用 llama.cpp-omni。摘要里“边缘设备 12 GB 以内”指的就是 llama.cpp-omni INT4 的 11 GB。模型卡另外写明：官方 PyTorch 全双工 Web Demo 需要<strong>至少 28 GB 显存</strong>；llama.cpp-omni 跑全双工需要 12 GB 显存的 NVIDIA 卡或 M4 Max + 24 GB 的 Mac。</p>
+<hr />
+<h2 id="8">十、作者承认的局限（<a href="https://arxiv.org/html/2604.27393v1#S8">§8</a>）<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li>在长时间、动态的真实流式交互中，基础能力和鲁棒性还需提升和验证；</li>
+<li>全模态流式模式下语音生成偶尔不稳定：<strong>读错字、中英文意外混杂</strong>；</li>
+<li>网络不稳时 Web Demo 会出现延迟增大或输出片段丢失，本地 llama.cpp-omni 部署更流畅；</li>
+<li>主动行为还比较简单，更丰富的上下文规划和自发协助留给未来。</li>
+</ol>
+<hr />
+<h2 id="_2">十一、我发现的不一致与存疑点<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>语音合成主表不是全双工模式的数字。</strong> <a href="https://arxiv.org/html/2604.27393v1#S6.T5">Table 5</a> 中 MiniCPM-o 4.5 那一行（0.86 / 74.5 / 2.38 / 64.9）与 <a href="https://arxiv.org/html/2604.27393v1#S6.T10">Table 10</a> 的“固定文本比例”行逐位相同；全双工真正用的 TAIL 模式是 1.04 / 74.1 / <strong>3.93</strong> / 65.1。也就是说，“英文 WER 比 CosyVoice2 低”这个结论<strong>在全双工模式下不成立</strong>（3.93 &gt; 2.57）。</li>
+<li><strong>“全面超过同规模及更大模型”在 Thinking 模式下不成立。</strong> <a href="https://arxiv.org/html/2604.27393v1#S6.SS2">§6.2</a> 说在 OpenCompass 上“持续超过 Qwen3-VL-8B 以及更大的 Qwen3-Omni-30B”，但 <a href="https://arxiv.org/html/2604.27393v1#S6.T3">Table 3</a> 的 Thinking 模式下 MiniCPM-o 4.5 是 78.2，<strong>低于 Qwen3-Omni 的 78.5</strong>。这个说法只在 Instruct 模式（77.6 vs 75.7）下成立。</li>
+<li><strong>文本能力“数学更好”与数据不符。</strong> <a href="https://arxiv.org/html/2604.27393v1#S6.SS4">§6.4</a> 说在“复杂推理、数学、代码、指令跟随”上超过主干，但 MATH500 从 84.0 掉到 77.0；只有 GSM8K 涨了 1.1。MMLU 也掉了 4.7。</li>
+<li><strong>主干名称前后不一。</strong> 正文 <a href="https://arxiv.org/html/2604.27393v1#S2">§2</a> 写 “Qwen3-8B”，<a href="https://arxiv.org/html/2604.27393v1#S6.SS1">§6.1</a> 写 “Qwen3-Instruct-8B”，<a href="https://arxiv.org/html/2604.27393v1#S6.T6">Table 6</a> 写 “Qwen3-8B-Instruct”。Qwen3 官方的 8B 是混合思考模型 Qwen3-8B，据我所知 2507 版的 Instruct/Thinking 拆分版本没有 8B 规格【存疑】，所以对比的到底是哪种模式的 Qwen3-8B 并不清楚。</li>
+<li><strong>视觉编码器版本不一。</strong> 论文写 SigLIP ViT 并引 <a href="https://arxiv.org/abs/2303.15343">SigLIP（ICCV 2023）</a>；<a href="https://huggingface.co/openbmb/MiniCPM-o-4_5">模型卡</a>写的是 “based on <strong>SigLip2</strong>”。Table 13 的配置（27 层、1152 维、patch 14、400M 级）与 SigLIP-so400m 系列一致，SigLIP 和 SigLIP2 都有这个规格，无法据此判断。</li>
+<li><strong>控制 token 的命名不统一。</strong> <a href="https://arxiv.org/html/2604.27393v1#S3.SS2">§3.2</a> 说静默时输出 <code>[listen]</code>；<a href="https://arxiv.org/html/2604.27393v1#S2.F4">Figure 4</a> 画的是 <code>sl</code>（Silent）和 <code>sp</code>（Speak）两种 token，对应 <a href="https://arxiv.org/html/2604.27393v1#S3.SS3">§3.3</a> 的 LS 方案（先出控制 token 再出内容）。§3.2 的描述更像 LT 方案。最终模型用的是 LS（Figure 4 和消融结论都指向 LS），但正文没有明说。</li>
+<li><strong>Table 1 的消融不完整、指标没说明。</strong> 没有说明评测协议（我推测是 VoiceBench 的语音问答子集）；没有任何延迟或轮次行为指标，所以“延迟—容量权衡”只测了容量一侧。0.2 s 块的 AlpacaEval（1.22）还低于 0.1 s 块（2.40），不单调，论文没解释。另外 1.0 s 下 LT 的 AlpacaEval（3.60）其实高于 LS（3.56），“LS 全面更好”的说法略强。</li>
+<li><strong>长度奖励消融的训练步数与主实验设置不一致。</strong> 主实验“前 480 步不加长度奖励”，但 <a href="https://arxiv.org/html/2604.27393v1#S6.F6">Figure 6</a> 的轻量实验只跑到约 400 步，而且从第 0 步起就有三条不同的曲线，说明消融实验并没有沿用“前 480 步不加”的设定。<span class="arithmatex">\(\tau\)</span> 的取值也没给。</li>
+<li><strong>“第一个全双工全模态 LLM”的说法可商榷。</strong> 例如 <a href="https://arxiv.org/abs/2408.05211">VITA</a> 已经做过音视频输入下的双工交互（双模型方案），MiniCPM-o 2.6 本身也有“全模态实时流”。更准确的说法是“第一个用单模型、时间对齐方式同时处理视频+音频输入和文本+语音输出的开源全双工模型”。</li>
+<li><strong>PDF 里残留了一行中文批注。</strong> 用 <code>pdftotext</code> 抽取 PDF 时，在 Figure 2 和引言之间能看到一行“加语音模型：Qwen-Audio”，HTML 版里没有。看起来是作者在 Figure 2 原图里遗留的内部批注（可能是不可见图层），不影响内容。</li>
+<li><strong>参考文献小问题</strong>：GPT-5 System Card 标成 “arXiv:2601.03267, 2025”（编号是 2026 年 1 月，年份写 2025）；“talking-head detection [27]” 引用的是 LiveCC 论文，而不是专门的检测方法。</li>
+</ol>
+<hr />
+<h2 id="_3">十二、与我们对话交互研究的关系<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>按 <a href="../../notes/ELLSA2_上半身机器人_差距分析与复现路线/">ELLSA 2 → 上半身机器人路线</a>，MiniCPM-o 4.5 是第 1 层“全双工对话 + 音色克隆”的首选底座。读完全文后，可以把几个关键问题落实一下：</p>
+<p><strong>1. 它给上层留了哪些接口。</strong></p>
+<table>
+<thead>
+<tr>
+<th>上层需要</th>
+<th>MiniCPM-o 4.5 里对应的东西</th>
+<th>是否现成</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对话状态（听 / 说 / 轮次结束）</td>
+<td>每秒的 <code>sl</code> / <code>sp</code> 控制 token；模型卡 API 的 <code>streaming_generate</code> 直接返回 <code>is_listen</code>、<code>end_of_turn</code></td>
+<td><strong>现成</strong>，每秒一次</td>
+</tr>
+<tr>
+<td>超前文本（给语义手势、表情做规划）</td>
+<td>TAIL 下文本只比语音超前“几个 look-ahead token”，最多约 1 秒</td>
+<td>现成，但超前量很小</td>
+</tr>
+<tr>
+<td>LLM 隐状态（ELLSA 2 式生成器的条件）</td>
+<td>每个文本 token 的隐状态 <span class="arithmatex">\(h\)</span> 本来就要送给语音解码器</td>
+<td>架构里有，API 不直接暴露，需改 <code>trust_remote_code</code> 的模型代码去取</td>
+</tr>
+<tr>
+<td>倾听时的隐状态（点头、表情反应）</td>
+<td>静默时 LLM 也要处理 <span class="arithmatex">\(v_k\)</span>、<span class="arithmatex">\(a_k\)</span> 并输出 <code>sl</code>，对应位置的隐状态存在</td>
+<td>需改代码；每秒只有一个“输出位置”</td>
+</tr>
+<tr>
+<td>音色克隆</td>
+<td>多模态系统提示里的参考音频，全双工示例代码 <code>model.prepare(ref_audio=...)</code></td>
+<td><strong>现成</strong>，中英文都支持</td>
+</tr>
+<tr>
+<td>视觉（注视、看人）</td>
+<td>1 帧/秒、448×448、64 token</td>
+<td>现成，但帧率很低</td>
+</tr>
+</tbody>
+</table>
+<p><strong>2. 1 秒粒度对具身交互意味着什么。</strong> 说话决策每秒一次，所以<strong>最快的“开口”反应也在 1 秒量级</strong>，做不到亚秒级的附和（“嗯”“对”）和快速让话。这和我们的五层设计正好互补：口型必须走独立的帧级快通路（第 2 层，由输出音频驱动，比如 A2F 或蒸馏学生模型）；点头、注视这类倾听行为（第 3 层）最好也不要等 LLM 的 1 Hz 决策，可以由输入音频的韵律特征直接驱动，LLM 的对话状态只做慢速调制。论文的 Table 1 也说明，把块长缩到 0.2 s 以下问答质量会崩，所以短期内不能指望靠调小块长解决。</p>
+<p><strong>3. 上下文能撑多久（修正之前的估算）。</strong> <a href="../../notes/全双工语音模型对比_上下文与工具调用/">横向对比笔记</a>里写的“约 68 分钟”只算了音频（10 token/秒）。加上视觉后：全双工模式每秒约 64（1 帧）+ 10（音频）+ 少量控制/文本/边界 token ≈ 80 token，40,960 的上下文只够 <strong>约 8.5 分钟</strong> <strong>[推算]</strong>；纯语音全双工（不开摄像头）约 15 token/秒，约 45 分钟 <strong>[推算]</strong>。机器人长期开着摄像头，就必须做滑窗或分层记忆。论文没有讨论长会话怎么处理，也没有说 KV 满了以后会怎样。</p>
+<p><strong>4. 回声问题。</strong> 模型自己的语音不进入 LLM，用户语音和环境声都走 env-audio。机器人扬声器的声音被麦克风收进来以后，模型会把<strong>自己的声音当成环境音频</strong>，可能误判成用户插话、自我打断。论文和模型卡都没有提回声消除（AEC），这在真机上必须由前端解决。这一点和 <a href="../SALMONN-omni_论文总结/">SALMONN-omni</a> 显式建模回声流的做法形成对照。</p>
+<p><strong>5. 硬件落地。</strong> 我们的 12 GB 卡只能走 llama.cpp-omni INT4（RTF 0.21，11 GB），但改代码取隐状态需要 PyTorch 版；PyTorch 全双工至少 28 GB 显存，而且在 4090 上不实时。所以研究阶段建议在 A800 上用 PyTorch 版取隐状态、做离线实验；实时演示再用 llama.cpp-omni，两条线分开。</p>
+<p><strong>6. 可以借鉴的方法。</strong></p>
+<ul>
+<li><strong>LS 控制方式</strong>（先出“说/不说”，再出内容）和我们第 5 层的“语义调用头”是同一种思路：把“要不要做”和“做什么”解耦。消融显示解耦更稳。</li>
+<li><strong>TAIL 的监督构造方式</strong>（按 token 起始时间分块）可以直接搬到“文本—动作”对齐上：按动作起始时间把手势 token 分到对应的 1 秒块里，就能得到与语音同步的动作流。</li>
+<li>**“用户请求只是环境的一部分”**这一抽象，很适合多人场景和机器人的主动行为（看到有人走近就打招呼），比“user / assistant 轮次”更贴近具身场景。</li>
+<li>专业配音演员“对话式演绎”录制的数据策略，对我们采集少而精的中文数据有参考价值。</li>
+</ul>
+<p><strong>7. 局限对我们的影响。</strong> 带语音的全双工行为（打断、附和、延迟）完全没有定量评测；中英混杂和读错字是已知问题。接入前应该先用 <a href="https://arxiv.org/abs/2503.04721">Full-Duplex-Bench</a> 这类基准，或自建的中文打断/附和测试集，实测一遍它的轮次行为。</p>
+<hr />
+<h2 id="_4">十三、链接汇总<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>本文</strong>：<a href="https://arxiv.org/abs/2604.27393v1">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2604.27393v1">PDF</a> ｜ <a href="https://arxiv.org/html/2604.27393v1">HTML</a> ｜ <a href="https://arxiv.org/src/2604.27393v1">TeX 源码</a> ｜ <a href="https://doi.org/10.48550/arXiv.2604.27393">DOI</a> ｜ <a href="https://huggingface.co/papers/2604.27393">HF Papers</a> ｜ <a href="https://scholar.google.com/scholar_lookup?arxiv_id=2604.27393">Google Scholar</a> ｜ <a href="https://api.semanticscholar.org/arXiv:2604.27393">Semantic Scholar</a></p>
+<p><strong>代码、权重与 Demo</strong>：<a href="https://huggingface.co/openbmb/MiniCPM-o-4_5">HF 模型卡</a> ｜ <a href="https://github.com/OpenBMB/MiniCPM-o">GitHub OpenBMB/MiniCPM-o</a> ｜ <a href="https://github.com/OpenSQZ/MiniCPM-V-CookBook">MiniCPM-V Cookbook</a> ｜ <a href="https://github.com/OpenSQZ/MiniCPM-V-CookBook/blob/main/demo/web_demo/WebRTC_Demo/README.md">WebRTC 全双工 Demo（llama.cpp-omni）</a> ｜ <a href="https://github.com/OpenBMB/minicpm-o-4_5-pytorch-simple-demo">PyTorch 简易 Web Demo</a> ｜ <a href="https://github.com/OpenSQZ/MiniCPM-V-CookBook/blob/main/deployment/llama.cpp/minicpm-o4_5_llamacpp.md">llama.cpp 部署文档</a> ｜ <a href="https://github.com/OpenSQZ/MiniCPM-V-CookBook/blob/main/deployment/vllm/minicpm-o4_5_vllm.md">vLLM 部署文档</a> ｜ <a href="https://minicpmo45.modelbest.cn/">在线 Demo</a> ｜ <a href="https://openbmb.github.io/minicpm-o-4_5-omni/">全双工 Casebook</a> ｜ <a href="https://openbmb.github.io/minicpm-o-4_5/">语音 Casebook</a> ｜ <a href="https://minicpm-o.readthedocs.io/en/latest/index.html">文档站</a></p>
+<p><strong>章节</strong>：<a href="https://arxiv.org/html/2604.27393v1#S1">§1 引言</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S2">§2 架构</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S3">§3 Omni-Flow</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S3.SS1">§3.1 三条流</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S3.SS2">§3.2 统一序列化</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S3.SS3">§3.3 设计权衡</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S3.SS4">§3.4 TAIL</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S4">§4 数据</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S5">§5 训练</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S5.SS4">§5.4 强化学习</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6">§6 评测</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.SS6">§6.6 分析</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S7">§7 推理效率</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S8">§8 结论与局限</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#A1">附录 A 模型配置</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#bib">参考文献</a></p>
+<p><strong>图表</strong>：<a href="https://arxiv.org/html/2604.27393v1#S0.F1">Figure 1 雷达图</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S0.F2">Figure 2 范式演进</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S1.F3">Figure 3 轮次 vs 全双工</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S2.F4">Figure 4 架构</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S3.F5">Figure 5 TAIL</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.F6">Figure 6 长度奖励曲线</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S5.E1">式 (1) 长度奖励</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S3.T1">Table 1 全双工消融</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T2">Table 2 视觉 Instruct</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T3">Table 3 视觉 Thinking</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T4">Table 4 语音理解</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T5">Table 5 语音生成</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T6">Table 6 文本</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T7">Table 7 全模态</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T8">Table 8 视觉全双工</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T9">Table 9 长度奖励</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S6.T10">Table 10 交错模式</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S7.T11">Table 11 vLLM 效率</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#S7.T12">Table 12 llama.cpp-omni</a> ｜ <a href="https://arxiv.org/html/2604.27393v1#A1.T13">Table 13 超参</a></p>
+<p><strong>组件来源</strong>：<a href="https://arxiv.org/abs/2408.01800">MiniCPM-V</a> ｜ <a href="https://arxiv.org/abs/2509.18154">MiniCPM-V 4.5</a> ｜ <a href="https://arxiv.org/abs/2506.07900">MiniCPM4</a> ｜ <a href="https://arxiv.org/abs/2403.11703">LLaVA-UHD</a> ｜ <a href="https://arxiv.org/abs/2303.15343">SigLIP</a> ｜ <a href="https://arxiv.org/abs/2212.04356">Whisper</a> ｜ <a href="https://arxiv.org/abs/2102.01547">WeNet</a> ｜ <a href="https://arxiv.org/abs/2505.09388">Qwen3</a> ｜ <a href="https://arxiv.org/abs/2407.05407">CosyVoice（S3 token）</a> ｜ <a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a> ｜ <a href="https://github.com/snakers4/silero-vad">Silero VAD</a> ｜ <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> ｜ <a href="https://arxiv.org/abs/2309.06180">vLLM</a></p>
+<p><strong>训练方法</strong>：<a href="https://arxiv.org/abs/2402.03300">GRPO（DeepSeekMath）</a> ｜ <a href="https://arxiv.org/abs/2501.12599">Kimi-K1.5</a> ｜ <a href="https://arxiv.org/abs/2508.03686">CompassVerifier</a> ｜ <a href="https://arxiv.org/abs/2405.17220">RLAIF-V</a> ｜ <a href="https://arxiv.org/abs/2310.20550">CapsFusion</a> ｜ <a href="https://arxiv.org/abs/2505.17496">灾难性遗忘缓解分析</a></p>
+<p><strong>对比模型</strong>：<a href="https://arxiv.org/abs/2509.17765">Qwen3-Omni</a> ｜ <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni</a> ｜ <a href="https://arxiv.org/search/?query=Qwen3-VL+technical+report&amp;searchtype=title">Qwen3-VL</a> ｜ <a href="https://arxiv.org/abs/2508.18265">InternVL3.5</a> ｜ <a href="https://arxiv.org/abs/2504.18425">Kimi-Audio</a> ｜ <a href="https://arxiv.org/abs/2507.16632">Step-Audio 2</a> ｜ <a href="https://arxiv.org/abs/2504.16030">LiveCC</a> ｜ <a href="https://arxiv.org/search/?query=StreamingVLM&amp;searchtype=title">StreamingVLM</a> ｜ <a href="https://arxiv.org/abs/2408.05211">VITA</a></p>
+<p><strong>评测基准</strong>：<a href="https://arxiv.org/abs/2410.17196">VoiceBench</a> ｜ <a href="https://arxiv.org/abs/2406.02430">Seed-TTS 测试集</a> ｜ <a href="https://arxiv.org/abs/2509.25131">LongTTS（MGM-Omni）</a> ｜ <a href="https://arxiv.org/abs/2308.05725">Expresso</a> ｜ <a href="https://arxiv.org/abs/2412.07626">OmniDocBench</a> ｜ <a href="https://arxiv.org/abs/2505.23764">MMSI-Bench</a> ｜ <a href="https://arxiv.org/abs/2406.09411">MUIRBench</a> ｜ <a href="https://arxiv.org/abs/2505.17862">Daily-Omni</a> ｜ <a href="https://arxiv.org/abs/2502.04326">WorldSense</a> ｜ <a href="https://arxiv.org/abs/2505.21374">Video-Holmes</a> ｜ <a href="https://arxiv.org/abs/2512.12772">JointAVBench</a> ｜ <a href="https://arxiv.org/abs/2503.19951">AVUT</a> ｜ <a href="https://arxiv.org/abs/2601.13836">FutureOmni</a> ｜ <a href="https://arxiv.org/abs/2503.04721">Full-Duplex-Bench</a></p>
+<p><strong>本库相关笔记</strong>：<a href="../../notes/ELLSA2_上半身机器人_差距分析与复现路线/">ELLSA 2 → 上半身机器人：差距与复现</a> ｜ <a href="../../notes/全双工语音模型对比_上下文与工具调用/">全双工语音模型对比：上下文与工具调用</a> ｜ <a href="../SALMONN-omni_论文总结/">SALMONN-omni 论文总结</a> ｜ <a href="../ELLSA2_论文总结/">ELLSA 2 论文总结</a> ｜ <a href="../Easy-Turn_论文总结/">Easy Turn 论文总结</a> ｜ <a href="../Moshi-Face_论文总结/">Moshi-Face 论文总结</a> ｜ <a href="../../notes/NVIDIA_Audio2Face-3D_仓库总结/">NVIDIA Audio2Face-3D 仓库总结</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--prev" aria-label="上一页: ELLSA 2">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                ELLSA 2
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../notes/ELLSA2_%E4%B8%8A%E5%8D%8A%E8%BA%AB%E6%9C%BA%E5%99%A8%E4%BA%BA_%E5%B7%AE%E8%B7%9D%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0%E8%B7%AF%E7%BA%BF/" class="md-footer__link md-footer__link--next" aria-label="下一页: ELLSA 2 → 上半身机器人：差距与复现">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                ELLSA 2 → 上半身机器人：差距与复现
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/hero.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

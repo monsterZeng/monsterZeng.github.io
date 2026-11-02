@@ -1,0 +1,2719 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/notes/ELLSA2_%E4%B8%8A%E5%8D%8A%E8%BA%AB%E6%9C%BA%E5%99%A8%E4%BA%BA_%E5%B7%AE%E8%B7%9D%E5%88%86%E6%9E%90%E4%B8%8E%E5%A4%8D%E7%8E%B0%E8%B7%AF%E7%BA%BF/">
+      
+      
+      
+        <link rel="prev" href="../../papers/MiniCPM-o-4.5_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+        <link rel="next" href="../%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>ELLSA 2 → 上半身机器人：差距与复现 - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              ELLSA 2 → 上半身机器人：差距与复现
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/SALMONN-omni_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-omni
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/ELLSA2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/MiniCPM-o-4.5_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  MiniCPM-o 4.5
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2 → 上半身机器人：差距与复现
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  ELLSA 2 → 上半身机器人：差距与复现
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、先说结论
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、需求逐项对照
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、三个关键补丁怎么做
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、三个关键补丁怎么做">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 人体姿态 → 机器人头颈与手臂
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 音色克隆
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-flame" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 FLAME 表情 → 仿生脸电机（如果是电机脸）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、哪些东西能直接拿来用
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、逐层实现路线（五层 + 一条硬件并行线）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、逐层实现路线（五层 + 一条硬件并行线）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#50" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.0 总体结构：最终系统长什么样
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 第 1 层：全双工对话 + 音色克隆
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 第 2 层：口型（快通路）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 第 3 层：头颈与倾听行为
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 第 4 层：非嘴部表情 + 节拍手势
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.5 第 5 层：语义手势
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.6 并行线：硬件映射（不依赖对话模型，硬件一到就开始）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、现在就要拍板的几个决定
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、现在就要拍板的几个决定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 仿生脸带来的架构调整
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 自由度还没定：用数据给硬件提需求
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、中文动作数据少怎么办
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、需要进一步核实的点
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  音频理解大模型
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  音频理解大模型
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/SALMONN-2_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  SALMONN-2
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Learning2Listen_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Learning to Listen（听者建模）
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_5">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、先说结论
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、需求逐项对照
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、三个关键补丁怎么做
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、三个关键补丁怎么做">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 人体姿态 → 机器人头颈与手臂
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 音色克隆
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-flame" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 FLAME 表情 → 仿生脸电机（如果是电机脸）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、哪些东西能直接拿来用
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、逐层实现路线（五层 + 一条硬件并行线）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、逐层实现路线（五层 + 一条硬件并行线）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#50" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.0 总体结构：最终系统长什么样
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 第 1 层：全双工对话 + 音色克隆
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 第 2 层：口型（快通路）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 第 3 层：头颈与倾听行为
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 第 4 层：非嘴部表情 + 节拍手势
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.5 第 5 层：语义手势
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#56" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.6 并行线：硬件映射（不依赖对话模型，硬件一到就开始）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、现在就要拍板的几个决定
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、现在就要拍板的几个决定">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 仿生脸带来的架构调整
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 自由度还没定：用数据给硬件提需求
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、中文动作数据少怎么办
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、需要进一步核实的点
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../papers/SALMONN-omni_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    全双工语音对话
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="ellsa-2">从 ELLSA 2 到上半身具身机器人：差距分析与复现路线<a class="headerlink" href="#ellsa-2" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>起因</strong>：我们决定第二阶段直接对标 <a href="../../papers/ELLSA2_论文总结/">ELLSA 2</a> 这类“全双工对话 + 手势表情联合建模”的框架。本文不重复论文细节，只回答三个问题：<strong>它离我们的上半身机器人还差什么？哪些东西能直接拿来用？按什么顺序复现？</strong><br />
+<strong>我们的需求</strong>：上半身机器人，需要面部表情、头部、脖子、上肢手势，并且要能和人自然地进行“对话-表情-行为”交互；语音要支持多音色克隆；以中文场景为主。<br />
+<strong>依据</strong>：<a href="https://arxiv.org/html/2610.21452v1">ELLSA 2 论文 HTML</a>、本库的 <a href="../../papers/ELLSA2_论文总结/">ELLSA 2 论文总结</a>、<a href="../../papers/SALMONN-omni_论文总结/">SALMONN-omni 论文总结</a>、<a href="../全双工语音模型对比_上下文与工具调用/">全双工模型横向对比</a>，以及 <a href="../../papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo</a> 和 <a href="../../papers/Lip_Learning_realistic_lip_motions_论文总结/">Lip</a> 两篇机器人脸论文。<br />
+<strong>标注说明</strong>：<strong>【论文】</strong> = 原文明确写了；<strong>【代码】</strong> = 来自开源仓库（转引自论文总结）；<strong>【推断】</strong> = 我根据架构推出来的，没有实验验证；<strong>【估计】</strong> = 工作量或资源的粗估；<strong>【待核实】</strong> = 需要查代码或跑实验确认。<br />
+<strong>整理日期</strong>：2026-11-02</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、先说结论<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>ELLSA 2 的动作表示已经覆盖了我们要的部位，包括脖子和头。</strong> 上半身的 13 个 SMPL-H 关节里，有 neck 和 head 两个关节，头部朝向由身体前向运动学给出；面部是 FLAME 的 100 维表情加下颌和眼球【论文】。所以“头颈交互”在表示层面不缺，缺的是<strong>从人体骨架到机器人自由度的映射</strong>。</li>
+<li><strong>最大的三个差距不在动作，而在语言、音色和机器人本体。</strong> 一是只有英文数据和英文底座；二是语音合成器沿用 SALMONN-omni 微调过的 CosyVoice 2，论文没有讨论换音色；三是输出的是虚拟人姿态，没有考虑关节限位、速度限制和执行器延迟。</li>
+<li><strong>现在能直接拿来用的，只有独立的手势-表情生成器、RVQ 分词器、数据筛选和评测工具。</strong> 完整的 10.78B 模型没有开源【论文/代码】，底座 SALMONN-omni 也没有放出权重（见 <a href="../../papers/SALMONN-omni_论文总结/">SALMONN-omni 总结</a> 的开源说明）。所以复现“联合优化”这一步时，必须换一个<strong>开源、能拿到隐状态的全双工底座</strong>。</li>
+<li><strong>建议的路线：以全双工对话为地基，逐层叠加。</strong> 第 1 层全双工对话 + 音色克隆 → 第 2 层口型（独立快通路）→ 第 3 层头颈与倾听行为 → 第 4 层表情与节拍手势（ELLSA 2 式生成器）→ 第 5 层语义手势；硬件映射作为并行线（见第五节，每层都附了推荐结构和论文）。中文场景下，底座优先考虑 MiniCPM-o 4.5 这类“LLM 只输出文本、TTS 独立且支持音色克隆、自带视觉”的模型【推断】。</li>
+</ol>
+<hr />
+<h2 id="_2">二、需求逐项对照<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>我们的需求</th>
+<th>ELLSA 2 提供了什么</th>
+<th>差距</th>
+<th>补法</th>
+<th>难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>面部表情</strong></td>
+<td>FLAME 100 维表情 + 4 维眼球，非嘴部 4 个码本【论文】</td>
+<td>机器人脸如果是电机驱动的仿生脸，需要额外做 FLAME → 电机的映射</td>
+<td>屏幕脸：直接渲染 FLAME。仿生脸：学一个映射 <span class="arithmatex">\(f:\boldsymbol\psi\to\mathbf m\)</span>（见 §三.3）</td>
+<td>屏幕脸低；仿生脸高</td>
+</tr>
+<tr>
+<td><strong>口型</strong></td>
+<td>8 维几何嘴部子空间 + 下颌张开，单独 2 个码本【论文】</td>
+<td>0.8 s 一块，口型分辨率是 7.5 Hz 潜变量上采样到 30 Hz；电机脸对口型时序更敏感</td>
+<td>口型可以另走一条帧级流式通路（A2F 或自研 audio→motor），ELLSA 2 只负责非嘴部表情和身体</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>头部 / 脖子</strong></td>
+<td>SMPL-H 的 neck、head 两个局部旋转；FLAME 的头部旋转槽位置零，头部朝向由身体 FK 给出【论文/代码】</td>
+<td>机器人脖子一般只有 2–3 个自由度，需要把 neck + head 两段旋转合成一个“头相对躯干”的姿态，再做限位</td>
+<td>见 §三.1 的合成与限位公式</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>躯干</strong></td>
+<td>spine&frac12;/3 三个关节【论文】</td>
+<td>机器人多数没有腰部自由度</td>
+<td>直接丢弃会损失前倾、侧身这类姿态；可以把一部分躯干旋转折算到头颈上</td>
+<td>低</td>
+</tr>
+<tr>
+<td><strong>手臂</strong></td>
+<td>左右各 collar、shoulder、elbow、wrist，共 8 个关节，6D 旋转【论文】</td>
+<td>机器人手臂的自由度数目和关节轴都和人不同</td>
+<td>关节对关节映射，或末端位姿 IK，加限位和自碰撞检测</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>手指</strong></td>
+<td>双手各 15 个关节，独立 6 个码本【论文】</td>
+<td>机器人手多数是 1–6 个自由度的简化手</td>
+<td>用“手部协同”（synergy）降维，或者第一版先不驱动手指</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>倾听行为</strong></td>
+<td>说话流在沉默时换成可学习空向量，倾听流持续驱动，所以能在用户说话时点头、做表情【论文】</td>
+<td>无，这是它最大的优势</td>
+<td>直接继承</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>语义手势</strong></td>
+<td>词典路由 + 调用头 + 3,227 条模板库，人工语义分从 2.014 提到 2.711【论文】</td>
+<td>词典和模板都是英文，模板库只来自 Seamless Interaction【论文：附录 F】</td>
+<td>重建中文词典和模板库；模板要在机器人上可执行</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>音色克隆</strong></td>
+<td>合成器是用 LLM 隐状态替换文本输入后微调的 CosyVoice 2-0.5B（来自 SALMONN-omni）【论文】</td>
+<td>论文没有讨论换音色</td>
+<td>见 §三.2</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>中文</strong></td>
+<td>训练数据只有英文的 Seamless Interaction；底座的 LLM 是 Llama-3-8B【论文】</td>
+<td>底座和手势数据都缺中文</td>
+<td>换中文全双工底座；手势数据先用英文预训练，再用少量中文数据微调</td>
+<td>高</td>
+</tr>
+<tr>
+<td><strong>视觉</strong></td>
+<td>没有视觉输入（论文自己承认，附录 F）【论文】</td>
+<td>机器人需要看用户：注视对方、对用户表情做出反应</td>
+<td>底座选自带视觉的模型，或者另走一条“视线跟随”控制回路</td>
+<td>中</td>
+</tr>
+<tr>
+<td><strong>实时性</strong></td>
+<td>0.8 s 块；论文没有报告推理耗时【论文】</td>
+<td>机器人还要叠加执行器延迟（通常几十到一百多毫秒）【估计】</td>
+<td>音频输出延迟补偿，让声音和动作对齐；块长可以考虑缩短</td>
+<td>中</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_3">三、三个关键补丁怎么做<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 人体姿态 → 机器人头颈与手臂<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p><strong>头颈。</strong> ELLSA 2 的上半身输入是 13 个 SMPL-H 局部旋转，在 body 数组中的下标是 <span class="arithmatex">\([2,5,8,11,12,13,14,15,16,17,18,19,20]\)</span>（<a href="https://arxiv.org/html/2610.21452v1#A1.SS1">附录 A.1</a>）。按 SMPL 的 body_pose 顺序（不含根关节），这 13 个分别是：spine1、spine2、spine3、neck、左右 collar、head、左右 shoulder、左右 elbow、左右 wrist【推断：按 SMPL 标准关节顺序对照】。</p>
+<p>机器人脖子通常只有 2–3 个自由度，而且安装在躯干上。所以要先把 neck 和 head 两段局部旋转合成为“头相对 spine3 的旋转”：</p>
+<div class="arithmatex">\[
+R_{\rm head/torso} = R_{\rm neck}\,R_{\rm head}
+\]</div>
+<p>如果机器人没有腰，可以再把一部分躯干旋转折算进来，保留前倾、侧身的效果（<span class="arithmatex">\(\lambda\in[0,1]\)</span> 是可调系数）：</p>
+<div class="arithmatex">\[
+R_{\rm cmd} = \operatorname{slerp}\!\left(I,\ R_{\rm spine1}R_{\rm spine2}R_{\rm spine3},\ \lambda\right)\, R_{\rm head/torso}
+\]</div>
+<p>然后按机器人脖子的关节顺序（例如 yaw-pitch-roll）分解成欧拉角 <span class="arithmatex">\((\alpha,\beta,\gamma)\)</span>，再逐轴做位置、速度、加速度三重限制：</p>
+<div class="arithmatex">\[
+q_t = \operatorname{clip}\!\Big(q_{t-1} + \operatorname{clip}\big(\hat q_t - q_{t-1},\ -\dot q_{\max}\Delta t,\ \dot q_{\max}\Delta t\big),\ q_{\min},\ q_{\max}\Big)
+\]</div>
+<p>其中 <span class="arithmatex">\(\hat q_t\)</span> 是分解出来的目标角，<span class="arithmatex">\(\Delta t = 1/30\)</span> s。生成出来的动作本身有一定平滑性，但 RVQ 解码在块边界可能有小跳变，最好再加一个一阶低通或 One-Euro 滤波【推断】。</p>
+<p><strong>手臂。</strong> 有两种映射方式：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>做法</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关节对关节</td>
+<td>shoulder 的 3 个旋转分解到机器人肩部的 2–3 个轴，elbow 取弯曲角，wrist 取主要轴</td>
+<td>机器人手臂构型接近人，自由度 ≥ 6</td>
+</tr>
+<tr>
+<td>末端 IK</td>
+<td>用 SMPL-H 的 FK 算出手腕相对躯干的位置和朝向，按机器人臂长缩放，再解 IK</td>
+<td>构型差别大、自由度少；指示类语义手势（要求“指得准”）也更适合用 IK</td>
+</tr>
+</tbody>
+</table>
+<p>两种方式都要做自碰撞检测，手不能穿过身体。可以参考人形机器人领域现成的重定向工具（例如 GMR 这类通用动作重定向框架），在 MuJoCo 或 Isaac 里先仿真验证，再上真机。</p>
+<p><strong>更彻底的做法（硬件定型后）。</strong> 上面都是“先在人体空间生成，再做后处理映射”，问题是生成器不知道机器人做不到哪些动作。更好的做法是：先把整个训练集重定向到机器人关节空间，<strong>直接在机器人关节上训练 RVQ 分词器</strong>，让生成器的输出天然落在可执行范围内。代价是每换一种机器人构型就要重训分词器，但生成器的主体可以复用【推断】。</p>
+<h3 id="32">3.2 音色克隆<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>ELLSA 2 的语音链路是：LLM 隐状态 → 合成器（微调后的 CosyVoice 2 语言模型部分）→ 25 Hz 语音 token → 声学部分 → 波形【论文，见 <a href="../../papers/SALMONN-omni_论文总结/">SALMONN-omni 总结 §3.2</a>】。CosyVoice 2 本身支持零样本音色克隆：语音 token 主要编码内容，音色由 token → mel 的流匹配部分根据参考音频提供。所以有三个方案：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>做法</th>
+<th>优点</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A. 换流匹配的参考音频</td>
+<td>保持语音 token 不变，只在 token → mel 阶段换一段目标说话人的参考音频</td>
+<td>不用重新训练</td>
+<td>语音 token 的韵律可能还带着训练数据里说话人的风格，换音色后“像不像”要实测【推断/待核实】</td>
+</tr>
+<tr>
+<td>B. 后接流式变声</td>
+<td>合成后再接一个流式声音转换模型（例如 Seed-VC 这类）</td>
+<td>和底座完全解耦，任何全双工模型都能用</td>
+<td>增加几十到上百毫秒延迟，音质会有损失【估计】</td>
+</tr>
+<tr>
+<td>C. 用自带音色克隆的底座</td>
+<td>底座本身支持音色克隆（例如 MiniCPM-o 系列宣称支持）</td>
+<td>一步到位</td>
+<td>要确认它的全双工模式下是否也能克隆【待核实】</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一个容易被忽略的耦合。</strong> ELLSA 2 的手势生成器会读取模型自己语音的 SPEAR 声学特征，以及合成器的隐状态【论文：式 (4)】。换音色后，输出音频的声学分布变了，手势和口型可能跟着漂移。所以无论选哪个方案，都要在换音色前后各跑一遍评测（韵律对齐分 <span class="arithmatex">\(A\)</span>、LVE），确认动作没有退化。如果退化了，可以让生成器读“换音色之前”的音频特征，变声只作用于最终播放的音频【推断】。</p>
+<h3 id="33-flame">3.3 FLAME 表情 → 仿生脸电机（如果是电机脸）<a class="headerlink" href="#33-flame" title="Permanent link">&para;</a></h3>
+<p>如果机器人是屏幕脸，这一节可以跳过。</p>
+<p>如果是电机驱动的仿生脸，需要一个映射 <span class="arithmatex">\(f_\theta:\boldsymbol\psi\in\mathbb R^{105}\to\mathbf m\in\mathbb R^{M}\)</span>（105 = 100 维表情 + 1 维下颌 + 4 维眼球；头部朝向由脖子电机负责，不在这里；<span class="arithmatex">\(M\)</span> 是面部电机数）。可以借鉴两篇机器人脸论文的做法：</p>
+<ul>
+<li><a href="../../papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo</a>：通过“自我建模”，让机器人随机驱动电机、用相机拍自己，学出“电机指令 → 面部关键点”的逆模型；</li>
+<li><a href="../../papers/Lip_Learning_realistic_lip_motions_论文总结/">Lip</a>：专门针对口型学习电机控制。</li>
+</ul>
+<p>对我们来说，比较顺的做法是：用相机拍机器人脸，再用同一个 FLAME 估计器（ELLSA 2 用的是 <a href="https://github.com/CyberAgentAILab/KaoLRM">KaoLRM</a>）从照片反推 FLAME 系数，得到配对数据 <span class="arithmatex">\((\mathbf m, \hat{\boldsymbol\psi})\)</span>，然后训练逆映射：</p>
+<div class="arithmatex">\[
+\theta^\ast = \arg\min_\theta \sum_i \big\lVert f_\theta(\hat{\boldsymbol\psi}_i) - \mathbf m_i \big\rVert_2^2
+\]</div>
+<p>这样生成器和机器人脸共用同一套 FLAME 坐标，中间不需要人工设计 blendshape 对应表【推断】。本地文件夹根目录有一份之前写的“流式 Audio→Motor 蒸馏方案 vs A2F”笔记（仅本地，未发布），口型部分可以和这里一起看。</p>
+<hr />
+<h2 id="_4">四、哪些东西能直接拿来用<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>按 <a href="../../papers/ELLSA2_论文总结/">ELLSA 2 论文总结</a> 记录的开源范围【代码】：</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>链接</th>
+<th>对我们的用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>独立手势-表情生成器</td>
+<td><a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">GitHub ELLSA2 分支</a> ｜ <a href="https://huggingface.co/tsinghua-ee/ELLSA2">HF 模型</a></td>
+<td>只需要双方音频 + 一段风格参考动作，就能输出身体和表情。可以直接级联到任何全双工模型后面，作为第 4 层的起步基线</td>
+</tr>
+<tr>
+<td>区域 RVQ 分词器 + 嘴部子空间</td>
+<td><a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/models/vq/factorized_flame_model.py">factorized_flame_model.py</a></td>
+<td>硬件定型后在机器人关节空间重训分词器时，可以照抄结构</td>
+</tr>
+<tr>
+<td>韵律对齐分 <span class="arithmatex">\(A\)</span></td>
+<td><a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/evaluation/alignment.py">alignment.py</a></td>
+<td>防“乱动刷分”的客观指标，适合做回归测试</td>
+</tr>
+<tr>
+<td>MLLM 评委 + 严格 JSON 校验</td>
+<td><a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/evaluation/activity.py">activity.py</a> ｜ <a href="https://github.com/bytedance/SALMONN/tree/ELLSA2/code/evaluation/protocols">提示词目录</a></td>
+<td>评测倾听、打断、附和时的行为是否合适</td>
+</tr>
+<tr>
+<td>138 条人工核验测试集</td>
+<td><a href="https://huggingface.co/datasets/tsinghua-ee/ELLSA2_data">HF 数据</a></td>
+<td>英文，可以直接测；中文要照着它的分类（附和 / 重叠 / 双向打断 / 语义）自建</td>
+</tr>
+<tr>
+<td>训练数据源</td>
+<td><a href="https://arxiv.org/abs/2506.22554">Seamless Interaction</a>（<a href="https://github.com/facebookresearch/seamless_interaction">GitHub</a>）</td>
+<td>动作预训练数据；记得用论文的说话人筛选（81 人好于 3,401 人）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>拿不到的</strong>：对话主干和合成器的权重、语义调用头、模板库是否完整公开【待核实：HF 数据集里是否包含 3,227 条模板】，以及 SALMONN-omni 的权重。</p>
+<hr />
+<h2 id="_5">五、逐层实现路线（五层 + 一条硬件并行线）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>2026-11-02 改写：原来的 P0–P4 是按“先跑通 ELLSA 2 官方生成器”排的；现在改成<strong>以全双工对话为地基、逐层叠加能力</strong>。每一层都可以单独验证，出了问题也能定位到具体某一层。官方生成器仍然有用，作为第 3–4 层的现成基线。</p>
+</blockquote>
+<h3 id="50">5.0 总体结构：最终系统长什么样<a class="headerlink" href="#50" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart LR
+    MIC[用户语音] --&gt; L1
+    CAM[相机：用户人脸位置] -.可选.-&gt; L3
+    subgraph L1[第 1 层 全双工对话 + 音色克隆]
+        ENC[流式语音编码器] --&gt; LLM[LLM 主干&lt;br/&gt;文本先于语音]
+        LLM --&gt; TTS[流式 TTS&lt;br/&gt;音色参考]
+    end
+    TTS --&gt; SPK[扬声器]
+    TTS --&gt;|输出音频| L2[第 2 层 口型快通路&lt;br/&gt;逐帧 audio→嘴部]
+    LLM --&gt;|倾听流 / 对话状态| L3[第 3 层 头颈与倾听行为]
+    LLM --&gt;|倾听流| L4[第 4 层 表情 + 节拍手势&lt;br/&gt;ELLSA 2 式生成器]
+    TTS --&gt;|说话流| L4
+    LLM --&gt;|超前文本| L5[第 5 层 语义调用头&lt;br/&gt;+ 模板库]
+    L5 --&gt;|模板引导| L4
+    L2 --&gt; MERGE[FLAME / SMPL-H 合并&lt;br/&gt;嘴部子空间 ⊕ 其余]
+    L3 --&gt; MERGE
+    L4 --&gt; MERGE
+    MERGE --&gt; HW[并行线：重定向 + 逆模型&lt;br/&gt;→ 脖子 / 手臂 / 面部电机]</code></pre>
+<p>各层的分工和依赖关系：</p>
+<table>
+<thead>
+<tr>
+<th>层</th>
+<th>内容</th>
+<th>输入</th>
+<th>输出</th>
+<th>频率</th>
+<th>粗估时间【估计】</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>全双工对话 + 音色克隆</td>
+<td>用户语音、音色参考音频</td>
+<td>机器人语音、文本、对话状态、隐状态</td>
+<td>主干步长几十到几百 ms</td>
+<td>3–6 周（选型 + 中文评测 + 微调）</td>
+</tr>
+<tr>
+<td>2</td>
+<td>口型</td>
+<td>机器人自己的输出音频</td>
+<td>嘴部 8 维 + 下颌</td>
+<td>逐帧（25–30 Hz）</td>
+<td>3–5 周</td>
+</tr>
+<tr>
+<td>3</td>
+<td>头颈与倾听行为</td>
+<td>对话状态、用户音频、（可选）用户人脸位置</td>
+<td>头部旋转、眼球、倾听表情</td>
+<td>10–30 Hz</td>
+<td>1–2 个月</td>
+</tr>
+<tr>
+<td>4</td>
+<td>非嘴部表情 + 节拍手势</td>
+<td>双方音频 + 主干隐状态</td>
+<td>上半身、双手、非嘴部表情</td>
+<td>0.8 s 一块</td>
+<td>1–2 个月</td>
+</tr>
+<tr>
+<td>5</td>
+<td>语义手势</td>
+<td>超前文本</td>
+<td>手势模板调用</td>
+<td>按短语触发</td>
+<td>1–2 个月</td>
+</tr>
+<tr>
+<td>并行</td>
+<td>硬件映射</td>
+<td>FLAME / SMPL-H 参数</td>
+<td>电机指令</td>
+<td>电机控制频率</td>
+<td>视硬件进度</td>
+</tr>
+</tbody>
+</table>
+<p>下面按层展开，每层都给出：推荐结构、推荐论文和模型、验收指标。</p>
+<hr />
+<h3 id="51-1">5.1 第 1 层：全双工对话 + 音色克隆<a class="headerlink" href="#51-1" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：中文场景下能边听边说、能被打断、会附和，并且能换音色。<strong>不从零训练</strong>，而是选型、评测、必要时微调。</p>
+<p><strong>推荐结构：thinker-talker 式单模型全双工，并且预留后续几层要用的接口。</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    U[用户语音] --&gt; E[流式编码器]
+    E --&gt; T[Thinker：LLM&lt;br/&gt;输出文本 + 对话状态 token]
+    T --&gt;|文本隐状态，超前于语音| K[Talker：流式 TTS&lt;br/&gt;音色参考音频]
+    K --&gt; A[机器人语音]
+    T -. 接口①：倾听流隐状态 .-&gt; X1((给第 3/4 层))
+    K -. 接口②：说话流隐状态 .-&gt; X2((给第 4 层))
+    T -. 接口③：带时间戳的超前文本 .-&gt; X3((给第 5 层))
+    T -. 接口④：对话状态 说/听/附和/被打断 .-&gt; X4((给第 3 层))</code></pre>
+<p><strong>选型时最看重的不是现在的效果，而是这四个接口能不能拿到。</strong> 拿不到的话，后面几层只能做成级联。</p>
+<table>
+<thead>
+<tr>
+<th>候选</th>
+<th>结构</th>
+<th>中文</th>
+<th>音色克隆</th>
+<th>四个接口</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/html/2604.27393#S3">MiniCPM-o 4.5</a></td>
+<td>时分全双工（1 s 窗口）+ <code>[listen]</code> token；LLM 只输出文本，TTS 独立；带视觉</td>
+<td>好</td>
+<td>宣称支持【待核实：全双工模式下是否可用】</td>
+<td>文本超前 ✓；隐状态需改代码取</td>
+<td><strong>首选</strong></td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/html/2509.17765#S2.SS2">Qwen3-Omni</a></td>
+<td>Thinker-Talker，轮次式</td>
+<td>好</td>
+<td>有限</td>
+<td>文本超前 ✓；不说话时未必持续处理输入，倾听流难保证</td>
+<td>备选，或作为第 5 层的文本大脑</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2410.00037">Moshi</a> / <a href="https://arxiv.org/html/2602.06053v1#S4">PersonaPlex</a></td>
+<td>多流并行，12.5 Hz</td>
+<td>弱</td>
+<td>PersonaPlex 支持音色和角色控制</td>
+<td>没有文本超前量</td>
+<td>学结构用，不适合中文主线</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2510.16756">ELLSA（上一代）</a></td>
+<td>SALMONN-omni 时序 + 语音/动作专家</td>
+<td>弱</td>
+<td>未知</td>
+<td>与 ELLSA 2 完全一致</td>
+<td>用来对照理解 ELLSA 2 的接口设计</td>
+</tr>
+<tr>
+<td>模块化级联基线</td>
+<td>流式 ASR + 轮次检测 + 文本 LLM + 流式 TTS</td>
+<td>好</td>
+<td>✓（TTS 原生）</td>
+<td>全部可拿，但没有“联合建模”</td>
+<td><strong>必须做一个</strong>，作为所有后续实验的对照组</td>
+</tr>
+</tbody>
+</table>
+<p><strong>推荐阅读</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>主题</th>
+<th>论文 / 模型</th>
+<th>读它的目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全双工时序</td>
+<td><a href="../../papers/SALMONN-omni_论文总结/">SALMONN-omni</a>（<a href="https://arxiv.org/abs/2505.17060">arXiv</a>）</td>
+<td>80 ms 时间块、<code>&lt;think&gt;</code>/<code>&lt;shift&gt;</code> 状态 token、隐状态喂 TTS，这正是 ELLSA 2 的底座设计</td>
+</tr>
+<tr>
+<td>全双工时序</td>
+<td><a href="https://arxiv.org/abs/2410.00037">Moshi</a></td>
+<td>多流并行和“内心独白”的另一种做法</td>
+</tr>
+<tr>
+<td>模块化双工</td>
+<td><a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a></td>
+<td>冻结 LLM + 状态分类头，最省事的双工方案</td>
+</tr>
+<tr>
+<td>中文轮次检测</td>
+<td><a href="../../papers/Easy-Turn_论文总结/">Easy Turn</a>（开源 1,145 小时中文数据）</td>
+<td>级联基线里的轮次检测器，也可以给第 3 层提供“对方说完没”的信号</td>
+</tr>
+<tr>
+<td>低成本决策</td>
+<td><a href="../../papers/DuplexJev_论文总结/">DuplexJev</a></td>
+<td>附和、打断这类小决策不解码、一次前向出结果</td>
+</tr>
+<tr>
+<td>长对话稳定性</td>
+<td><a href="https://arxiv.org/html/2610.32349v1">Why Full-Duplex Speech Models Collapse in Long Conversations</a></td>
+<td>机器人要连续对话很久，滑窗崩溃问题必须提前知道</td>
+</tr>
+<tr>
+<td>上下文与工具</td>
+<td><a href="../全双工语音模型对比_上下文与工具调用/">全双工模型横向对比</a></td>
+<td>各家每秒占多少上下文、怎么接工具</td>
+</tr>
+<tr>
+<td>音色克隆 TTS</td>
+<td><a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a> ｜ <a href="https://arxiv.org/search/?query=CosyVoice+3&amp;searchtype=title">CosyVoice 3</a> ｜ <a href="https://arxiv.org/search/?query=IndexTTS2&amp;searchtype=title">IndexTTS2</a> ｜ <a href="https://arxiv.org/abs/2410.06885">F5-TTS</a></td>
+<td>流式、零样本克隆；IndexTTS2 能控制时长，对动作对齐有用</td>
+</tr>
+<tr>
+<td>流式变声</td>
+<td><a href="https://arxiv.org/search/?query=Seed-VC+zero-shot+voice+conversion&amp;searchtype=title">Seed-VC</a></td>
+<td>§3.2 的方案 B：和底座解耦的换音色</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验收指标</strong>：中文轮次切换成功率；被打断后停止说话的时间；附和是否自然；首包延迟；换音色前后的说话人相似度（用说话人验证模型算余弦相似度）；连续 30 分钟以上对话不崩溃。</p>
+<hr />
+<h3 id="52-2">5.2 第 2 层：口型（快通路）<a class="headerlink" href="#52-2" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：嘴唇和下颌逐帧对上机器人自己的声音。它只依赖输出音频，和对话模型完全解耦，换底座也不用重做。</p>
+<p><strong>推荐结构：因果音频编码器 + 小前瞻窗口 + 嘴部子空间输出 + 电机逆模型。</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    A[机器人输出音频&lt;br/&gt;播放前就已合成] --&gt; F[音频特征&lt;br/&gt;多语种 SSL 或 TTS 音素时间戳]
+    F --&gt; M[因果 Transformer / 卷积&lt;br/&gt;前瞻约 0.2 s]
+    M --&gt; P[嘴部 8 维 B^T ψ + 下颌]
+    P --&gt; INV[逆模型 f_θ]
+    INV --&gt; MOT[嘴部电机]
+    A --&gt;|延迟补偿：音频晚放 Δ ms| SPK[扬声器]</code></pre>
+<p>两个关键设计：</p>
+<ol>
+<li><strong>利用“音频在播放前就已经合成好”这一点。</strong> 机器人自己的语音是 TTS 生成的，口型模型可以看到“未来”约 0.2 s 的音频，前瞻不增加对话延迟。再把扬声器播放推迟 <span class="arithmatex">\(\Delta\)</span>（约等于电机响应延迟），让声音和嘴部动作同时到达。设电机延迟为 <span class="arithmatex">\(\tau_{\rm motor}\)</span>、口型模型计算耗时为 <span class="arithmatex">\(\tau_{\rm model}\)</span>，则<br />
+   $$<br />
+   \Delta \approx \tau_{\rm motor} + \tau_{\rm model}<br />
+   $$</li>
+<li><strong>中文特征可以走捷径。</strong> 流式 TTS 本身知道每个音素的起止时间，可以直接把“音素 → 口型（viseme）”作为特征，或者和音频特征拼在一起。这对中文特别有用，因为不依赖英文训练的语音编码器【推断】。</li>
+</ol>
+<p><strong>推荐阅读</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>论文 / 模型</th>
+<th>结构要点</th>
+<th>读它的目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../papers/FaceFormer_论文总结/">FaceFormer</a>（<a href="https://arxiv.org/abs/2112.05329">arXiv</a>）</td>
+<td>wav2vec 2.0 + 自回归 Transformer 解码顶点</td>
+<td>语音驱动 3D 人脸的经典基线，理解音频-帧率对齐</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2301.02379">CodeTalker</a></td>
+<td>先学离散“面部动作码本”，再自回归预测码</td>
+<td>和 ELLSA 2 的 RVQ 思路同源，离散化能避免嘴型“过度平均”</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=UniTalker+3D+facial+animation&amp;searchtype=title">UniTalker</a></td>
+<td>多数据集、多标注格式统一训练</td>
+<td>中文数据少时，可以借它的“多数据集联合训练”思路</td>
+</tr>
+<tr>
+<td><a href="../NVIDIA_Audio2Face-3D_仓库总结/">NVIDIA Audio2Face-3D</a>（<a href="https://arxiv.org/abs/2508.16401">技术报告</a>）</td>
+<td>回归 + 扩散两种网络，开源 SDK 和训练框架</td>
+<td>现成可用的基线，也可以用它的训练框架训中文口型</td>
+</tr>
+<tr>
+<td><a href="../../papers/wav2vec/">wav2vec</a></td>
+<td>自监督语音表征</td>
+<td>选择音频编码器时的背景知识</td>
+</tr>
+<tr>
+<td><a href="../../papers/Lip_Learning_realistic_lip_motions_论文总结/">Lip</a>（Science Robotics 2026）</td>
+<td>10 自由度嘴 + 自监督：motor babbling → VAE → Facial Action Transformer</td>
+<td><strong>仿生嘴的直接参考</strong>，以及“英文训练泛化到 10 种语言”的证据</td>
+</tr>
+<tr>
+<td><a href="../../papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo</a>（Science Robotics 2024）</td>
+<td>26 电机软皮肤脸 + 逆模型（自我建模）</td>
+<td>学 FLAME → 电机的逆模型 <span class="arithmatex">\(f_\theta\)</span> 怎么训</td>
+</tr>
+</tbody>
+</table>
+<p>本地文件夹根目录还有一份“流式 Audio→Motor 蒸馏方案 vs A2F”的笔记（仅本地，未发布），讨论的正是这一层怎么做成流式小模型。</p>
+<p><strong>验收指标</strong>：屏幕上先测 LVE（唇部顶点误差）；上真机后用相机拍机器人嘴，测“音频起音 → 嘴部动作”的时间偏差（目标在几十毫秒以内）和 b/p/m 闭合事件的命中率。</p>
+<hr />
+<h3 id="53-3">5.3 第 3 层：头颈与倾听行为<a class="headerlink" href="#53-3" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：用户说话时，机器人会看着对方、适时点头、做出倾听表情；轮到自己说时，头部有自然的伴随动作。我认为这一层对“像不像活的”提升最大，而且它依赖全双工的对话状态。</p>
+<p><strong>推荐结构：注视控制 + 学习式倾听生成器，两部分叠加。</strong></p>
+<pre class="mermaid"><code>flowchart LR
+    CAM[相机：用户人脸位置] --&gt; GAZE[注视控制器&lt;br/&gt;规则 / PD 控制]
+    ST[第 1 层对话状态&lt;br/&gt;谁在说、说完没、附和点] --&gt; GEN
+    H[第 1 层倾听流隐状态] --&gt; GEN
+    UA[用户音频] --&gt; GEN[小型因果生成器&lt;br/&gt;点头、摇头、倾听表情]
+    GAZE --&gt; SUM[叠加：注视基准 + 生成的偏移]
+    GEN --&gt; SUM
+    SUM --&gt; NECK[§3.1 合成、限位、滤波&lt;br/&gt;→ 脖子电机 + 眼球]</code></pre>
+<ul>
+<li><strong>注视</strong>用规则或控制器就够了：用相机检测用户人脸位置，算出头和眼的目标朝向。这部分不需要学习，但对“被关注感”影响很大。</li>
+<li><strong>点头、倾听表情</strong>用学习的方式生成，作为叠加在注视基准上的偏移。条件里一定要有第 1 层的对话状态和倾听流隐状态，这就是 ELLSA 2 “沉默时说话流换空向量、倾听流持续驱动”的思路，这里先做一个只管头颈和表情的小版本。</li>
+<li>这一层可以比 ELLSA 2 的 0.8 s 块更细（例如 10 Hz），从而降低倾听反应的延迟（见 §6.1）。</li>
+</ul>
+<p><strong>推荐阅读</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>论文 / 模型</th>
+<th>结构要点</th>
+<th>读它的目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/abs/2204.08451">Learning to Listen</a>（CVPR 2022）</td>
+<td>用 VQ 码本 + 自回归预测听者的脸和头</td>
+<td>听者行为建模的开山之作</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2401.01885">audio2photoreal</a>（Meta）</td>
+<td>双人对话中的脸、身体、手</td>
+<td>双人对话数据的建模方式</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2506.22554">Seamless Interaction</a>（Meta，<a href="https://github.com/facebookresearch/seamless_interaction">GitHub</a>）</td>
+<td>大规模双人对话动作数据 + 双人动作模型</td>
+<td>主要训练数据来源</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=DualTalk+dual-speaker&amp;searchtype=title">DualTalk</a></td>
+<td>双人对话中，说与听状态切换的 3D 人脸</td>
+<td>说/听切换时表情的连续性</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=UniLS+listening+speaking&amp;searchtype=title">UniLS</a>（<a href="https://github.com/xg-chu/UniLS">GitHub</a>）</td>
+<td>说与听统一的人脸生成</td>
+<td>ELLSA 2 的表情评测就沿用它的实现</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=INFP+audio-driven+interactive+head+generation&amp;searchtype=title">INFP</a></td>
+<td>双人对话中的交互式头部生成</td>
+<td>不需要手动切换说/听角色的建模方式</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=DiffPoseTalk&amp;searchtype=title">DiffPoseTalk</a></td>
+<td>语音驱动表情 + 头部姿态，带风格编码</td>
+<td>头部姿态和风格的联合建模</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2606.30145">FacePlex</a> ｜ <a href="https://arxiv.org/abs/2606.03874">DyaPlex</a></td>
+<td>基于全双工语音模型表征生成人脸 / 手势</td>
+<td>和第 1 层接口对接的最新做法</td>
+</tr>
+<tr>
+<td><a href="../../papers/Moshi-Face_论文总结/">Moshi-Face</a></td>
+<td>在 Moshi 里直接加双方人脸 token 流</td>
+<td>另一条路线：把脸直接放进主干</td>
+</tr>
+<tr>
+<td><a href="../../papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo</a></td>
+<td>预测对方 0.8 s 后的表情，提前做出“共同表情”</td>
+<td>机器人上做倾听表情的实证</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验收指标</strong>：用户说完到机器人做出反应的延迟；ELLSA 2 的说话-倾听活跃度比 <span class="arithmatex">\(R_{\rm SL}\)</span> 和 MLLM 双工分 <span class="arithmatex">\(D\)</span>；人工评测“是否感觉在认真听”。</p>
+<hr />
+<h3 id="54-4">5.4 第 4 层：非嘴部表情 + 节拍手势<a class="headerlink" href="#54-4" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：说话时眉眼和手臂跟着语义和节奏动起来，听的时候也不僵。这一层就是 ELLSA 2 生成器的主体。</p>
+<p><strong>推荐结构：直接采用 ELLSA 2 的“按块交错自回归 + 区域 RVQ + 隐状态残差注入”。</strong> 细节见 <a href="../../papers/ELLSA2_论文总结/">ELLSA 2 论文总结 §三</a>，这里只列我们要改的地方：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>ELLSA 2 原设计</th>
+<th>我们的调整</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分词器</td>
+<td>上半身 6 + 双手 6 + 非嘴部表情 4 + 嘴部 2 个码本【论文】</td>
+<td><strong>去掉嘴部 2 个码本</strong>（交给第 2 层）；硬件定型后，改为在机器人关节空间训练</td>
+</tr>
+<tr>
+<td>声学条件</td>
+<td>冻结的 SPEAR 特征（英文为主）</td>
+<td>换成多语种编码器，或更多依赖主干隐状态【推断】</td>
+</tr>
+<tr>
+<td>隐状态注入</td>
+<td><span class="arithmatex">\(c_k^{r} = \phi_k^{r} + \gamma_r(u)\,P_r(h_k^{r})\)</span>，取 SALMONN-omni 的末层【论文】</td>
+<td>从第 1 层选定底座的接口①②取；层号要重新做消融</td>
+</tr>
+<tr>
+<td>头颈</td>
+<td>属于上半身码本</td>
+<td>和第 3 层的关系二选一：第 3 层只管注视和倾听，说话时的头部动作由本层负责；或者本层输出的头颈只作为第 3 层的参考</td>
+</tr>
+<tr>
+<td>起步方式</td>
+<td>—</td>
+<td>先直接用官方开源的独立生成器（只读双方音频）做级联，再逐步换成隐状态注入，对比两者差别</td>
+</tr>
+</tbody>
+</table>
+<p><strong>推荐阅读</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>论文 / 模型</th>
+<th>结构要点</th>
+<th>读它的目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../papers/ELLSA2_论文总结/">ELLSA 2</a>（<a href="https://arxiv.org/abs/2610.21452">arXiv</a>，<a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">代码</a>）</td>
+<td>本层的主结构</td>
+<td>精读 §3.1、§3.2 和附录 A.1–A.3</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2401.00374">EMAGE</a>（CVPR 2024）</td>
+<td>掩码建模，脸、身体、手、全局运动统一生成；配套 BEAT2 数据</td>
+<td>区域分开建模、掩码预训练</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2203.05297">BEAT</a>（ECCV 2022）</td>
+<td>多模态手势数据集 + CaMN 基线</td>
+<td>数据集，以及据我所知包含中文说话人【待核实】</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=GestureLSM&amp;searchtype=title">GestureLSM</a>（<a href="https://github.com/andypinxinliu/GestureLSM">GitHub</a>）</td>
+<td>流匹配，身体部位间的潜空间交互</td>
+<td>ELLSA 2 的对比基线之一，速度快</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=DiffSHEG&amp;searchtype=title">DiffSHEG</a></td>
+<td>扩散模型，表情和手势联合实时生成</td>
+<td>表情驱动手势的单向依赖设计</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=MIBURI+interactive+gesture&amp;searchtype=title">MIBURI</a></td>
+<td>基于冻结语音交互模型的表征生成手势</td>
+<td>和“隐状态注入”最接近的前作</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=ConvoFusion&amp;searchtype=title">ConvoFusion</a></td>
+<td>双人对话手势的扩散生成</td>
+<td>双人场景的另一种建模</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2203.01941">RQ-VAE（Lee et al. 2022）</a></td>
+<td>残差向量量化</td>
+<td>理解分词器原理（本库已有 VQ-VAE 学习页，仅本地）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验收指标</strong>：ELLSA 2 的韵律对齐分 <span class="arithmatex">\(A\)</span>（<a href="https://github.com/bytedance/SALMONN/blob/ELLSA2/code/evaluation/alignment.py">代码</a>）、<span class="arithmatex">\(R_{\rm SL}\)</span>、非嘴部表情的 FDD；人工评测。</p>
+<hr />
+<h3 id="55-5">5.5 第 5 层：语义手势<a class="headerlink" href="#55-5" title="Permanent link">&para;</a></h3>
+<p><strong>目标</strong>：说“这么大”时张开双手，说“在那边”时指过去，说“好的”时点头加手势。</p>
+<p><strong>推荐结构：先做一个简单基线，再升级到 ELLSA 2 的做法。</strong></p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>结构</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基线：显式工具调用</td>
+<td>让第 1 层的文本 LLM 直接输出 <code>&lt;gesture:big&gt;</code> 这类标签，触发机器人上预制的动作</td>
+<td>一天就能跑起来，中文没问题，可控性强</td>
+<td>动作是预制的，和节拍手势衔接生硬；LLM 输出标签会占文本上下文</td>
+</tr>
+<tr>
+<td>进阶：ELLSA 2 式语义调用</td>
+<td>中文短语词典路由 → 调用头读主干中间层判断“是否合适” → 从模板库取示范 → 插入第 4 层生成器的序列做引导</td>
+<td>模板只引导、不替代，动作衔接自然；不占主干上下文</td>
+<td>需要训练调用头和建模板库</td>
+</tr>
+</tbody>
+</table>
+<pre class="mermaid"><code>flowchart LR
+    TXT[第 1 层超前文本] --&gt; R[中文短语词典路由&lt;br/&gt;最长匹配]
+    R --&gt;|候选位置| HEAD[调用头&lt;br/&gt;读主干中间层，sigmoid]
+    HEAD --&gt;|p ≥ τ| LIB[(模板库&lt;br/&gt;机器人上可执行的关键帧)]
+    LIB --&gt;|模板 token| G4[第 4 层生成器&lt;br/&gt;只引导上半身和双手]</code></pre>
+<p>机器人场景的两个优势：一是<strong>模板可以由动画师直接在机器人上制作</strong>，天然满足关节限位，几百条就能覆盖常用语义；二是调用头<strong>只需要中文文本 + LLM 打分</strong>就能训练，不需要动作数据（见第七节）。</p>
+<p><strong>推荐阅读</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>论文 / 模型</th>
+<th>结构要点</th>
+<th>读它的目的</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://arxiv.org/html/2610.21452v1#S3.SS3">ELLSA 2 §3.3</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A1.SS4">附录 A.4–A.5</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A7.SS5">打分提示词 G.5</a></td>
+<td>词典 + 调用头 + 模板引导</td>
+<td>本层的主结构，提示词可以直接改成中文</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/abs/2505.15197">Intentional Gesture</a></td>
+<td>先推理“交流意图”，再生成手势</td>
+<td>意图层的另一种建模</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=Semantic+Gesticulator&amp;searchtype=title">Semantic Gesticulator</a></td>
+<td>用 LLM 检索语义手势库，再和节奏动作融合</td>
+<td>和 ELLSA 2 的模板引导思路接近，可以对比</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=SemGes+semantics-aware+co-speech+gesture&amp;searchtype=title">SemGes</a></td>
+<td>语义感知的手势生成</td>
+<td>语义一致性的建模和评测</td>
+</tr>
+<tr>
+<td><a href="https://arxiv.org/search/?query=Generative+Expressive+Robot+Behaviors+using+Large+Language+Models&amp;searchtype=title">GenEM</a>（HRI 2024）</td>
+<td>用 LLM 生成机器人的表达性行为</td>
+<td>基线版本（显式工具调用）在机器人上的做法</td>
+</tr>
+</tbody>
+</table>
+<p><strong>验收指标</strong>：中文测试集上调用头的 F1；ELLSA 2 的语义分 <span class="arithmatex">\(S\)</span>；人工评测“手势是否表达了正确的意思”。</p>
+<hr />
+<h3 id="56">5.6 并行线：硬件映射（不依赖对话模型，硬件一到就开始）<a class="headerlink" href="#56" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>做法</th>
+<th>参考</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>自由度需求分析</td>
+<td>用 Seamless 数据统计头颈、手臂、手指、面部的活动范围和主成分</td>
+<td>§6.2</td>
+</tr>
+<tr>
+<td>头颈和手臂重定向</td>
+<td>合成 neck + head 旋转 → 欧拉分解 → 限位滤波；手臂用关节映射或 IK</td>
+<td>§3.1</td>
+</tr>
+<tr>
+<td>面部逆模型</td>
+<td>motor babbling + 相机 + FLAME 估计器，训练 <span class="arithmatex">\(f_\theta:\boldsymbol\psi\to\mathbf m\)</span></td>
+<td>§3.3，<a href="../../papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo</a>，<a href="../../papers/Lip_Learning_realistic_lip_motions_论文总结/">Lip</a></td>
+</tr>
+<tr>
+<td>仿真验证</td>
+<td>MuJoCo / Isaac 里先驱动机器人模型，再上真机</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><strong>算力。</strong> ELLSA 2 的生成器是 0.5B（Qwen2.5-0.5B 初始化），单独训练时每个阶段 50k 步、全局 batch 128–256【论文】。在 A800 上训练第 3–4 层是可行的；接入隐状态时，额外开销主要是底座的前向推理【估计】。第 1 层的底座微调视规模而定，LoRA 微调 7–8B 模型在 A800 上可行【估计】。</p>
+<hr />
+<h2 id="_6">六、现在就要拍板的几个决定<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<ol>
+<li><del>机器人脸是屏幕脸还是电机仿生脸？</del> <strong>已确定（2026-11-02）：电机驱动的仿生脸。</strong> 所以 §3.3 必须做；口型建议单独走一条帧级通路（见 §6.1）。</li>
+<li><strong>机器人上半身的自由度清单。</strong> 目前硬件自由度还没定。建议先用人体空间表示推进，同时用对话数据反过来给硬件提需求（见 §6.2）。</li>
+<li><strong>动作表示：人体空间加重定向，还是直接用机器人关节空间？</strong> 自由度未定，所以第 2–5 层先统一用人体空间（SMPL-H + FLAME）作为稳定接口；等硬件定型后，再切换到机器人空间。</li>
+<li><strong>块长要不要缩短。</strong> 0.8 s 对虚拟人够用，但机器人对打断的反应（比如被打断时立刻停下手势）可能需要更短的块。这会改变每块的 token 预算（论文是 10 + 10 + 6×18），要在第 3–4 层做消融。</li>
+<li><strong>中文数据少怎么办。</strong> 见第七节：大部分模块其实不需要中文动作数据。</li>
+</ol>
+<h3 id="61">6.1 仿生脸带来的架构调整<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<p>先澄清一个容易误解的点：ELLSA 2 <strong>输出</strong>的表情是 30 Hz 的逐帧参数，并不卡顿。它的 RVQ-VAE 把每 4 帧（133 ms）压缩成一个潜变量步（7.5 Hz），生成器预测的是这些潜变量，再由卷积解码器还原成 30 Hz【论文】。解码器是学出来的，不是线性插值，所以 133 ms 内部也能有细节，平滑度没有问题。</p>
+<p>对电机脸来说，真正需要关注的是另外两件事：</p>
+<ol>
+<li><strong>时间精度（风险，待验证）</strong>：每 133 ms 的动作只用一组离散码描述，嘴部只分到 2 个码本。b/p/m 的双唇闭合这类短事件只有几十到一百毫秒，它的起止时刻能否对得准，要在电机脸上实测。论文在虚拟人上的唇部误差（LVE 8.74 mm）已经优于对比方法，所以这只是风险，不是已知缺陷【推断】。</li>
+<li><strong>倾听反应的延迟</strong>：生成器按 0.8 s 一块工作，某一块的动作要以这一块的用户音频为条件。所以对用户语音的反应（点头、表情变化）至少滞后约一个块长。模型自己说话时没有这个问题，因为合成器的语音先于播放产生【推断，依据块内顺序“说话音频 → 倾听音频 → 动作 token”】。</li>
+</ol>
+<p>再加上电机本身的响应延迟，建议把面部拆成两条通路：</p>
+<table>
+<thead>
+<tr>
+<th>通路</th>
+<th>负责</th>
+<th>来源</th>
+<th>频率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>慢通路</td>
+<td>非嘴部表情（眉、眼、脸颊）、眼球、头颈、手臂</td>
+<td>ELLSA 2 式生成器，读对话隐状态</td>
+<td>0.8 s 一块</td>
+</tr>
+<tr>
+<td>快通路</td>
+<td>嘴唇 + 下颌</td>
+<td>帧级流式 audio → mouth 模型（A2F 或自研蒸馏小模型），只读机器人自己的输出音频</td>
+<td>帧级，前瞻约 0.2 s</td>
+</tr>
+</tbody>
+</table>
+<p>两条通路在 FLAME 空间合并，正好可以直接用 ELLSA 2 的嘴部正交子空间：慢通路只输出 <span class="arithmatex">\((I-BB^\top)\boldsymbol\psi\)</span>，快通路只输出 <span class="arithmatex">\(B^\top\boldsymbol\psi\)</span> 和下颌，两者在数学上互不覆盖【推断】。合并后再经过 §3.3 的 <span class="arithmatex">\(f_\theta\)</span> 映射到电机。</p>
+<h3 id="62">6.2 自由度还没定：用数据给硬件提需求<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<p>既然硬件还没定型，可以先用 Seamless Interaction 的动作数据（以及将来的中文数据）做一轮统计，回答“对话场景下哪些自由度最重要”【推断，待实施】：</p>
+<ul>
+<li><strong>头颈</strong>：统计 neck + head 合成旋转在 yaw / pitch / roll 三个轴上的角度范围、速度和加速度的 95 分位数，以及点头、摇头这类倾听动作主要落在哪个轴上。这直接给出脖子电机的行程、转速要求，以及 2 轴是否够用。</li>
+<li><strong>手臂</strong>：统计各关节的活动范围和能量占比。如果某个关节在对话里几乎不动，就可以省掉。</li>
+<li><strong>手指</strong>：对双手 15 个关节做 PCA，看前几个主成分能覆盖多少方差，决定用几自由度的手。</li>
+<li><strong>面部</strong>：对 FLAME 100 维表情系数做 PCA，看前 <span class="arithmatex">\(k\)</span> 个主成分覆盖 90% 或 95% 方差时 <span class="arithmatex">\(k\)</span> 是多少，作为面部电机数量的下限参考；再看这些主成分主要集中在眉、眼、嘴哪个区域，指导电机布置。</li>
+</ul>
+<p>以 PCA 为例，设表情数据矩阵中心化后的特征值为 <span class="arithmatex">\(\lambda_1\ge\lambda_2\ge\cdots\)</span>，前 <span class="arithmatex">\(k\)</span> 个主成分的累计方差占比为：</p>
+<div class="arithmatex">\[
+\rho(k) = \frac{\sum_{i=1}^{k}\lambda_i}{\sum_{i}\lambda_i}
+\]</div>
+<p>这份统计报告可以直接交给硬件团队，让“机器人要做哪些对话动作”来决定自由度，而不是反过来。</p>
+<hr />
+<h2 id="_7">七、中文动作数据少怎么办<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p>核心判断：<strong>真正需要“中文配对动作数据”的模块很少。</strong> 按模块拆开看：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>和语言的关系</th>
+<th>需要中文动作数据吗</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对话主干（听、说、轮次）</td>
+<td>强相关</td>
+<td>不需要动作数据，只需要中文语音对话数据</td>
+<td>直接用中文全双工底座。语音对话数据可以大量合成：SALMONN-omni 的训练语音几乎全部由 CosyVoice 2 合成（见 <a href="../../papers/SALMONN-omni_论文总结/">SALMONN-omni 总结</a>）</td>
+</tr>
+<tr>
+<td>节拍手势、倾听时的点头和表情</td>
+<td>弱相关，主要跟韵律和对话状态有关【推断】</td>
+<td>少量即可</td>
+<td>用英文 Seamless 预训练，再用少量中文数据微调。前提是生成器的音频输入换成多语种编码器，或者主要依赖底座隐状态，避免英文声学特征成为瓶颈</td>
+</tr>
+<tr>
+<td>口型</td>
+<td>强相关（中文的口型和英文不同）</td>
+<td>需要，但只要“音频 + 人脸”，不要全身</td>
+<td>走 §6.1 的快通路。中文说话人脸视频比全身对话视频好找得多（新闻播报、访谈、课程录像）</td>
+</tr>
+<tr>
+<td>语义调用头</td>
+<td>强相关</td>
+<td><strong>完全不需要动作数据</strong></td>
+<td>它的输入只有文本，标签来自两个 LLM 打分【论文】。中文文本对话 + 中文短语词典 + LLM 打分就能训练</td>
+</tr>
+<tr>
+<td>语义手势模板</td>
+<td>部分相关</td>
+<td>少量，可以人工制作</td>
+<td>大部分象征、指示、模仿手势跨语言通用，英文模板可以复用；但有些手势有文化差异（例如中国人用单手比 6–10 的数字手势，和西方习惯不同），需要补一批中文模板。模板只有几百到几千条，可以由动画师直接在机器人上手工制作关键帧，甚至比从视频里提取更可控</td>
+</tr>
+<tr>
+<td>机器人整体风格</td>
+<td>无关</td>
+<td>不需要</td>
+<td>用风格参考动作（gesture prompt）控制</td>
+</tr>
+</tbody>
+</table>
+<p><strong>仍然需要的少量中文数据，可以从三个来源拿：</strong></p>
+<ol>
+<li><strong>自己采集（最推荐）。</strong> 招募几十对说话人，录制中文双人对话，用多机位无标记动捕加面部相机。ELLSA 2 的消融说明，精选的 81 名说话人、1,318 段录音，效果好于全量 3,401 名说话人【论文：Table 12】，所以中文数据要的是“少而精”：说话时手势清晰、说和听的状态差别明显。</li>
+<li><strong>公开视频伪标注。</strong> 从中文访谈、播客视频中筛选，用 SMPL-X 姿态估计加 KaoLRM 提取动作和表情，再用 ELLSA 2 的窗口质量分 <span class="arithmatex">\(Q_w\)</span> 和说话人筛选流程过滤。要注意视频版权和肖像权。</li>
+<li><strong>现有多语种数据集。</strong> 据我所知，BEAT 数据集（ECCV 2022）包含中文说话人的动捕数据，但它是单人独白，不是双人对话【待核实：中文部分的时长和授权】。</li>
+</ol>
+<p><strong>一个可以探索的数据增强思路</strong>【推断，未验证】：把英文 Seamless 数据的转写翻译成中文，用支持时长控制的 TTS（例如 IndexTTS2）合成中文语音，并让锚定短语的时间点和原动作对齐。这样语义手势的时机能保留下来，但韵律和节拍手势会失配，所以只能用于语义调用相关的训练，不能用来训练节拍手势。</p>
+<hr />
+<h2 id="_8">八、需要进一步核实的点<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<ul>
+<li>HF 上的 <code>ELLSA2_data</code> 是否包含完整的 3,227 条语义模板，以及模板库是否排除了测试会话（论文总结里已列为存疑点）；</li>
+<li>代码中 <code>ListenerLowRankDelta</code>、<code>ListenerCausalConvGate</code> 和倾听门控损失（论文未描述）对倾听行为的贡献有多大，第 4 层接入隐状态时要做消融；</li>
+<li>换音色后，手势和口型是否漂移（§3.2）；</li>
+<li>MiniCPM-o 4.5 全双工模式下能否同时做音色克隆，以及能否拿到逐步隐状态。<strong>部分已确认（2026-11-02）</strong>：<a href="https://huggingface.co/openbmb/MiniCPM-o-4_5">官方模型卡</a>的全双工示例代码在建立会话时传入 <code>ref_audio</code>（参考音频）做音色克隆；克隆质量和逐步隐状态仍需实测。部署方面，Mac 上要用 llama.cpp-omni（全双工的硬件要求两处官方文档写法不一致：模型卡写 M4 Max + 24GB，<a href="https://github.com/OpenSQZ/MiniCPM-V-CookBook/blob/main/demo/web_demo/WebRTC_Demo/README.md">WebRTC Demo README</a> 写最低 M4 Pro + 36GB、推荐 M4 Max + 64GB），研究和取隐状态建议在 A800 上用 PyTorch 版本；</li>
+<li>官方生成器的实际推理速度：论文没有报告，要在我们的 GPU 上实测，确认 0.8 s 一块能否实时跑完。</li>
+</ul>
+<hr />
+<h2 id="_9">九、链接汇总<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p><strong>ELLSA 2</strong>：<a href="https://arxiv.org/abs/2610.21452">摘要页</a> ｜ <a href="https://arxiv.org/html/2610.21452v1">HTML</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A1.SS1">附录 A.1 动作表示</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A1.SS3">附录 A.3 隐状态注入</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A1.SS4">附录 A.4 语义调用</a> ｜ <a href="https://arxiv.org/html/2610.21452v1#A6">附录 F 局限</a> ｜ <a href="https://github.com/bytedance/SALMONN/tree/ELLSA2">GitHub ELLSA2 分支</a> ｜ <a href="https://huggingface.co/tsinghua-ee/ELLSA2">HF 模型</a> ｜ <a href="https://huggingface.co/datasets/tsinghua-ee/ELLSA2_data">HF 数据</a></p>
+<p><strong>底座候选</strong>：<a href="https://arxiv.org/abs/2510.16756">ELLSA 上一代（arXiv）</a> ｜ <a href="https://huggingface.co/tsinghua-ee/ELLSA">ELLSA 权重</a> ｜ <a href="https://arxiv.org/abs/2505.17060">SALMONN-omni</a> ｜ <a href="https://arxiv.org/abs/2410.00037">Moshi</a> ｜ <a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a></p>
+<p><strong>数据与表示</strong>：<a href="https://arxiv.org/abs/2506.22554">Seamless Interaction</a>（<a href="https://github.com/facebookresearch/seamless_interaction">GitHub</a>） ｜ <a href="https://github.com/vchoutas/smplx">SMPL-X</a> ｜ <a href="https://mano.is.tue.mpg.de/">SMPL-H / MANO</a> ｜ <a href="https://flame.is.tue.mpg.de/">FLAME</a> ｜ <a href="https://github.com/CyberAgentAILab/KaoLRM">KaoLRM</a></p>
+<p><strong>本库相关笔记</strong>：<a href="../../papers/ELLSA2_论文总结/">ELLSA 2 论文总结</a> ｜ <a href="../../papers/SALMONN-omni_论文总结/">SALMONN-omni 论文总结</a> ｜ <a href="../全双工语音模型对比_上下文与工具调用/">全双工语音模型横向对比</a> ｜ <a href="../../papers/Moshi-Face_论文总结/">Moshi-Face 论文总结</a> ｜ <a href="../../papers/Emo_Human-robot_facial_coexpression_论文总结/">Emo 论文总结</a> ｜ <a href="../../papers/Lip_Learning_realistic_lip_motions_论文总结/">Lip 论文总结</a> ｜ <a href="../NVIDIA_Audio2Face-3D_仓库总结/">NVIDIA Audio2Face-3D 仓库总结</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../papers/MiniCPM-o-4.5_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--prev" aria-label="上一页: MiniCPM-o 4.5">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                MiniCPM-o 4.5
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-footer__link md-footer__link--next" aria-label="下一页: 横向对比：上下文与工具调用">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                横向对比：上下文与工具调用
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/hero.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="../../assets/javascripts/zoom.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
