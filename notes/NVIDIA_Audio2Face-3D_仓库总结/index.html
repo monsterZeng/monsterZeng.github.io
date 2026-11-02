@@ -1,0 +1,1419 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/notes/NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        <link rel="prev" href="../../papers/FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+        <link rel="next" href="../../papers/wav2vec/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>NVIDIA Audio2Face-3D - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              NVIDIA Audio2Face-3D
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. 一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. 生态组成（导航表）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. 技术要点（读子仓库代码得出）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 技术要点（读子仓库代码得出）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 两条模型路线
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 流式推理（和全双工最相关的部分）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 情绪
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 训练流程
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. 与对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. 发现的不一致 / 注意事项
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. 链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../papers/Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. 一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. 生态组成（导航表）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. 技术要点（读子仓库代码得出）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 技术要点（读子仓库代码得出）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.1 两条模型路线
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.2 流式推理（和全双工最相关的部分）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.3 情绪
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3.4 训练流程
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. 与对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. 发现的不一致 / 注意事项
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. 链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../../papers/FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    语音驱动人脸动画
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="nvidia-audio2face-3d">NVIDIA Audio2Face-3D 仓库总结<a class="headerlink" href="#nvidia-audio2face-3d" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>仓库：<a href="https://github.com/NVIDIA/Audio2Face-3D">NVIDIA/Audio2Face-3D</a>　｜　技术报告：<a href="https://arxiv.org/abs/2508.16401">arXiv:2508.16401</a>（<a href="https://arxiv.org/pdf/2508.16401">PDF</a> · <a href="https://arxiv.org/html/2508.16401v1">HTML</a>）　｜　整理日期：2026-10-28</p>
+</blockquote>
+<h2 id="1">1. 一句话概括<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>Audio2Face-3D（A2F）是 NVIDIA 的<strong>语音驱动 3D 面部动画</strong>系统：输入一段语音（离线文件或实时流），输出口型同步、带情绪的面部动画（下颌、舌头、眼睛、皮肤形变），可以表示为<strong>网格顶点形变 / 关节变换 / blendshape 权重</strong>（默认对齐 <a href="https://developer.apple.com/documentation/arkit/arfaceanchor/blendshapelocation">Apple ARKit 52 blendshape</a>）。2025 年 9 月整体开源。</p>
+<p>需要先知道的一点：<strong>这个仓库本身没有代码</strong>，里面只有 <code>README.md</code>、<code>RELEASE.md</code> 和两张 banner 图。它是整个 A2F 生态的"导航页"，真正的代码分布在下面几个子仓库和 Hugging Face 上。</p>
+<h2 id="2">2. 生态组成（导航表）<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>作用</th>
+<th>形式 / 许可</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Audio2Face-3D SDK</strong>（Audio2X SDK）</td>
+<td>C++ 推理库，本地/云端实时生成动画，含 Audio2Emotion</td>
+<td>C++ &amp; Python，MIT</td>
+<td><a href="https://github.com/NVIDIA/Audio2Face-3D-SDK">GitHub</a></td>
+</tr>
+<tr>
+<td><strong>Training Framework v1.0</strong></td>
+<td>用自己的数据训练 A2F 模型（官方 Mark/Claire/James 也是用它训的）</td>
+<td>Python + Docker，Apache</td>
+<td><a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework">GitHub</a></td>
+</tr>
+<tr>
+<td><strong>Maya-ACE（MACE）v2.0</strong></td>
+<td>Maya 插件，视口实时预览，导出关键帧/FBX</td>
+<td>MIT</td>
+<td><a href="https://github.com/NVIDIA/Maya-ACE">GitHub</a></td>
+</tr>
+<tr>
+<td><strong>UE5 插件 v2.5</strong></td>
+<td>Blueprint 节点驱动角色面部，附 MetaHuman 示例</td>
+<td>MIT</td>
+<td><a href="https://developer.nvidia.com/downloads/assets/ace/nv_ace_reference-ue5.6-v2.5.0rc3.zip">UE5.6</a> · <a href="https://developer.nvidia.com/downloads/assets/ace/nv_ace_reference-ue5.5-v2.5.0rc3.zip">UE5.5</a> · <a href="https://developer.nvidia.com/downloads/assets/ace/nv_ace_reference-ue5.4-v2.4.0.zip">UE5.4</a> · <a href="https://developer.nvidia.com/downloads/assets/ace/ace_3.0_a2f_models.zip">3.0 模型包</a> · <a href="https://developer.nvidia.com/downloads/assets/ace/aceunrealsample-1.0.0.7z">示例工程</a></td>
+</tr>
+<tr>
+<td><strong>A2F NIM</strong></td>
+<td>容器化微服务，gRPC 接口，多路并发流</td>
+<td>NVIDIA AI 产品许可</td>
+<td><a href="https://build.nvidia.com/nvidia/audio2face-3d">build.nvidia.com</a></td>
+</tr>
+</tbody>
+</table>
+<p>Hugging Face 上的模型与数据：</p>
+<table>
+<thead>
+<tr>
+<th>资源</th>
+<th>说明</th>
+<th>许可</th>
+<th>链接</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A2F 3.0（扩散模型）</td>
+<td>新一代，基于 HuBERT + GRU 的扩散模型</td>
+<td>NVIDIA Open Model</td>
+<td><a href="https://huggingface.co/nvidia/Audio2Face-3D-v3.0">v3.0</a></td>
+</tr>
+<tr>
+<td>A2F 2.3（回归模型）</td>
+<td>三个角色各一个模型</td>
+<td>NVIDIA Open Model</td>
+<td><a href="https://huggingface.co/nvidia/Audio2Face-3D-v2.3-Mark">Mark v2.3</a> · <a href="https://huggingface.co/nvidia/Audio2Face-3D-v2.3.1-Claire">Claire v2.3.1</a> · <a href="https://huggingface.co/nvidia/Audio2Face-3D-v2.3.1-James">James v2.3.1</a></td>
+</tr>
+<tr>
+<td>Audio2Emotion</td>
+<td>从语音推断情绪，<strong>gated，只能配合 A2F 使用</strong></td>
+<td>自定义</td>
+<td><a href="https://huggingface.co/nvidia/Audio2Emotion-v2.2">v2.2</a> · <a href="https://huggingface.co/nvidia/Audio2Emotion-v3.0">v3.0（实验）</a></td>
+</tr>
+<tr>
+<td>训练样例数据</td>
+<td>Claire 的音频 + blendshape + 几何缓存</td>
+<td>仅限评估</td>
+<td><a href="https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire">Claire Dataset v1.0.0</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="3">3. 技术要点（读子仓库代码得出）<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<p>README 本身只讲产品，技术细节我是从 <a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework">Training Framework</a> 和 <a href="https://github.com/NVIDIA/Audio2Face-3D-SDK">SDK</a> 的源码和配置里翻出来的。</p>
+<h3 id="31">3.1 两条模型路线<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p><strong>回归模型（v2.x）</strong>：网络名为 <a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework/blob/main/audio2face/networks/conv_w2v_autocorr.py"><code>conv_w2v_autocorr</code></a>。音频特征有两路：一路是冻结的 wav2vec2 特征（默认只用 1 层），另一路是传统的<strong>自相关（autocorrelation）特征</strong>；之后在频率轴、时间轴上做 2D 卷积。情绪以两部分形式输入：16 维的"隐式情绪"（可学习的 embedding）和"显式情绪"向量（每个情绪类别一维）。每次推理的音频窗口长度为 <code>buffer_len = 8320</code> 个采样点（16 kHz 下约 0.52 s），以当前帧为中心（<code>buffer_ofs = 4160</code>），因此<strong>需要约 0.26 s 的未来音频</strong>。</p>
+<p><strong>扩散模型（v3.0）</strong>：网络在 <a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework/blob/main/audio2face/networks/diffusion_rnn.py"><code>diffusion_rnn.py</code></a>。音频编码器用的是 <a href="https://huggingface.co/facebook/hubert-base-ls960">HuBERT-base-ls960</a>（50 fps 特征插值到 30/60 fps 的动画帧率）；条件 token 由 HuBERT 特征、几何输入、角色（actor）embedding、扩散步 t、情绪 embedding 拼接而成，送进 <strong>GRU</strong> 去噪。扩散骨架借用了 <a href="https://github.com/GuyTevet/motion-diffusion-model">Motion Diffusion Model</a> 的代码。训练时 1000 步，推理默认只用 <strong>2 步</strong>（<code>NUM_DIFFUSION_STEPS = 2</code>），所以能跑实时。</p>
+<h3 id="32">3.2 流式推理（和全双工最相关的部分）<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<p>扩散模型有专门的 <code>forward_streaming</code> 模式，配置见 <a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework/blob/main/audio2face/config_base/config_train_diffusion_base.py"><code>config_train_diffusion_base.py</code></a>：</p>
+<table>
+<thead>
+<tr>
+<th>帧率</th>
+<th>输入窗口</th>
+<th>每次输出</th>
+<th>左/右截断（上下文）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>60 fps</td>
+<td>1 s 音频</td>
+<td>30 帧（0.5 s）</td>
+<td>15 / 15 帧（各 0.25 s）</td>
+</tr>
+<tr>
+<td>30 fps</td>
+<td>1 s 音频</td>
+<td>15 帧（0.5 s）</td>
+<td>7 / 8 帧</td>
+</tr>
+</tbody>
+</table>
+<p>GRU 的隐状态<strong>按扩散步 t 分别保存</strong>（<code>self.h[t]</code>），在相邻块之间传递，保证动画连续；换一条新音轨之前要调用 <code>reset_hidden_state_dict()</code> 清空。还有一个 <code>streaming_stateless</code> 变体，隐状态通过 forward 显式传入传出，方便部署成无状态服务。</p>
+<p>按配置推算，算法上至少要有 <strong>~0.25 s 的前瞻</strong>，再加上 0.5 s 一个块的粒度。这是我根据配置算的，不是官方给的延迟数字。</p>
+<p>SDK 这边对应的是 <a href="https://github.com/NVIDIA/Audio2Face-3D-SDK/blob/main/audio2face-sdk/include/audio2face/interactive_executor.h"><code>interactive_executor.h</code></a>，回归、扩散、blendshape 求解各有一个 interactive executor，内部分为推理、皮肤、舌头、牙齿、眼睛、音频累加器、情绪累加器几个"层"，可以分别失效重算。另外还支持多音轨（<code>multitrack_animator.h</code>）。README 写的是"高于 60 FPS 生成"，依赖 CUDA 12.8+ 和 TensorRT 10.13+。</p>
+<h3 id="33">3.3 情绪<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<p>样例数据集里的情绪类别有 11 个：neutral、amazement、anger、cheekiness、disgust、fear、grief、joy、outofbreath、pain、sadness（见 <a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework/blob/main/configs/example-regression-min/config_dataset.py">config_dataset.py</a>）。情绪向量可以由 Audio2Emotion 从语音里自动推断，也可以由外部<strong>直接指定</strong>。</p>
+<h3 id="34">3.4 训练流程<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
+<p>数据准备 → <code>run_preproc.py</code> → <code>run_train.py</code> → <code>run_deploy.py</code>（导出 ONNX，并生成 JSON model card）→ 构建 TensorRT 引擎 → 在 Maya-ACE / SDK / NIM 中加载。整个流程跑在 Docker 里（Ubuntu 或 WSL），batch size 固定为 1。详见 <a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework/blob/main/docs/training_framework.md">training_framework.md</a> 和 <a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework/blob/main/docs/preparing_animation_data.md">preparing_animation_data.md</a>。样例数据中的 Claire 数据带有 <code>zh</code> 语言标签，说明 Claire 模型包含中文训练数据。</p>
+<h2 id="4">4. 与对话交互研究的关系<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<p>把 A2F 放进全双工语音对话系统（Moshi 那一类）时，它的位置是<strong>下游"渲染层"</strong>：对话模型或 TTS 输出音频流，A2F 再把这路音频转成脸部动画。有几点值得注意：</p>
+<p><strong>音画同步与延迟预算。</strong> 扩散流式模式至少需要约 0.25 s 的未来音频，输出以 0.5 s 为一块。对话模型的音频要么延后播放来等脸，要么接受嘴型略滞后。在全双工系统里，这笔延迟会直接叠加在响应延迟上，需要算进端到端预算。</p>
+<p><strong>打断（barge-in）。</strong> 用户插话、模型停止说话时，需要截断音频流并重置 GRU 状态（<code>reset_hidden_state_dict</code>），否则残留状态会让嘴继续"说完"半个块。SDK 的 interactive executor 和累加器层就是做这件事的入口，值得细看。</p>
+<p><strong>上下文不会膨胀。</strong> A2F 只看局部窗口，加上固定大小的 GRU 状态，内存不随对话轮次增长。这和你担心的 LLM 侧上下文爆炸是两回事，渲染层这边不构成瓶颈。</p>
+<p><strong>情绪来源可以换。</strong> 默认情绪是从合成语音里"反推"出来的（Audio2Emotion），但模型接受显式的情绪向量。如果对话模型本身就知道自己想表达什么情绪，直接把这个信号传给 A2F，可能比从语音反推更准。这可以作为一个研究点。</p>
+<p><strong>明显的空白是"倾听态"。</strong> A2F 完全由说话音频驱动，没有音频就没有动作。全双工对话里，大量时间 avatar 是在听：点头、附和、对用户情绪的面部反应、轮次交接前的预备动作，这些它都覆盖不了，需要另外的 listener 模型或规则层来补。</p>
+<h2 id="5">5. 发现的不一致 / 注意事项<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<ol>
+<li>README 表格写的是"UE5 插件 v2.5 支持 UE 5.5 / 5.6"，但下载列表里还有 UE 5.4（v2.4.0）；而且 5.5 / 5.6 的包文件名是 <code>v2.5.0rc3</code>，即<strong>发布候选版</strong>，不是正式版。</li>
+<li>表格里 SDK 的描述是"C++ &amp; Python"源码，但 SDK 仓库里的 Python 只是模型下载、TensorRT 转换和测试数据生成脚本，我没找到 pybind 一类的 <strong>Python 推理绑定</strong>（需要 Python 推理可以用训练框架里的 <code>run_inference.py</code>，或者走 NIM）。</li>
+<li>Audio2Emotion 是 gated 模型，且许可限定"只能和 Audio2Face 一起用"。如果想把它单独当语音情绪识别器用在对话系统里，许可上不允许。</li>
+<li>训练样例数据集只能用于评估，不能商用；A2F NIM 走的是 NVIDIA 商业许可，和其余 MIT/Apache 组件不同。</li>
+<li><code>RELEASE.md</code> 只有一条记录（2025-09-16，添加 Maya-ACE 信息）。我克隆时看到的最后提交是 SDK 2025-08-28、训练框架 2025-09-25（v1.0.1），之后的更新情况需要再到 GitHub 上确认。</li>
+</ol>
+<h2 id="6">6. 链接汇总<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<ul>
+<li>主仓库：<a href="https://github.com/NVIDIA/Audio2Face-3D">https://github.com/NVIDIA/Audio2Face-3D</a></li>
+<li>技术报告：<a href="https://arxiv.org/abs/2508.16401">arXiv abs</a> · <a href="https://arxiv.org/pdf/2508.16401">PDF</a> · <a href="https://arxiv.org/html/2508.16401v1">HTML</a></li>
+<li>SDK：<a href="https://github.com/NVIDIA/Audio2Face-3D-SDK">https://github.com/NVIDIA/Audio2Face-3D-SDK</a></li>
+<li>训练框架：<a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework">https://github.com/NVIDIA/Audio2Face-3D-training-framework</a>（<a href="https://github.com/NVIDIA/Audio2Face-3D-training-framework/blob/main/docs/a2f_introduction.md">介绍文档</a>）</li>
+<li>Maya-ACE：<a href="https://github.com/NVIDIA/Maya-ACE">https://github.com/NVIDIA/Maya-ACE</a></li>
+<li>NIM：<a href="https://build.nvidia.com/nvidia/audio2face-3d">https://build.nvidia.com/nvidia/audio2face-3d</a></li>
+<li>模型：<a href="https://huggingface.co/nvidia/Audio2Face-3D-v3.0">A2F v3.0</a> · <a href="https://huggingface.co/nvidia/Audio2Face-3D-v2.3-Mark">Mark</a> · <a href="https://huggingface.co/nvidia/Audio2Face-3D-v2.3.1-Claire">Claire</a> · <a href="https://huggingface.co/nvidia/Audio2Face-3D-v2.3.1-James">James</a> · <a href="https://huggingface.co/nvidia/Audio2Emotion-v2.2">A2E v2.2</a> · <a href="https://huggingface.co/nvidia/Audio2Emotion-v3.0">A2E v3.0</a></li>
+<li>数据：<a href="https://huggingface.co/datasets/nvidia/Audio2Face-3D-Dataset-v1.0.0-claire">Claire Dataset</a></li>
+<li>依赖：<a href="https://huggingface.co/facebook/hubert-base-ls960">HuBERT-base-ls960</a> · <a href="https://github.com/GuyTevet/motion-diffusion-model">Motion Diffusion Model</a> · <a href="https://developer.apple.com/documentation/arkit/arfaceanchor/blendshapelocation">ARKit blendshapes</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../../papers/FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--prev" aria-label="上一页: FaceFormer">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                FaceFormer
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../papers/wav2vec/" class="md-footer__link md-footer__link--next" aria-label="下一页: wav2vec">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                wav2vec
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

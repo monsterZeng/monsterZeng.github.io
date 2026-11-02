@@ -1,0 +1,1755 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/papers/Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        <link rel="prev" href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>Lip：逼真口型 - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Lip：逼真口型
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. 一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. 它要解决什么问题
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-p23-1-2pdf-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. 硬件（p.2–3，图 1、图 2（PDF p.3））
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. 方法
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-p4-3pdf-p4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 整体管线（p.4 图 3（PDF p.4））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-p8-35pdf-p8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 迭代匹配，生成"说话相关指令"（p.8 公式 3–5（PDF p.8））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-vaep89-6pdf-p8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 VAE：把合成画面拉进真实分布（p.8–9 图 6（PDF p.8））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-facial-action-transformerp9-7pdf-p9" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 Facial Action Transformer（p.9 图 7（PDF p.9））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. 实验结果
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-p45-4pdf-p5p10-pdf-p10" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 单词级（p.4–5 图 4（PDF p.5），p.10 分组说明（PDF p.10））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-msep6-1pdf-p6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 连续句子：隐空间 MSE（p.6 表 1（PDF p.6））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-p67-5pdf-p7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 多语言（p.6–7 图 5（PDF p.7））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-p7-pdf-p7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 作者自述的局限（p.7 讨论（PDF p.7））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-audio2face-3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. 和 Audio2Face-3D 的区别
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 和 Audio2Face-3D 的区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 总对比
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 本质差异
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-a2f-wav2lip" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 能否用 A2F 替换本文里的 Wav2Lip？
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7. 与对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8. 发现的不一致 / 值得质疑的地方
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        9. 链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        1. 一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        2. 它要解决什么问题
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-p23-1-2pdf-p3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        3. 硬件（p.2–3，图 1、图 2（PDF p.3））
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4. 方法
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-p4-3pdf-p4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 整体管线（p.4 图 3（PDF p.4））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-p8-35pdf-p8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 迭代匹配，生成"说话相关指令"（p.8 公式 3–5（PDF p.8））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-vaep89-6pdf-p8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 VAE：把合成画面拉进真实分布（p.8–9 图 6（PDF p.8））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-facial-action-transformerp9-7pdf-p9" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 Facial Action Transformer（p.9 图 7（PDF p.9））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5. 实验结果
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-p45-4pdf-p5p10-pdf-p10" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.1 单词级（p.4–5 图 4（PDF p.5），p.10 分组说明（PDF p.10））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-msep6-1pdf-p6" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.2 连续句子：隐空间 MSE（p.6 表 1（PDF p.6））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-p67-5pdf-p7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.3 多语言（p.6–7 图 5（PDF p.7））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-p7-pdf-p7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        5.4 作者自述的局限（p.7 讨论（PDF p.7））
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-audio2face-3d" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6. 和 Audio2Face-3D 的区别
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 和 Audio2Face-3D 的区别">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 总对比
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 本质差异
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-a2f-wav2lip" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 能否用 A2F 替换本文里的 Wav2Lip？
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        7. 与对话交互研究的关系
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8. 发现的不一致 / 值得质疑的地方
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        9. 链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    机器人脸
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="learning-realistic-lip-motions-for-humanoid-face-robots">Learning realistic lip motions for humanoid face robots 论文总结<a class="headerlink" href="#learning-realistic-lip-motions-for-humanoid-face-robots" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>论文</strong>：Yuhang Hu, Jiong Lin, Judah Allen Goldfeder, Philippe M. Wyder, …, Boyuan Chen, Hod Lipson. <em>Learning realistic lip motions for humanoid face robots</em>. <strong>Science Robotics</strong> 11, eadx3017，2026-01-14（2025-03-07 投稿，2025-12-10 接收）
+<strong>链接</strong>：<a href="https://doi.org/10.1126/scirobotics.adx3017">DOI</a> · <a href="https://www.science.org/doi/10.1126/scirobotics.adx3017">Science 官网</a>
+<strong>代码 / 模型</strong>：<a href="https://doi.org/10.5281/zenodo.17804235">Zenodo 17804235</a>　｜　<strong>数据</strong>：<a href="https://doi.org/10.5061/dryad.j6q573nrc">Dryad j6q573nrc</a>
+<strong>团队</strong>：哥伦比亚大学 Creative Machines Lab（Hod Lipson）。一作和团队与 <a href="../Emo_Human-robot_facial_coexpression_论文总结/">Emo 共同表情论文</a> 相同，可以看作它的"口型"续篇。
+<strong>阅读范围</strong>：正文 12 页加参考文献已全部读完。补充材料（问卷细节、图 S1、表 S1–S3、视频 S1–S5）不在这份 PDF 里。
+<strong>对比对象</strong>：<a href="../../notes/NVIDIA_Audio2Face-3D_仓库总结/">NVIDIA Audio2Face-3D 仓库总结</a>
+整理日期：2026-10-28</p>
+</blockquote>
+<hr />
+<h2 id="1">1. 一句话概括<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>做了一张嘴部有 <strong>10 个自由度</strong>、带软硅胶嘴唇的机器人脸，再用一条<strong>自监督</strong>管线让它"自己学会"对口型：先让机器人乱动嘴巴（motor babbling）并拍下来，然后用 <strong>Wav2Lip</strong> 把 TTS 语音"贴"到机器人脸的视频上，得到"理想的说话视频"；接着用 <strong>VAE</strong> 把真实帧和合成帧映射到同一个 16 维隐空间，最后用 <strong>Facial Action Transformer（FAT）</strong> 把隐向量序列翻译成平滑的电机指令。论文称这套方法在只用英语数据的前提下，可以泛化到另外 10 种语言。</p>
+<h2 id="2">2. 它要解决什么问题<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>作者在摘要和引言（PDF p.1）中给出两个障碍：</p>
+<p><strong>障碍一：机械结构不够复杂。</strong> 传统的机器人脸大多只有"下巴开合"这一个动作，并且是拉线驱动（只能拉、不能推），做不出抿嘴、噘嘴、咬下唇这类形状。</p>
+<p><strong>障碍二：同步方法靠手工规则。</strong> 过去的做法是按音素分类，为每一类手写一个口型和时长（参考 Ishi 2012 共振峰法（IROS 2012，文献 14）、Strathearn &amp; Ma 2021 音素→动作），不仅费时费力，而且数据再多也不会变好。</p>
+<p>至于数字人方向的方法（<a href="https://arxiv.org/abs/2008.10010">Wav2Lip</a>、<a href="https://arxiv.org/abs/1905.03079">VOCA</a>、<a href="https://arxiv.org/abs/2104.08223">MeshTalk</a>、<a href="https://arxiv.org/abs/2301.02379">CodeTalker</a>），作者在 p.2（PDF p.2） 中指出它们<strong>假设网格可微、没有执行器限制</strong>；而真实机器人需要面对舵机惯性、弹性皮肤的反拉力和碰撞边界。<strong>这一点正是它和 Audio2Face 的根本分界线</strong>（见第 6 节）。</p>
+<h2 id="3-p23-1-2pdf-p3">3. 硬件（p.2–3，图 1、图 2（PDF p.3））<a class="headerlink" href="#3-p23-1-2pdf-p3" title="Permanent link">&para;</a></h2>
+<p><img alt="图1 硬件" src="../lip_figs/fig1_hardware.jpg" /></p>
+<table>
+<thead>
+<tr>
+<th>部位</th>
+<th>自由度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>嘴角</td>
+<td>2 对（4）</td>
+<td>每侧两个电机叠放，形成 2D 运动平面，可以回缩、也可以外凸（噘嘴）</td>
+</tr>
+<tr>
+<td>上唇</td>
+<td>3</td>
+<td>连接件下降时向外翻，模仿发 "w/r/u" 时的噘唇</td>
+</tr>
+<tr>
+<td>下唇</td>
+<td>2</td>
+<td>抬起时欠驱动的转轴向外摆，保持与软唇的柔顺接触</td>
+</tr>
+<tr>
+<td>下颌</td>
+<td>1</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>10</strong></td>
+<td>执行器<strong>既能推也能拉</strong>皮肤，克服了拉线机构只能拉的缺点</td>
+</tr>
+</tbody>
+</table>
+<p>其他设计：皮肤通过<strong>磁吸快拆连接件</strong>固定，方便换皮和迭代（拉线机构则每次都要重新标定零点）；眼球里装有 RGB 相机，外加麦克风和扬声器，底座放边缘计算设备。论文称口型可以覆盖 24 个辅音和 16 个元音，并按照 <a href="https://www.garycmartin.com/mouth_shapes.html">Preston Blair 口型表</a> 归为 <strong>12 类 viseme</strong>（图 2（PDF p.3））。</p>
+<p><img alt="图2 口型" src="../lip_figs/fig2_visemes.jpg" /></p>
+<h2 id="4">4. 方法<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="41-p4-3pdf-p4">4.1 整体管线（p.4 图 3（PDF p.4））<a class="headerlink" href="#41-p4-3pdf-p4" title="Permanent link">&para;</a></h3>
+<p><img alt="图3 管线" src="../lip_figs/fig3_pipeline.jpg" /></p>
+<p><strong>数据采集（自监督，不需要人工标注）</strong>：机器人执行"与说话相关的随机指令"（motor babbling），相机录下嘴部，得到 <code>(X_t, A_t)</code> 图像-指令对，共 <strong>20,000 帧</strong>（公式 1，p.8（PDF p.8））。</p>
+<p><strong>部署</strong>：文本（由 ChatGPT 生成）→ TTS 得到音频 → <strong>Wav2Lip 以真实机器人视频为底</strong>，生成"机器人在说这句话"的合成视频 <code>X'_t</code> → VAE 编码器得到 <code>L'_t</code> → FAT 输出电机指令 <code>A_t</code> → 下发给真实机器人。</p>
+<p>可以看出，<strong>音频→口型这一步实际上是 Wav2Lip 完成的</strong>。作者自己的模型解决的是"像素级口型→电机指令"，也就是一个视觉逆模型（自建模），并不是端到端的 audio-to-motor。摘要里"directly from speech audio"的说法偏宽松。</p>
+<h3 id="42-p8-35pdf-p8">4.2 迭代匹配，生成"说话相关指令"（p.8 公式 3–5（PDF p.8））<a class="headerlink" href="#42-p8-35pdf-p8" title="Permanent link">&para;</a></h3>
+<p>对每一帧合成画面 <code>X'_t</code>，在 VAE 隐空间（ℝ¹⁶）中用欧氏距离找到最近的真实帧 <code>L_i*</code>，把它对应的指令 <code>A_i*</code> 记为"说话相关指令"。再加高斯噪声扩充数据，重复这个过程，<strong>4 轮</strong>后效果令人满意。这本质上是一个"在自己的动作库里检索 + 加噪探索"的自举过程，使 babbling 数据的分布逐渐向说话动作集中。</p>
+<h3 id="43-vaep89-6pdf-p8">4.3 VAE：把合成画面拉进真实分布（p.8–9 图 6（PDF p.8））<a class="headerlink" href="#43-vaep89-6pdf-p8" title="Permanent link">&para;</a></h3>
+<p><img alt="图6 VAE" src="../lip_figs/fig6_vae.jpg" /></p>
+<p>训练分两步：先用 20,000 张<strong>真实</strong>帧预训练一个"real VAE"；再用真实帧加 <strong>5,173 张合成帧</strong>微调成"hybrid VAE"，同时约束 hybrid VAE 给出的隐向量和 real VAE 的保持一致，让 Wav2Lip 生成的画面落到真实机器人图像的隐空间里。损失函数是 MSE 重建损失加 KL 散度。隐向量维度为 <strong>16</strong>。</p>
+<h3 id="44-facial-action-transformerp9-7pdf-p9">4.4 Facial Action Transformer（p.9 图 7（PDF p.9））<a class="headerlink" href="#44-facial-action-transformerp9-7pdf-p9" title="Permanent link">&para;</a></h3>
+<p><img alt="图7 FAT" src="../lip_figs/fig7_fat.jpg" /></p>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>输入</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Transformer 编码器</td>
+<td>过去的指令 <code>A_{t-2}, A_{t-1}</code>（MLP 嵌入 + 位置编码）</td>
+<td>记住嘴巴"刚才在哪"，保证连续性</td>
+</tr>
+<tr>
+<td>Transformer 解码器</td>
+<td>当前和下一帧的隐向量 <code>L_t, L_{t+1}</code></td>
+<td>看"要去哪"，提前准备过渡</td>
+</tr>
+<tr>
+<td>输出</td>
+<td><code>A_t, A_{t+1}</code></td>
+<td>一次预测两帧指令，减少抖动</td>
+</tr>
+</tbody>
+</table>
+<p><strong>损失函数</strong>（公式 6–8，p.10（PDF p.10））：<code>L_total = L_MAE + λ·L_closure</code>。其中 closure loss 是<strong>单边惩罚</strong>，只针对上唇（0 号）、下唇（1 号）和下颌（4 号）三个执行器：如果预测的闭合程度"不够紧"就罚，用来保证 /b/ /p/ /m/ 这类双唇音能完全闭合。作者的理由是：闭不严的嘴，人一眼就能看出来。</p>
+<p><strong>数据增强</strong>：把 20,000 帧序列复制后倒序，得到 40,000 帧，让模型同时学到正向和反向的运动。</p>
+<h2 id="5">5. 实验结果<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51-p45-4pdf-p5p10-pdf-p10">5.1 单词级（p.4–5 图 4（PDF p.5），p.10 分组说明（PDF p.10））<a class="headerlink" href="#51-p45-4pdf-p5p10-pdf-p10" title="Permanent link">&para;</a></h3>
+<p>测试词分成 6 组，各自考察一个难点：亲属称谓（mama/papa，双唇音反复开合）、双唇音加长元音（blue/between）、/t/ 结尾的爆破音（mat/cat）、长元音保持（father/spa）、快速的双唇-爆破切换（bat/map）、塞擦音露齿（choose/jeep）。这部分只有<strong>定性</strong>展示（视频 S2）。</p>
+<h3 id="52-msep6-1pdf-p6">5.2 连续句子：隐空间 MSE（p.6 表 1（PDF p.6））<a class="headerlink" href="#52-msep6-1pdf-p6" title="Permanent link">&para;</a></h3>
+<p>用 ChatGPT 生成 3 句话（原文见 p.11（PDF p.11）），评估指标是"合成帧隐向量"和"真实机器人执行后拍到的帧的隐向量"之间的 MSE。</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>句 1（327 帧）</th>
+<th>句 2（702 帧）</th>
+<th>句 3（444 帧）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>本文</strong></td>
+<td><strong>0.0140</strong></td>
+<td><strong>0.0118</strong></td>
+<td><strong>0.0136</strong></td>
+</tr>
+<tr>
+<td>平移 0.033 s（约 1 帧）</td>
+<td>0.0494</td>
+<td>0.0563</td>
+<td>0.0519</td>
+</tr>
+<tr>
+<td>平移 0.5 s</td>
+<td>0.3606</td>
+<td>0.3018</td>
+<td>0.2966</td>
+</tr>
+<tr>
+<td>MediaPipe 关键点最近邻</td>
+<td>0.4014</td>
+<td>0.3711</td>
+<td>0.3896</td>
+</tr>
+<tr>
+<td>随机选指令</td>
+<td>0.5366</td>
+<td>0.5493</td>
+<td>0.5771</td>
+</tr>
+<tr>
+<td>音频幅度驱动下巴</td>
+<td>0.6265</td>
+<td>0.7637</td>
+<td>0.8276</td>
+</tr>
+</tbody>
+</table>
+<p>有两个现象值得注意。第一，"音频幅度驱动下巴"这种传统做法<strong>比随机选指令还差</strong>：随机采样至少来自说话相关动作的分布，而单自由度的下巴开合完全做不出圆唇、嘴角回缩。第二，MediaPipe 关键点只能描述嘴唇轮廓，<strong>区分不了"张嘴露齿"和"张嘴不露齿"</strong>（例如 /f/ 和 /a/），所以表现很差。这一点对后面讨论"用 blendshape 或关键点作为中间表示"很关键。</p>
+<p><strong>用户调研</strong>：与两个基线对比，62.5% 的人更偏好本文方法（P &lt; 0.0001，卡方检验，机会水平 &#8531;）。样本量等细节都在补充材料里。</p>
+<h3 id="53-p67-5pdf-p7">5.3 多语言（p.6–7 图 5（PDF p.7））<a class="headerlink" href="#53-p67-5pdf-p7" title="Permanent link">&para;</a></h3>
+<p><img alt="图5 多语言" src="../lip_figs/fig5_multilingual.jpg" /></p>
+<p>测试 11 种语言（英、法、日、韩、西、意、德、俄、中、希伯来、阿拉伯），外加一个老年男声的英语。所有非英语语言的误差都落在 English1（女声）的误差棒范围内，俄语和中文的方差略大。每种语言<strong>只有一句话</strong>，n 就是这句话的帧数。考虑到真正处理音频的是 Wav2Lip（它本身在多语种的 LRS2 上训练），"跨语言泛化"在很大程度上是继承自 Wav2Lip，而不是 VAE+FAT 本身的贡献。</p>
+<h3 id="54-p7-pdf-p7">5.4 作者自述的局限（p.7 讨论（PDF p.7））<a class="headerlink" href="#54-p7-pdf-p7" title="Permanent link">&para;</a></h3>
+<p>作者承认"远未完美"。改进方向包括：增加自由度、增加数据和上下文长度、设计更贴近人类感知的损失函数。其中一点很重要：<strong>人在发声前 80–300 ms 就开始摆口型</strong>（<a href="https://www.jneurosci.org/content/14/11/6585">Gracco 1994</a>、<a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000436">Chandrasekaran 2009</a>），当前系统没有显式建模这一点，作者建议用"音频-视频-执行器完全对齐"的数据再训练一个模块。另外，作者也讨论了情感操纵和过度信任的伦理风险，对儿童、老人和认知衰退人群尤其需要注意。</p>
+<h2 id="6-audio2face-3d">6. 和 Audio2Face-3D 的区别<a class="headerlink" href="#6-audio2face-3d" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 总对比<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>本文（Lip robot）</th>
+<th><a href="../../notes/NVIDIA_Audio2Face-3D_仓库总结/">Audio2Face-3D</a></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>驱动对象</strong></td>
+<td>实体机器人脸：10 个舵机 + 硅胶皮肤</td>
+<td>数字人 3D 网格（皮肤顶点、舌头、下颌、眼球）/ ARKit 52 blendshape</td>
+</tr>
+<tr>
+<td><strong>输出</strong></td>
+<td>10 维电机指令 <code>A_t</code></td>
+<td>顶点形变 / 关节变换 / blendshape 权重</td>
+</tr>
+<tr>
+<td><strong>核心难点</strong></td>
+<td><strong>物理约束</strong>：舵机惯性、皮肤弹性反拉、碰撞边界、指令到执行的延迟，没有可微模型</td>
+<td><strong>表现力</strong>：嘴型精度、情绪、舌头和眼睛等细节；输出空间可微、没有执行约束</td>
+</tr>
+<tr>
+<td><strong>音频→口型这一步谁做</strong></td>
+<td>借用现成的 <strong>Wav2Lip</strong>（2D 像素空间）</td>
+<td>A2F 自己的网络（v2.3 回归：wav2vec2 + 自相关 + CNN；v3.0：HuBERT + GRU 扩散）</td>
+</tr>
+<tr>
+<td><strong>训练数据</strong></td>
+<td>机器人<strong>自己乱动</strong>拍下的 20k 帧（自监督）+ 5k 合成帧，<strong>不需要人类数据</strong></td>
+<td>演员 4D 面部捕捉（Mark/Claire/James），音频与几何严格对齐</td>
+</tr>
+<tr>
+<td><strong>中间表示</strong></td>
+<td>16 维 VAE 隐向量（从机器人图像学来，对齐真实帧和合成帧）</td>
+<td>PCA 皮肤系数 → blendshape 求解</td>
+</tr>
+<tr>
+<td><strong>时序建模</strong></td>
+<td>FAT：看过去 2 帧指令和当前+下 1 帧隐向量</td>
+<td>回归模型约 0.52 s 音频窗口（需要约 0.26 s 未来音频）；扩散模型有 <code>forward_streaming</code></td>
+</tr>
+<tr>
+<td><strong>情绪</strong></td>
+<td>无（只管口型）</td>
+<td>有：11 类情绪，Audio2Emotion 自动推断或外部直接指定</td>
+</tr>
+<tr>
+<td><strong>实时 / 流式</strong></td>
+<td>论文里是<strong>离线管线</strong>：整句 TTS → Wav2Lip 生成整段视频 → 逐帧推理；没有报告端到端延迟</td>
+<td>SDK 宣称 &gt; 60 FPS，有 interactive executor 和流式模式</td>
+</tr>
+<tr>
+<td><strong>评估</strong></td>
+<td>隐空间 MSE（用的是自己训练的 VAE）+ 一次偏好调研</td>
+<td>技术报告中有 lip-sync 指标和主观评估</td>
+</tr>
+<tr>
+<td><strong>开源</strong></td>
+<td>代码 + 模型在 Zenodo，数据在 Dryad</td>
+<td>SDK / 训练框架 / 模型全开源（MIT / Apache / NVIDIA Open Model）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="62">6.2 本质差异<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<p><strong>A2F 回答的是"这段语音对应的人脸应该长什么样"，本文回答的是"想让这张机器人脸长成这样，电机该怎么动"。</strong> 本文前半段其实把"长什么样"外包给了 Wav2Lip，真正的贡献在后半段：在没有运动学模型的软体脸上，学一个从"目标外观"到"电机指令"的<strong>视觉逆模型（self-model）</strong>，再加上让轨迹平滑、让双唇闭紧的时序模型。A2F 只做到"目标外观"为止，它的世界里没有电机。</p>
+<p>所以两者不是竞争关系，而是<strong>上下游关系</strong>：A2F（或 Wav2Lip）位于上游的"语音→口型"，本文的 VAE+FAT 位于下游的"口型→执行器"。</p>
+<h3 id="63-a2f-wav2lip">6.3 能否用 A2F 替换本文里的 Wav2Lip？<a class="headerlink" href="#63-a2f-wav2lip" title="Permanent link">&para;</a></h3>
+<p>可以作为一个研究方向，但要注意以下几点：</p>
+<ol>
+<li><strong>表示空间不同。</strong> 本文的 VAE 吃的是<strong>机器人脸的图像</strong>，Wav2Lip 正好能在机器人视频上直接贴口型；A2F 输出的是<strong>人脸模型上的 blendshape</strong>，需要一个新的桥接：要么把 blendshape 渲染成"机器人样子的脸"再送进 VAE，要么直接学 <code>blendshape → 电机</code> 的映射。</li>
+<li><strong>一个可行的桥接</strong>：对 babbling 的 20k 帧跑 <a href="https://ai.google.dev/edge/mediapipe/solutions/vision/face_landmarker">MediaPipe Face Landmarker</a>，它能输出 52 个与 ARKit 基本同名的 blendshape 分数，于是得到 <code>(blendshape, 电机)</code> 对，可以训练 <code>blendshape → 电机</code> 的逆模型；部署时 A2F 输出 ARKit blendshape，直接喂给这个逆模型，<strong>完全绕开像素空间，也能流式运行</strong>。<strong>风险</strong>：本文表 1 已经说明 MediaPipe 关键点区分不了是否露齿，blendshape 的检测器同样基于关键点和网格，对硅胶机器人脸的检测精度也是未知数。</li>
+<li><strong>得到的好处</strong>：情绪通道（A2F 的情绪向量可以同时驱动嘴角和眉毛，和 <a href="../Emo_Human-robot_facial_coexpression_论文总结/">Emo</a> 的表情能力衔接）、流式推理，以及在中文上更可靠的上游（Claire 模型有中文数据）。</li>
+</ol>
+<h2 id="7">7. 与对话交互研究的关系<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<p><strong>(1) 在全双工系统中的位置。</strong> 在 Moshi 类全双工模型（参见 <a href="../../notes/全双工语音模型对比_上下文与工具调用/">全双工语音模型对比</a>、<a href="../Moshi-Face_论文总结/">Moshi-Face</a>）后面接一张实体脸，就是"语音 token → 音频 → 口型 → 电机"。本文管线是<strong>整句离线</strong>的（TTS 先生成完整音频，Wav2Lip 再生成整段视频），没法直接接到逐帧流式输出的全双工模型上；A2F 的流式模式在这一点上更合适。</p>
+<p><strong>(2) 前瞻量（lookahead）与延迟的权衡。</strong> 人类提前 80–300 ms 摆口型，A2F 回归模型需要约 0.26 s 的未来音频，FAT 需要下一帧的隐向量，再加上舵机自身的执行延迟。全双工模型的音频是先生成、后播放的，<strong>可以把"播放缓冲"当作口型的前瞻窗口</strong>；但缓冲越长，响应延迟越大，这需要在对话层面统一设计。</p>
+<p><strong>(3) 打断（barge-in）。</strong> 用户插话时，全双工模型会立即停止输出，但物理嘴巴有惯性，可能停在半张的状态。本文没有讨论"中途闭嘴"或"停止并回到中性位"的轨迹。这是对话交互特有、而本文和 A2F 都没有覆盖的问题，值得单独研究（例如在 FAT 中加入一个"中止"条件）。</p>
+<p><strong>(4) 倾听态。</strong> 本文只覆盖"说"。对话中机器人在听的时候也需要有反应（点头、微笑、准备开口），这一点要和 Emo 的"预测对方表情"结合起来。</p>
+<h2 id="8">8. 发现的不一致 / 值得质疑的地方<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>平移基线的数值前后矛盾</strong>：基线定义里写的是 <strong>0.033 s</strong> 平移（p.5（PDF p.5），表 1 也是 0.033 s），讨论部分却写成"<strong>0.33 s</strong> shift baselines… Even a 0.33-s shift"（p.6（PDF p.6））。</li>
+<li><strong>图 6 的图注是复制错误</strong>：图 6 是 VAE 结构图，图注却是图 5 多语言误差的说明（p.8（PDF p.8））。</li>
+<li><strong>Wav2Lip 引用编号错误</strong>：正文写 "Wav2Lip (43)"（p.4（PDF p.4）），但参考文献 43 是 Donahue 等人的 <a href="https://arxiv.org/abs/2006.03575">EATS 端到端对抗 TTS</a>；Wav2Lip 实际上是文献 19。可能是引用位置放错了（原本要引的是 TTS）。</li>
+<li><strong>相机位置描述不一致</strong>：正文说"front-facing camera"（p.4（PDF p.4）），图 3 图注写的是"side-view camera for 3D lip shape data"。</li>
+<li><strong>模块命名不一致</strong>：图 3 图注叫"Robot Inverse Transformer"，正文统一叫"Facial Action Transformer"；正文说解码器用"two future latent vectors"，图 7 画的却是 <code>L_t, L_{t+1}</code>（当前帧 + 下一帧）。</li>
+<li><strong>语言数量</strong>：摘要写"10 languages unseen during training"，正文写"11 languages"。两者不算矛盾（11 = 英语 + 10 种未见语言），但容易误读。</li>
+<li><strong>评估指标有循环论证之嫌</strong>：MSE 是在<strong>本文自己训练的 VAE 隐空间</strong>里计算的，本文方法又恰好是在这个隐空间里做最近邻匹配和训练的，天然占优；MediaPipe 和幅度基线并没有为这个隐空间做优化。只平移 1 帧，MSE 就从 0.014 涨到 0.05，说明这个指标对时间错位极其敏感，但它和人类感知的对应关系没有得到验证。比较可信的证据只有那次偏好调研，而调研细节都在补充材料里。</li>
+<li><strong>多语言实验每种语言只有 1 句话</strong>，n 是帧数，帧之间高度相关，误差棒的统计意义有限；而且如第 5.3 节所说，泛化能力主要来自 Wav2Lip。</li>
+<li>论文没有说明这台机器人和 Emo 是否是同一个头部平台（外观相似，但 Emo 嘴部有 11 个电机，这里是 10 个自由度）。</li>
+</ol>
+<h2 id="9">9. 链接汇总<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<ul>
+<li>论文：<a href="https://doi.org/10.1126/scirobotics.adx3017">DOI 10.1126/scirobotics.adx3017</a> · <a href="https://www.science.org/doi/10.1126/scirobotics.adx3017">Science 页面</a></li>
+<li>本地 PDF 页码直达：p.1 摘要/引言（PDF p.1） · p.2 相关工作/硬件（PDF p.2） · p.3 图 1–2（PDF p.3） · p.4 管线/图 3（PDF p.4） · p.5 图 4/基线（PDF p.5） · p.6 表 1/多语言（PDF p.6） · p.7 图 5/讨论（PDF p.7） · p.8 方法/VAE（PDF p.8） · p.9 FAT/图 7（PDF p.9） · p.10 损失/词组（PDF p.10） · p.11 测试句/统计/参考文献（PDF p.11）</li>
+<li>本地图片：<a href="../lip_figs/fig1_hardware.jpg">图 1</a> · <a href="../lip_figs/fig2_visemes.jpg">图 2</a> · <a href="../lip_figs/fig3_pipeline.jpg">图 3</a> · <a href="../lip_figs/fig4_words.jpg">图 4</a> · <a href="../lip_figs/fig5_multilingual.jpg">图 5</a> · <a href="../lip_figs/fig6_vae.jpg">图 6</a> · <a href="../lip_figs/fig7_fat.jpg">图 7</a> · <a href="../lip_figs/movie1_overview.jpg">Movie 1 截图</a></li>
+<li>代码 / 数据：<a href="https://doi.org/10.5281/zenodo.17804235">Zenodo 17804235</a> · <a href="https://doi.org/10.5061/dryad.j6q573nrc">Dryad j6q573nrc</a></li>
+<li>关键引用：<a href="https://arxiv.org/abs/2008.10010">Wav2Lip（arXiv 2008.10010）</a>（<a href="https://github.com/Rudrabha/Wav2Lip">GitHub</a>） · <a href="https://arxiv.org/abs/1905.03079">VOCA</a> · <a href="https://arxiv.org/abs/2104.08223">MeshTalk</a> · <a href="https://arxiv.org/abs/2301.02379">CodeTalker</a> · <a href="https://arxiv.org/abs/2106.04185">Lipsync3D</a> · <a href="https://arxiv.org/abs/2004.12992">MakeItTalk</a> · <a href="https://arxiv.org/abs/2211.14758">VideoReTalking</a> · <a href="https://arxiv.org/abs/1312.6114">VAE（Kingma &amp; Welling）</a> · <a href="https://github.com/google-ai-edge/mediapipe">MediaPipe</a> · <a href="https://arxiv.org/abs/2006.03575">EATS（被误引为 Wav2Lip 的 43 号文献）</a></li>
+<li>同组前作：<a href="https://doi.org/10.1126/scirobotics.adi4724">Human-robot facial coexpression（Emo）</a> → <a href="../Emo_Human-robot_facial_coexpression_论文总结/">本地总结</a> · <a href="https://doi.org/10.1038/s42256-025-01006-w">Teaching robots to build simulations of themselves（NMI 2025）</a></li>
+<li>对比：<a href="../../notes/NVIDIA_Audio2Face-3D_仓库总结/">Audio2Face-3D 仓库总结</a> · <a href="https://arxiv.org/abs/2508.16401">A2F 技术报告 arXiv 2508.16401</a> · Colab 推理 Demo</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Emo：人机共同表情">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Emo：人机共同表情
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>

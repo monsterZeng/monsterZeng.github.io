@@ -1,0 +1,1745 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="全双工语音、语音驱动人脸动画与机器人脸的论文阅读笔记">
+      
+      
+        <meta name="author" content="monsterZeng">
+      
+      
+        <link rel="canonical" href="https://monsterzeng.github.io/papers/Easy-Turn_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+      
+        <link rel="prev" href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/">
+      
+      
+        <link rel="next" href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.74">
+    
+    
+      
+        <title>Easy Turn - 论文阅读笔记</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.4ab2de0c.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.b60ce83d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_scope.pathname.endsWith("/")||(__md_scope=new URL(__md_scope.pathname+"/",location)),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,_=__md_scope)=>JSON.parse(t.getItem(_.pathname+"."+e)),__md_set=(e,t,_=localStorage,a=__md_scope)=>{try{_.setItem(a.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-hidden="true"></label>
+    <div data-md-component="skip">
+      <a href="#__skip" class="md-skip">
+        跳转至
+      </a>
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="论文阅读笔记" class="md-header__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+      <span class="md-visually-hidden">导航栏</span>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            论文阅读笔记
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Easy Turn
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到浅色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换到浅色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun-moon" viewBox="0 0 24 24"><path d="M12 2v2M14.837 16.385a6 6 0 1 1-7.223-7.222c.624-.147.97.66.715 1.248a4 4 0 0 0 5.26 5.259c.589-.255 1.396.09 1.248.715M16 12a4 4 0 0 0-4-4M19 5l-1.256 1.256M20 12h2"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换到深色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换到深色模式" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="跟随系统"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="跟随系统" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+          <span class="md-visually-hidden">查找</span>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="查找">
+  <button type="button" class="md-search__button">
+    查找
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+        <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="论文阅读笔记" class="md-nav__button md-logo" aria-label="论文阅读笔记" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+
+    </a>
+    论文阅读笔记
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/monsterZeng" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.3.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2026 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    monsterZeng
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 5v16M20.001 19A2 2 0 0 0 22 17V5a2 2 0 0 0-1.999-2L16 3.002A5 5 0 0 0 12 5a5 5 0 0 0-4-2H4a2 2 0 0 0-2 2v12a2 2 0 0 0 1.999 2H8a5 5 0 0 1 4 2 5 5 0 0 1 4-2z"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+  首页
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  全双工语音对话
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+            <label class="md-nav__title" for="__nav_2">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  全双工语音对话
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Moshi-Face
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../DuplexJev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  DuplexJev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Qwen-Audio-Jev
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Easy Turn
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、四种轮次状态（§2.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#easy-turn-corpus2-figure-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、数据集 Easy Turn Corpus（§2，流程见 Figure 1）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、数据集 Easy Turn Corpus（§2，流程见 Figure 1）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-table-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 训练集规模（Table 1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-221" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 真实数据（§2.2.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-222" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 合成数据（§2.2.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 测试集（§2.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-figure-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、模型（§3，架构见 Figure 2）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、模型（§3，架构见 Figure 2）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        训练（§4.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、实验结果
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-42table-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 主结果（§4.2，Table 2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-43table-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 消融（§4.3，Table 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-44figure-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 应用示例（§4.4，Figure 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、论文中的不一致与可疑之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、与我们对话交互研究的关联
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  横向对比：上下文与工具调用
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  语音驱动人脸动画
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_3">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  语音驱动人脸动画
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../FaceFormer_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  FaceFormer
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../notes/NVIDIA_Audio2Face-3D_%E4%BB%93%E5%BA%93%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  NVIDIA Audio2Face-3D
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../wav2vec/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  wav2vec
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  机器人脸
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        
+          <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+            <label class="md-nav__title" for="__nav_4">
+              <span class="md-nav__icon md-icon"></span>
+              
+  
+  机器人脸
+
+            </label>
+            <ul class="md-nav__list" data-md-scrollfix>
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Emo_Human-robot_facial_coexpression_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Emo：人机共同表情
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+                
+                  
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Lip_Learning_realistic_lip_motions_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+  Lip：逼真口型
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+                
+              
+            </ul>
+          </nav>
+        
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        一、一句话概括
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        二、要解决的问题（§1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        三、四种轮次状态（§2.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#easy-turn-corpus2-figure-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        四、数据集 Easy Turn Corpus（§2，流程见 Figure 1）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、数据集 Easy Turn Corpus（§2，流程见 Figure 1）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-table-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.1 训练集规模（Table 1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-221" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.2 真实数据（§2.2.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-222" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.3 合成数据（§2.2.2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-23" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        4.4 测试集（§2.3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-figure-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        五、模型（§3，架构见 Figure 2）
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、模型（§3，架构见 Figure 2）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        训练（§4.1）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        六、实验结果
+      </span>
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、实验结果">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61-42table-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.1 主结果（§4.2，Table 2）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-43table-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.2 消融（§4.3，Table 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-44figure-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        6.3 应用示例（§4.4，Figure 3）
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        七、论文中的不一致与可疑之处
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        八、与我们对话交互研究的关联
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        九、链接汇总
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+  <nav class="md-path" aria-label="导航栏" >
+    <ol class="md-path__list">
+      
+        
+  
+  
+    <li class="md-path__item">
+      <a href="../.." class="md-path__link">
+        
+  
+  <span class="md-ellipsis">
+    首页
+  </span>
+
+      </a>
+    </li>
+  
+
+      
+      
+        
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+    
+      <li class="md-path__item">
+        <a href="../Moshi-Face_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-path__link">
+          
+  
+  <span class="md-ellipsis">
+    全双工语音对话
+  </span>
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ol>
+  </nav>
+
+              
+              <article class="md-content__inner md-typeset">
+                <a id="__skip" tabindex="-1"></a>
+                
+                  
+
+  
+  
+
+
+<h1 id="easy-turn">Easy Turn：融合声学与语言双模态的全双工轮次检测 —— 论文总结<a class="headerlink" href="#easy-turn" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>原文</strong>：<a href="https://arxiv.org/html/2509.23938v1">Easy Turn: Integrating Acoustic and Linguistic Modalities for Robust Turn-Taking in Full-Duplex Spoken Dialogue Systems</a>（arXiv:2509.23938v1，cs.CL，2025-09-28，许可 CC BY 4.0）
+<strong>快捷入口</strong>：<a href="https://arxiv.org/abs/2509.23938v1">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2509.23938v1">PDF</a> ｜ <a href="https://arxiv.org/html/2509.23938v1">HTML 全文</a>
+<strong>作者</strong>：Guojian Li、Chengyou Wang、Hongfei Xue、Shuiyuan Wang、Dehui Gao、Zihan Zhang、Yuke Lin、Wenjie Li、Longshuai Xiao、Zhonghua Fu*、Lei Xie*（*通讯作者）
+<strong>机构</strong>：西北工业大学 ASLP 实验室（谢磊组）、华为技术有限公司
+<strong>开源</strong>：<a href="https://github.com/ASLP-lab/Easy-Turn">GitHub: ASLP-lab/Easy-Turn</a>（论文写的是“将会公开”，我这次访问 GitHub 连接失败，未能确认当前发布状态）</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一句话概括<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>做一个<strong>独立于对话主模型的、开源的轮次检测器</strong>：Whisper-Medium 编码器 + 适配器 + Qwen2.5-0.5B，输入一段用户语音，<strong>先输出 ASR 转写、再输出轮次状态标签</strong>（complete / incomplete / backchannel / wait 四类）。同时开源 1145 小时的中文训练集和一个 800 条的测试集。在自家测试集上四类准确率都高于 <a href="https://github.com/ten-framework/ten-turn-detection">TEN Turn Detection</a> 和 <a href="https://github.com/pipecat-ai/smart-turn">Smart Turn V2</a>。</p>
+<hr />
+<h2 id="1">二、要解决的问题（<a href="https://arxiv.org/html/2509.23938v1#S1">§1</a>）<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<p>全双工系统的核心难点是判断“该说、该听、还是该闭嘴”。作者把现有路线分成两类：</p>
+<table>
+<thead>
+<tr>
+<th>路线</th>
+<th>代表</th>
+<th>作者认为的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>外挂轮次检测模型</strong>（主 LLM 保持半双工）</td>
+<td><a href="https://github.com/ten-framework/ten-turn-detection">TEN Turn Detection</a>：Qwen2.5-7B 做文本语义判断，三类 finished / unfinished / wait；<a href="https://github.com/pipecat-ai/smart-turn">Smart Turn V2</a>：<a href="https://arxiv.org/abs/2006.11477">wav2vec2</a> + 线性分类，两类 complete / incomplete</td>
+<td>大多闭源；TEN 太大（7B）且只吃文本、需要上游 ASR，丢声学信息；Smart Turn 只有线性头，语义能力弱</td>
+</tr>
+<tr>
+<td><strong>把 LLM 主干本身训成全双工</strong></td>
+<td><a href="https://arxiv.org/abs/2410.00037">Moshi</a>、<a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a>、<a href="https://arxiv.org/abs/2412.02612">GLM-4-Voice</a></td>
+<td>需要大量高质量全双工对话数据，而开源的几乎没有（多数工作只简单描述数据流程，如 <a href="https://arxiv.org/abs/2502.14145">ref 11</a>）</td>
+</tr>
+</tbody>
+</table>
+<p>Easy Turn 走第一条路线，目标是“小、开源、双模态、类别全”。</p>
+<hr />
+<h2 id="21">三、四种轮次状态（<a href="https://arxiv.org/html/2509.23938v1#S2.SS1">§2.1</a>）<a class="headerlink" href="#21" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>含义</th>
+<th>例子</th>
+<th>系统应采取的动作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>complete</strong></td>
+<td>用户意图已完整表达</td>
+<td>“你能给我讲个故事吗？”</td>
+<td>立即回复</td>
+</tr>
+<tr>
+<td><strong>incomplete</strong></td>
+<td>用户停顿了但显然没说完</td>
+<td>“我想问一下……”“你知道它怎么……”</td>
+<td>继续听，不抢话</td>
+</tr>
+<tr>
+<td><strong>backchannel</strong></td>
+<td>附和、表示在听（参见 <a href="https://arxiv.org/abs/2503.04721">Full-Duplex-Bench</a>）</td>
+<td>“嗯嗯”“对”</td>
+<td>不打断系统正在说的话</td>
+</tr>
+<tr>
+<td><strong>wait</strong></td>
+<td>明确要求暂停或结束（参见 <a href="https://arxiv.org/abs/2410.11190">Mini-Omni2</a>）</td>
+<td>“闭嘴”“停一下”</td>
+<td>停止当前回复或结束对话</td>
+</tr>
+</tbody>
+</table>
+<p>对比：TEN 没有 backchannel，Smart Turn 没有 backchannel 和 wait。</p>
+<hr />
+<h2 id="easy-turn-corpus2-figure-1">四、数据集 Easy Turn Corpus（<a href="https://arxiv.org/html/2509.23938v1#S2">§2</a>，流程见 <a href="https://arxiv.org/html/2509.23938v1#S1.F1">Figure 1</a>）<a class="headerlink" href="#easy-turn-corpus2-figure-1" title="Permanent link">&para;</a></h2>
+<h3 id="41-table-1">4.1 训练集规模（<a href="https://arxiv.org/html/2509.23938v1#S2.T1">Table 1</a>）<a class="headerlink" href="#41-table-1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>状态</th>
+<th>条数（千）</th>
+<th>时长（小时）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Complete</td>
+<td>423</td>
+<td>580</td>
+</tr>
+<tr>
+<td>Incomplete</td>
+<td>712</td>
+<td>532</td>
+</tr>
+<tr>
+<td>Backchannel</td>
+<td>41</td>
+<td>10</td>
+</tr>
+<tr>
+<td>Wait</td>
+<td>40</td>
+<td>23</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td><strong>1216</strong></td>
+<td><strong>1145</strong></td>
+</tr>
+</tbody>
+</table>
+<p>类别非常不均衡，backchannel 和 wait 合计只占 3% 左右的时长。</p>
+<h3 id="42-221">4.2 真实数据（<a href="https://arxiv.org/html/2509.23938v1#S2.SS2.SSS1">§2.2.1</a>）<a class="headerlink" href="#42-221" title="Permanent link">&para;</a></h3>
+<p>来源是 <a href="https://arxiv.org/abs/2203.16844">MagicData-RAMC</a>（约 180 小时中文自然对话，人工转写）。按时间戳切成句子级片段后，<strong>用文本 LLM 自动打标</strong>，采用“交叉标注”：只保留 <a href="https://arxiv.org/abs/2412.15115">Qwen2.5-32B-Instruct</a> 和 TEN Turn Detection 两者都给出同一标签的样本。backchannel 例外：TEN 不支持该类，只用 Qwen2.5-32B 单独标注，且只考虑短于 2 秒的片段。</p>
+<h3 id="43-222">4.3 合成数据（<a href="https://arxiv.org/html/2509.23938v1#S2.SS2.SSS2">§2.2.2</a>）<a class="headerlink" href="#43-222" title="Permanent link">&para;</a></h3>
+<p>为补足“人机交互”场景，统一流程是：LLM 生成文本 → 交叉标注过滤 → <a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a> 等合成语音（参考音色来自 <a href="https://arxiv.org/abs/2501.15907">Emilia</a>）→ 用 <a href="https://arxiv.org/abs/2206.08317">Paraformer</a> 回识别，<strong>只保留 WER = 0 的样本</strong>。</p>
+<p>各子集的要点：Complete-Syn 取自 <a href="https://arxiv.org/abs/2501.16327">AudioQA-1M</a>（Lucy 论文的数据）中的提问部分；Incomplete-Syn 用 <a href="https://arxiv.org/abs/2412.19437">DeepSeek-V3</a> 生成残句，合成时<strong>故意加入拖长尾音或 0–1 秒停顿</strong>来模拟犹豫；Backchannel-Syn 和 Wait-Syn 也由 DeepSeek-V3 扩充表达多样性。</p>
+<h3 id="44-23">4.4 测试集（<a href="https://arxiv.org/html/2509.23938v1#S2.SS3">§2.3</a>）<a class="headerlink" href="#44-23" title="Permanent link">&para;</a></h3>
+<p>共 800 条：complete 和 incomplete 各 300，backchannel 和 wait 各 100；真实录音与 CosyVoice 2 合成各占一半。文本来源与训练集不重叠，<strong>标签为人工标注</strong>。</p>
+<hr />
+<h2 id="3-figure-2">五、模型（<a href="https://arxiv.org/html/2509.23938v1#S3">§3</a>，架构见 <a href="https://arxiv.org/html/2509.23938v1#S3.F2">Figure 2</a>）<a class="headerlink" href="#3-figure-2" title="Permanent link">&para;</a></h2>
+<p>结构仿照 <a href="https://arxiv.org/abs/2311.07919">Qwen-Audio</a>，由三部分组成：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>选型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>音频编码器</td>
+<td><a href="https://arxiv.org/abs/2212.04356">Whisper</a>-Medium（2 层 1D 卷积 + 24 层 Transformer）</td>
+</tr>
+<tr>
+<td>适配器</td>
+<td>3 层 1D 卷积 + 4 层 Transformer</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>Qwen2.5-0.5B-Instruct</td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键设计：ASR + Turn-Detection 范式</strong>（<a href="https://arxiv.org/html/2509.23938v1#S3.SS2">§3.2</a>，借鉴同组的 <a href="https://arxiv.org/abs/2501.13306">OSUM</a>）。LLM 先自回归地生成转写文本，再生成状态标签，相当于让模型“先把话听清，再结合文字和声音下判断”。提示词由 DeepSeek-V3 生成 5 条，训练时随机抽一条以提升鲁棒性。</p>
+<h3 id="41">训练（<a href="https://arxiv.org/html/2509.23938v1#S4.SS1">§4.1</a>）<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>数据</th>
+<th>可训练部分</th>
+<th>超参</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 模态对齐（ASR 任务）</td>
+<td>2.3 万小时：<a href="https://arxiv.org/abs/1709.05522">AISHELL-1</a>、<a href="https://arxiv.org/abs/1808.10583">AISHELL-2</a>、<a href="https://arxiv.org/abs/2110.03370">WenetSpeech</a> + 内部数据</td>
+<td>编码器 + 适配器（LLM 冻结）</td>
+<td>lr 5e-5，bs 16，3 epoch，8×RTX 4090</td>
+</tr>
+<tr>
+<td>2. 轮次检测专项训练</td>
+<td>Easy Turn 训练集</td>
+<td>全部参数解冻</td>
+<td>lr 2e-5，bs 12，6 epoch，8×RTX 4090</td>
+</tr>
+</tbody>
+</table>
+<p>训练框架为 <a href="https://arxiv.org/abs/2102.01547">WeNet</a>；推理在单张 4090 上用贪心解码。</p>
+<hr />
+<h2 id="_2">六、实验结果<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="61-42table-2">6.1 主结果（<a href="https://arxiv.org/html/2509.23938v1#S4.SS2">§4.2</a>，<a href="https://arxiv.org/html/2509.23938v1#S2.T2">Table 2</a>）<a class="headerlink" href="#61-42table-2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>参数量</th>
+<th>延迟 (ms)</th>
+<th>显存 (MB)</th>
+<th>ACC complete</th>
+<th>ACC incomplete</th>
+<th>ACC backchannel</th>
+<th>ACC wait</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Paraformer + TEN Turn Detection</td>
+<td>7220M</td>
+<td>204</td>
+<td>15419</td>
+<td>86.67</td>
+<td>89.3</td>
+<td>–</td>
+<td>91</td>
+</tr>
+<tr>
+<td>Smart Turn V2</td>
+<td><strong>95M</strong></td>
+<td><strong>27</strong></td>
+<td><strong>370</strong></td>
+<td>78.67</td>
+<td>62</td>
+<td>–</td>
+<td>–</td>
+</tr>
+<tr>
+<td><strong>Easy Turn</strong></td>
+<td>850M</td>
+<td>263</td>
+<td>2559</td>
+<td><strong>96.33</strong></td>
+<td><strong>97.67</strong></td>
+<td><strong>91</strong></td>
+<td><strong>98</strong></td>
+</tr>
+</tbody>
+</table>
+<p>TEN 不能直接吃语音，所以前面接了 Paraformer 做 ASR。</p>
+<h3 id="62-43table-3">6.2 消融（<a href="https://arxiv.org/html/2509.23938v1#S4.SS3">§4.3</a>，<a href="https://arxiv.org/html/2509.23938v1#S4.T3">Table 3</a>）<a class="headerlink" href="#62-43table-3" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>模态</th>
+<th>四类平均 ACC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Easy Turn</strong></td>
+<td>声学 + 语言</td>
+<td><strong>95.75</strong></td>
+</tr>
+<tr>
+<td>Easy Turn（only-state，不先输出转写）</td>
+<td>声学 + 语言</td>
+<td>87.88</td>
+</tr>
+<tr>
+<td>微调 Qwen2.5-0.5B（只看文本）</td>
+<td>仅语言</td>
+<td>86.25</td>
+</tr>
+<tr>
+<td>微调 Whisper + 线性头（只听语音）</td>
+<td>仅声学</td>
+<td>85.50</td>
+</tr>
+</tbody>
+</table>
+<p>最有意思的一点：<strong>同样的架构，去掉“先转写”这一步，准确率掉了约 8 个点</strong>，几乎跌到单模态水平。说明提升主要来自“先 ASR 再判断”这种类似思维链的输出顺序，而不只是双模态输入本身。</p>
+<h3 id="63-44figure-3">6.3 应用示例（<a href="https://arxiv.org/html/2509.23938v1#S4.SS4">§4.4</a>，<a href="https://arxiv.org/html/2509.23938v1#S4.F3">Figure 3</a>）<a class="headerlink" href="#63-44figure-3" title="Permanent link">&para;</a></h3>
+<p>作者把 Easy Turn 部署进内部的语音对话系统，用麦克风实测，给出了几组“检测状态 → 系统动作”的示例，但没有给出定量的端到端指标。</p>
+<hr />
+<h2 id="_3">七、论文中的不一致与可疑之处<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>参数量单位写错</strong>：<a href="https://arxiv.org/html/2509.23938v1#S2.T2">Table 2</a> 表头写“Params(MB)”，但数值显然是“百万参数”。Whisper-Medium 编码器约 3 亿 + Qwen2.5-0.5B 约 5 亿 + 适配器，合起来约 8.5 亿，正好对应 850；TEN 一行 7220 也对应 7B LLM 加约 2.2 亿参数的 Paraformer。</li>
+<li><strong>TEN 被说成“我们之前提出的模型”</strong>：<a href="https://arxiv.org/html/2509.23938v1#S2.SS2.SSS1">§2.2.1</a> 写“TEN Turn Detection, our previously introduced turn-taking detection model”，但 TEN 是 <a href="https://github.com/ten-framework/ten-turn-detection">ten-framework</a> 的项目，不是本文作者的。更可能是想说“前文介绍过的”。</li>
+<li><strong>延迟的说法偏乐观</strong>：正文称“仅略微增加延迟”“推理速度有竞争力”，但 Easy Turn 的 263 ms 其实<strong>比 Paraformer + TEN 的 204 ms 还慢</strong>，是 Smart Turn V2（27 ms）的约 10 倍。而且由于要先自回归输出整句转写，延迟会随句子变长而增加，论文只给了平均值。</li>
+<li><strong>基线评测不完全公平</strong>：</li>
+<li>训练标签本身就是“Qwen2.5-32B 与 TEN 一致才保留”，等于 TEN 参与了制造训练集；</li>
+<li>测试集一半是 CosyVoice 2 合成语音，和训练集同一个 TTS，Easy Turn 天然占便宜；</li>
+<li>Smart Turn V2 和 TEN 都没有在这份中文数据上微调，直接拿来比。</li>
+<li>只在自家测试集上评测，没有用 <a href="https://arxiv.org/abs/2503.04721">Full-Duplex-Bench</a> 这类公共基准。</li>
+<li><strong>平均准确率的算法</strong>：消融里的 95.75 是四类准确率的简单平均（(96.33+97.67+91+98)/4 = 95.75，数字核对无误），但测试集四类数量是 300/300/100/100，按样本加权会是另一个数。论文没给混淆矩阵，看不出 backchannel 被误判成什么。</li>
+<li><strong>backchannel 的评测场景与定义不符</strong>：定义强调的是“系统说话时用户的附和不应打断系统”，但测试样本是孤立的单句录音，既没有系统语音重叠，也没有回声，并没有测到这个真实场景。</li>
+<li><strong>引用不太相关</strong>：适配器的“模态对齐”引用的 <a href="https://arxiv.org/html/2509.23938v1#bib.bib23">ref 23</a> 是一篇遥感图像领域自适应论文（Hy-MSDA），与语音模态对齐关系不大。</li>
+</ol>
+<hr />
+<h2 id="_4">八、与我们对话交互研究的关联<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p><strong>1. 它代表“模块化全双工”路线，正好绕开 Moshi 式的上下文膨胀。</strong> 我们之前担心 <a href="https://arxiv.org/abs/2410.00037">Moshi</a> 这类同步多流架构会让上下文窗口膨胀（用户流、系统流、文本流每帧都占位置）。Easy Turn 的思路是：主 LLM 保持半双工、只处理完整的轮次；“什么时候说”交给一个旁路的小模型。这样主模型的上下文只包含有意义的轮次内容，不会被静音帧和重叠帧填满。代价是失去真正的“边想边说”和语音层面的细粒度重叠能力。</p>
+<p><strong>2. 四种状态可以直接映射成工具调用的控制信号。</strong> 在“实时语音 + 工具调用”的场景下：</p>
+<ul>
+<li><strong>wait</strong> 可以作为取消信号，用来中止正在进行的异步工具调用和 TTS 输出；</li>
+<li><strong>incomplete</strong> 时可以按已有的半句话<strong>投机预取</strong>工具结果（比如听到“帮我查一下明天北京……”就开始准备天气或航班接口），等变成 complete 再确认；</li>
+<li><strong>backchannel</strong> 时，系统正在播报工具返回结果，不应该被“嗯嗯”打断。</li>
+</ul>
+<p><strong>3. 它没有对话上下文，这是一个明显的局限。</strong> 模型只看当前这一句用户语音，看不到系统刚才说了什么。比如系统问“要帮你订吗？”，用户回答“嗯”，这其实是 complete（肯定回答），而不是 backchannel。要在真实系统里用好，至少需要把系统上一轮的文本作为条件输入。</p>
+<p><strong>4. “先转写再判断”这个发现值得借鉴。</strong> 消融显示，让模型先输出转写再给标签，比直接输出标签高约 8 个点。这和 <a href="../DuplexJev_论文总结/">DuplexJev</a> 的方向正好形成对照：DuplexJev 追求“不解码、一个 token 出决策”以节省成本，并且在其论文中把 Easy-Turn 作为“只能回答一个固定问题”的专用分类器来批评；Easy Turn 则用多解码一段文本换准确率。两者的取舍可以放在一起比较：<strong>解码中间文本（准确、慢、可解释） vs. 单 token 读出（快、可批量、但可能丢信息）</strong>。</p>
+<p><strong>5. 数据流程可复用。</strong> “LLM 双模型交叉标注 → TTS 合成 → ASR 回识别、WER=0 过滤”这条流水线，以及在 incomplete 样本里人为插入 0–1 秒停顿和拖音的做法，可以直接用来给我们自己的全双工或工具调用场景造数据，比如造“说到一半去等工具结果”的样本。</p>
+<hr />
+<h2 id="_5">九、链接汇总<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><strong>本文</strong>：<a href="https://arxiv.org/abs/2509.23938v1">摘要页</a> ｜ <a href="https://arxiv.org/pdf/2509.23938v1">PDF</a> ｜ <a href="https://arxiv.org/html/2509.23938v1">HTML</a> ｜ <a href="https://github.com/ASLP-lab/Easy-Turn">GitHub</a></p>
+<p><strong>章节</strong>：<a href="https://arxiv.org/html/2509.23938v1#S1">§1 引言</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S2.SS1">§2.1 轮次状态</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S2.SS2">§2.2 训练集</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S2.SS3">§2.3 测试集</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S3.SS1">§3.1 模型结构</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S3.SS2">§3.2 ASR+Turn-Detection</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S4.SS1">§4.1 实验设置</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S4.SS2">§4.2 主结果</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S4.SS3">§4.3 消融</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S4.SS4">§4.4 示例</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S5">§5 结论</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#bib">参考文献</a></p>
+<p><strong>图表</strong>：<a href="https://arxiv.org/html/2509.23938v1#S1.F1">Figure 1 数据流程</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S3.F2">Figure 2 模型架构</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S4.F3">Figure 3 应用示例</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S2.T1">Table 1 训练集统计</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S2.T2">Table 2 主结果</a> ｜ <a href="https://arxiv.org/html/2509.23938v1#S4.T3">Table 3 消融</a></p>
+<p><strong>对比的轮次检测模型</strong>：<a href="https://github.com/ten-framework/ten-turn-detection">TEN Turn Detection</a> ｜ <a href="https://github.com/pipecat-ai/smart-turn">Smart Turn</a></p>
+<p><strong>全双工对话模型</strong>：<a href="https://arxiv.org/abs/2410.00037">Moshi</a> ｜ <a href="https://arxiv.org/abs/2411.00774">Freeze-Omni</a> ｜ <a href="https://arxiv.org/abs/2412.02612">GLM-4-Voice</a> ｜ <a href="https://arxiv.org/abs/2503.20215">Qwen2.5-Omni</a> ｜ <a href="https://arxiv.org/abs/2411.18138">SALMONN-omni</a> ｜ <a href="https://arxiv.org/abs/2501.01957">VITA-1.5</a> ｜ <a href="https://arxiv.org/abs/2410.11190">Mini-Omni2</a> ｜ <a href="https://arxiv.org/abs/2502.11123">DuplexMamba</a> ｜ <a href="https://arxiv.org/abs/2205.15060">Duplex Conversation (KDD 2022)</a> ｜ <a href="https://arxiv.org/abs/2502.14145">LLM-Enhanced 全双工对话管理</a> ｜ <a href="https://arxiv.org/abs/2503.04721">Full-Duplex-Bench</a></p>
+<p><strong>模型组件</strong>：<a href="https://arxiv.org/abs/2311.07919">Qwen-Audio</a> ｜ <a href="https://arxiv.org/abs/2212.04356">Whisper</a> ｜ <a href="https://arxiv.org/abs/2412.15115">Qwen2.5</a> ｜ <a href="https://arxiv.org/abs/2501.13306">OSUM</a> ｜ <a href="https://arxiv.org/abs/2006.11477">wav2vec 2.0</a> ｜ <a href="https://arxiv.org/abs/2102.01547">WeNet</a></p>
+<p><strong>数据与工具</strong>：<a href="https://arxiv.org/abs/2203.16844">MagicData-RAMC</a> ｜ <a href="https://arxiv.org/abs/2501.16327">AudioQA-1M / Lucy</a> ｜ <a href="https://arxiv.org/abs/2501.15907">Emilia</a> ｜ <a href="https://arxiv.org/abs/2412.10117">CosyVoice 2</a> ｜ <a href="https://arxiv.org/abs/2206.08317">Paraformer</a> ｜ <a href="https://arxiv.org/abs/2412.19437">DeepSeek-V3</a> ｜ <a href="https://arxiv.org/abs/1709.05522">AISHELL-1</a> ｜ <a href="https://arxiv.org/abs/1808.10583">AISHELL-2</a> ｜ <a href="https://arxiv.org/abs/2110.03370">WenetSpeech</a></p>
+<p><strong>本库相关笔记</strong>：<a href="../DuplexJev_论文总结/">DuplexJev 论文总结</a> ｜ <a href="../../notes/全双工语音模型对比_上下文与工具调用/">全双工语音模型对比：上下文与工具调用</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../Qwen-Audio-Jev_%E8%AE%BA%E6%96%87%E6%80%BB%E7%BB%93/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Qwen-Audio-Jev">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                Qwen-Audio-Jev
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../notes/%E5%85%A8%E5%8F%8C%E5%B7%A5%E8%AF%AD%E9%9F%B3%E6%A8%A1%E5%9E%8B%E5%AF%B9%E6%AF%94_%E4%B8%8A%E4%B8%8B%E6%96%87%E4%B8%8E%E5%B7%A5%E5%85%B7%E8%B0%83%E7%94%A8/" class="md-footer__link md-footer__link--next" aria-label="下一页: 横向对比：上下文与工具调用">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                横向对比：上下文与工具调用
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2025–2026 monsterZeng
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog" role="status" aria-atomic="true">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      
+        
+        
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["content.code.annotate","content.code.copy","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight","toc.follow"],"redirect":null,"search":"../../assets/javascripts/workers/search.719e0d91.min.js","tags":null,"translations":{"clipboard.copied":"已复制","clipboard.copy":"复制","clipboard.error":"Could not copy to clipboard","search.result.more.one":"在该页上还有 1 个符合条件的结果","search.result.more.other":"在该页上还有 # 个符合条件的结果","search.result.none":"没有找到符合条件的结果","search.result.one":"找到 1 个符合条件的结果","search.result.other":"# 个符合条件的结果","search.result.placeholder":"键入以开始搜索","search.result.term.missing":"缺少","select.version":"选择当前版本"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d31f0ffa.min.js"></script>
+      
+        <script src="../../assets/javascripts/mathjax.js"></script>
+      
+        <script src="https://unpkg.com/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
